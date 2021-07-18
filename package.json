@@ -1,10 +1,14 @@
 {
   "name": "calcium",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "./lib/index.js",
+  "typings": "./lib/index.d.ts",
   "repository": "https://github.com/jiangshengdev/calcium.git",
   "author": "Jiang Sheng <jiangshengdev@outlook.com>",
   "license": "MIT",
+  "scripts": {
+    "api": "tsc && api-extractor run --local --verbose"
+  },
   "devDependencies": {
     "@babel/core": "^7.14.6",
     "@babel/preset-env": "^7.14.7",
@@ -14,6 +18,8 @@
     "@typescript-eslint/parser": "^4.28.3",
     "babel-jest": "^27.0.6",
     "eslint": "^7.31.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
     "jest": "^27.0.6",
     "prettier": "^2.3.2",
     "typescript": "^4.3.5"

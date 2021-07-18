@@ -1,9 +1,16 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
-    "module": "CommonJS",
-    "sourceMap": true,
     "strict": true,
-    "target": "ESNext"
+    "target": "ESNext",
+    "module": "CommonJS",
+    "declaration": true,
+    "sourceMap": true,
+    "declarationMap": true,
+    "types": ["jest"],
+    "lib": ["ESNext"],
+    "outDir": "lib"
   },
-  "include": ["src"]
+  "include": ["src/**/*.ts"],
+  "exclude": ["src/**/*.test.ts"]
 }

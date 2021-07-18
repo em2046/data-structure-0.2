@@ -1,9 +1,30 @@
 import { Equatable } from "./equatable";
 
+/**
+ * @public
+ *
+ * A type that can be compared using the relational operators `<`, `<=`, `>=`
+ * and `>`.
+ */
 export interface Comparable extends Equatable {
+  /**
+   * Returns a Boolean value indicating whether the value of `this`
+   * is less than that of the first argument.
+   *
+   * @param rhs - Another value to compare.
+   */
   lessThan(rhs: Comparable): boolean;
 }
 
+/**
+ * @public
+ *
+ * Returns a Boolean value indicating whether the value of the first argument
+ * is less than that of the second argument.
+ *
+ * @param lhs - A value to compare.
+ * @param rhs - Another value to compare.
+ */
 export function lessThan<T>(lhs: T, rhs: T): boolean {
   const lhsComparable = lhs as unknown as Comparable;
   const rhsComparable = rhs as unknown as Comparable;
