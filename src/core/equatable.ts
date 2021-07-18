@@ -21,14 +21,14 @@ export interface Equatable {
  * @param rhs - Another value to compare.
  */
 export function equality<T>(lhs: T, rhs: T): boolean {
-  const lhsEquable = lhs as unknown as Equatable;
-  const rhsEquable = rhs as unknown as Equatable;
+  const lhsEquatable = lhs as unknown as Equatable;
+  const rhsEquatable = rhs as unknown as Equatable;
 
   if (
-    typeof lhsEquable.equality === "function" &&
-    typeof rhsEquable.equality === "function"
+    typeof lhsEquatable.equality === "function" &&
+    typeof rhsEquatable.equality === "function"
   ) {
-    return lhsEquable.equality(rhsEquable);
+    return lhsEquatable.equality(rhsEquatable);
   }
 
   return lhs === rhs;

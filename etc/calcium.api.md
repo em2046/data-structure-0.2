@@ -18,6 +18,11 @@ export interface Equatable {
 }
 
 // @public
+export interface Identifiable {
+    id: unknown;
+}
+
+// @public
 export function lessThan<T>(lhs: T, rhs: T): boolean;
 
 
