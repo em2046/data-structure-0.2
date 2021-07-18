@@ -5,8 +5,8 @@ export interface Comparable extends Equatable {
 }
 
 export function lessThan<T>(lhs: T, rhs: T): boolean {
-  let lhsComparable = lhs as unknown as Comparable;
-  let rhsComparable = rhs as unknown as Comparable;
+  const lhsComparable = lhs as unknown as Comparable;
+  const rhsComparable = rhs as unknown as Comparable;
 
   if (
     typeof lhsComparable.lessThan === "function" &&

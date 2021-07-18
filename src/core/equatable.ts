@@ -3,8 +3,8 @@ export interface Equatable {
 }
 
 export function equality<T>(lhs: T, rhs: T): boolean {
-  let lhsEquable = lhs as unknown as Equatable;
-  let rhsEquable = rhs as unknown as Equatable;
+  const lhsEquable = lhs as unknown as Equatable;
+  const rhsEquable = rhs as unknown as Equatable;
 
   if (
     typeof lhsEquable.equality === "function" &&

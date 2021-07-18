@@ -16,8 +16,8 @@ class Point implements Equatable {
 
 describe("equatable", () => {
   test("basic", () => {
-    let a = new Point(1, 2);
-    let b = new Point(1, 2);
+    const a = new Point(1, 2);
+    const b = new Point(1, 2);
 
     expect(a.equality(b)).toBe(true);
     expect(equality(a, b)).toBe(true);

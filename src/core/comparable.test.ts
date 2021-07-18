@@ -24,8 +24,8 @@ class Point implements Comparable {
 
 describe("comparable", () => {
   test("basic", () => {
-    let a = new Point(1, 2);
-    let b = new Point(1, 3);
+    const a = new Point(1, 2);
+    const b = new Point(1, 3);
 
     expect(a.lessThan(b)).toBe(true);
     expect(lessThan(a, b)).toBe(true);
