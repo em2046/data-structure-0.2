@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "sourceMap": true,
+    "strict": true,
+    "target": "ESNext"
+  },
+  "include": ["src"]
+}
