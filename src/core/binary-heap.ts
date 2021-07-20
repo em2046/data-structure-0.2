@@ -1,21 +1,45 @@
+/***
+ * https://github.com/facebook/react/blob/3f62dec84aba5d7ae6dfc73d68752254e8f06384/packages/scheduler/src/SchedulerMinHeap.js
+ */
+
 import { assert } from "../shared";
 import { lessThan } from "./comparable";
 
+/**
+ * @public
+ *
+ * A priority queue implemented with a binary heap.
+ *
+ * This will be a min-heap.
+ */
 export class BinaryHeap<T> {
   #elements: T[] = [];
 
-  push(element: T): void {
+  /**
+   * Pushes a new element onto the binary heap.
+   *
+   * @param newElement - The element to push to the binary heap.
+   */
+  push(newElement: T): void {
     const elements = this.#elements;
-    const length = elements.length;
+    const index = elements.length;
 
-    elements.push(element);
-    this.siftUp(length);
+    elements.push(newElement);
+    this.#siftUp(newElement, index);
   }
 
+  /**
+   * Returns the min element in the binary heap, or
+   * `undefined` if it is empty.
+   */
   peek(): T | undefined {
     return this.#elements[0];
   }
 
+  /**
+   * Removes the min element from the binary heap and returns it, or `undefined` if it
+   * is empty.
+   */
   pop(): T | undefined {
     const elements = this.#elements;
     const first = elements[0];
@@ -28,68 +52,58 @@ export class BinaryHeap<T> {
 
     assert(last !== undefined);
     elements[0] = last;
-    this.siftDown(0);
+    this.#siftDown(last, 0);
 
     return first;
   }
 
-  siftUp(index: number): void {
+  #siftUp(element: T, index: number): void {
     const elements = this.#elements;
 
     while (index > 0) {
       const parentIndex = Math.floor((index - 1) / 2);
+      const parent = elements[parentIndex];
 
-      if (lessThan(elements[index], elements[parentIndex])) {
-        [elements[index], elements[parentIndex]] = [
-          elements[parentIndex],
-          elements[index],
-        ];
+      if (lessThan(element, parent)) {
+        // The parent is larger. Swap position.
+        elements[parentIndex] = element;
+        elements[index] = parent;
         index = parentIndex;
       } else {
-        break;
+        // The parent is smaller. Exit.
+        return;
       }
     }
   }
 
-  siftDown(index: number): void {
+  #siftDown(element: T, index: number): void {
     const elements = this.#elements;
     const length = elements.length;
 
     while (index < length) {
       const leftIndex = index * 2 + 1;
+      const left = elements[leftIndex];
       const rightIndex = leftIndex + 1;
+      const right = elements[rightIndex];
 
-      if (
-        leftIndex < length &&
-        lessThan(elements[leftIndex], elements[index])
-      ) {
-        if (
-          rightIndex < length &&
-          lessThan(elements[rightIndex], elements[leftIndex])
-        ) {
-          [elements[rightIndex], elements[index]] = [
-            elements[index],
-            elements[rightIndex],
-          ];
+      // If the left or right element is smaller, swap with the smaller of those.
+      if (leftIndex < length && lessThan(left, element)) {
+        if (rightIndex < length && lessThan(right, left)) {
+          elements[index] = right;
+          elements[rightIndex] = element;
           index = rightIndex;
         } else {
-          [elements[leftIndex], elements[index]] = [
-            elements[index],
-            elements[leftIndex],
-          ];
+          elements[index] = left;
+          elements[leftIndex] = element;
           index = leftIndex;
         }
-      } else if (
-        rightIndex < length &&
-        lessThan(elements[rightIndex], elements[index])
-      ) {
-        [elements[rightIndex], elements[index]] = [
-          elements[index],
-          elements[rightIndex],
-        ];
+      } else if (rightIndex < length && lessThan(right, element)) {
+        elements[index] = right;
+        elements[rightIndex] = element;
         index = rightIndex;
       } else {
-        break;
+        // Neither child is smaller. Exit.
+        return;
       }
     }
   }

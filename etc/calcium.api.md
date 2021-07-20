@@ -5,6 +5,13 @@
 ```ts
 
 // @public
+export class BinaryHeap<T> {
+    peek(): T | undefined;
+    pop(): T | undefined;
+    push(newElement: T): void;
+}
+
+// @public
 export interface Comparable extends Equatable {
     lessThan(rhs: Comparable): boolean;
 }
