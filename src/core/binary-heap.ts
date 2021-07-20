@@ -1,41 +1,48 @@
+import { assert } from "../shared";
 import { lessThan } from "./comparable";
 
 export class BinaryHeap<T> {
-  elements: T[] = [];
+  #elements: T[] = [];
+
+  push(element: T): void {
+    const elements = this.#elements;
+    const length = elements.length;
+
+    elements.push(element);
+    this.siftUp(length);
+  }
 
   peek(): T | undefined {
-    return this.elements[0];
+    return this.#elements[0];
   }
 
   pop(): T | undefined {
-    if (this.elements.length <= 0) {
-      return undefined;
+    const elements = this.#elements;
+    const first = elements[0];
+
+    if (elements.length <= 1) {
+      return first;
     }
 
-    const first = this.elements[0];
-    const last = this.elements.pop();
+    const last = elements.pop();
 
-    this.elements[0] = last;
+    assert(last !== undefined);
+    elements[0] = last;
     this.siftDown(0);
 
     return first;
   }
 
-  push(element: T): void {
-    const length = this.elements.length;
-
-    this.elements.push(element);
-    this.siftUp(length);
-  }
-
   siftUp(index: number): void {
+    const elements = this.#elements;
+
     while (index > 0) {
       const parentIndex = Math.floor((index - 1) / 2);
 
-      if (lessThan(this.elements[index], this.elements[parentIndex])) {
-        [this.elements[index], this.elements[parentIndex]] = [
-          this.elements[parentIndex],
-          this.elements[index],
+      if (lessThan(elements[index], elements[parentIndex])) {
+        [elements[index], elements[parentIndex]] = [
+          elements[parentIndex],
+          elements[index],
         ];
         index = parentIndex;
       } else {
@@ -45,44 +52,42 @@ export class BinaryHeap<T> {
   }
 
   siftDown(index: number): void {
-    const length = this.elements.length;
+    const elements = this.#elements;
+    const length = elements.length;
 
-    while (true) {
+    while (index < length) {
       const leftIndex = index * 2 + 1;
-      const rightIndex = index * 2 + 2;
+      const rightIndex = leftIndex + 1;
 
-      if (rightIndex < length) {
-        if (lessThan(this.elements[leftIndex], this.elements[rightIndex])) {
-          if (lessThan(this.elements[leftIndex], this.elements[index])) {
-            [this.elements[leftIndex], this.elements[index]] = [
-              this.elements[index],
-              this.elements[leftIndex],
-            ];
-            index = leftIndex;
-          } else {
-            break;
-          }
+      if (
+        leftIndex < length &&
+        lessThan(elements[leftIndex], elements[index])
+      ) {
+        if (
+          rightIndex < length &&
+          lessThan(elements[rightIndex], elements[leftIndex])
+        ) {
+          [elements[rightIndex], elements[index]] = [
+            elements[index],
+            elements[rightIndex],
+          ];
+          index = rightIndex;
         } else {
-          if (lessThan(this.elements[rightIndex], this.elements[index])) {
-            [this.elements[rightIndex], this.elements[index]] = [
-              this.elements[index],
-              this.elements[rightIndex],
-            ];
-            index = rightIndex;
-          } else {
-            break;
-          }
-        }
-      } else if (leftIndex < length) {
-        if (lessThan(this.elements[leftIndex], this.elements[index])) {
-          [this.elements[leftIndex], this.elements[index]] = [
-            this.elements[index],
-            this.elements[leftIndex],
+          [elements[leftIndex], elements[index]] = [
+            elements[index],
+            elements[leftIndex],
           ];
           index = leftIndex;
-        } else {
-          break;
         }
+      } else if (
+        rightIndex < length &&
+        lessThan(elements[rightIndex], elements[index])
+      ) {
+        [elements[rightIndex], elements[index]] = [
+          elements[index],
+          elements[rightIndex],
+        ];
+        index = rightIndex;
       } else {
         break;
       }
