@@ -7,7 +7,7 @@ import { Equatable } from "./equatable";
 /**
  * @public
  *
- * A type that can be compared using the relational operators `<`, `<=`, `>=`
+ * A type that can be compared using the relational operators `<`, `<=`, `>=`,
  * and `>`.
  */
 export interface Comparable extends Equatable {

@@ -82,7 +82,7 @@ export class BinaryHeap<T> {
       const parent = elements[parentIndex];
 
       if (lessThan(element, parent)) {
-        // The parent is larger. Swap position.
+        // The parent is larger. Swap positions.
         elements[parentIndex] = element;
         elements[index] = parent;
         index = parentIndex;
