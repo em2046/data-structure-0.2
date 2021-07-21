@@ -16,6 +16,13 @@ export class BinaryHeap<T> {
   #elements: T[] = [];
 
   /**
+   * Returns the length of the binary heap.
+   */
+  get length(): number {
+    return this.#elements.length;
+  }
+
+  /**
    * Pushes a new element onto the binary heap.
    *
    * @param newElement - The element to push to the binary heap.
@@ -58,13 +65,6 @@ export class BinaryHeap<T> {
     }
 
     return first;
-  }
-
-  /**
-   * Returns the length of the binary heap.
-   */
-  get length(): number {
-    return this.#elements.length;
   }
 
   /**

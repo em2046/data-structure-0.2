@@ -6,7 +6,7 @@ describe("binary-heap", () => {
     const origin = [];
     const length = 1000;
 
-    expect(binaryHeap.length).toEqual(0);
+    expect(binaryHeap.length).toBe(0);
 
     for (let i = 0; i < length; i++) {
       const element = Math.random();
@@ -14,10 +14,10 @@ describe("binary-heap", () => {
       binaryHeap.push(element);
       origin.push(element);
 
-      expect(binaryHeap.length).toEqual(i + 1);
+      expect(binaryHeap.length).toBe(i + 1);
     }
 
-    expect(binaryHeap.length).toEqual(length);
+    expect(binaryHeap.length).toBe(length);
 
     const result = [];
 
@@ -27,16 +27,18 @@ describe("binary-heap", () => {
 
       result.push(pop);
 
-      expect(peek).toEqual(pop);
-      expect(binaryHeap.length).toEqual(length - i - 1);
+      expect(peek).toBe(pop);
+      expect(binaryHeap.length).toBe(length - i - 1);
     }
 
     origin.sort((a, b) => {
       return a - b;
     });
 
-    expect(binaryHeap.length).toEqual(0);
-    expect(result).toEqual(origin);
+    expect(binaryHeap.length).toBe(0);
+    expect(binaryHeap.peek()).toBe(undefined);
+    expect(binaryHeap.pop()).toBe(undefined);
+    expect(result).toStrictEqual(origin);
   });
 
   test("clear", () => {
@@ -49,10 +51,10 @@ describe("binary-heap", () => {
       binaryHeap.push(element);
     }
 
-    expect(binaryHeap.length).toEqual(length);
+    expect(binaryHeap.length).toBe(length);
 
     binaryHeap.clear();
 
-    expect(binaryHeap.length).toEqual(0);
+    expect(binaryHeap.length).toBe(0);
   });
 });
