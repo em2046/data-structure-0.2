@@ -60,6 +60,20 @@ export class BinaryHeap<T> {
     return first;
   }
 
+  /**
+   * Returns the length of the binary heap.
+   */
+  get length(): number {
+    return this.#elements.length;
+  }
+
+  /**
+   * Drops all elements from the binary heap.
+   */
+  clear(): void {
+    this.#elements = [];
+  }
+
   #siftUp(element: T, index: number): void {
     const elements = this.#elements;
 
