@@ -12,8 +12,8 @@ import { Equatable } from "./equatable";
  */
 export interface Comparable extends Equatable {
   /**
-   * Returns a Boolean value indicating whether the value of `this`
-   * is less than that of the first argument.
+   * Returns a Boolean value indicating whether the value of `this` is less
+   * than that of the first argument.
    *
    * @param rhs - Another value to compare.
    */
