@@ -22,4 +22,11 @@ describe("equatable", () => {
     expect(a.equality(b)).toBe(true);
     expect(equality(a, b)).toBe(true);
   });
+
+  test("primitive", () => {
+    const a = 1;
+    const b = 2;
+
+    expect(equality(a, b)).toBe(false);
+  });
 });

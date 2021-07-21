@@ -16,6 +16,13 @@ export class BinaryHeap<T> {
   #elements: T[] = [];
 
   /**
+   * Returns the length of the binary heap.
+   */
+  get length(): number {
+    return this.#elements.length;
+  }
+
+  /**
    * Pushes a new element onto the binary heap.
    *
    * @param newElement - The element to push to the binary heap.
@@ -29,32 +36,42 @@ export class BinaryHeap<T> {
   }
 
   /**
-   * Returns the min element in the binary heap, or
-   * `undefined` if it is empty.
+   * Returns the least element in the binary heap, or `undefined` if it is
+   * empty.
    */
   peek(): T | undefined {
     return this.#elements[0];
   }
 
   /**
-   * Removes the min element from the binary heap and returns it, or `undefined` if it
-   * is empty.
+   * Removes the least element from the binary heap and returns it, or
+   * `undefined` if it is empty.
    */
   pop(): T | undefined {
     const elements = this.#elements;
-    const first = elements[0];
+    const length = elements.length;
 
-    if (elements.length <= 1) {
-      return first;
+    if (length < 1) {
+      return undefined;
     }
 
+    const first = elements[0];
     const last = elements.pop();
 
-    assert(last !== undefined);
-    elements[0] = last;
-    this.#siftDown(last, 0);
+    if (length > 1) {
+      assert(last !== undefined);
+      elements[0] = last;
+      this.#siftDown(last, 0);
+    }
 
     return first;
+  }
+
+  /**
+   * Drops all elements from the binary heap.
+   */
+  clear(): void {
+    this.#elements = [];
   }
 
   #siftUp(element: T, index: number): void {
@@ -65,7 +82,7 @@ export class BinaryHeap<T> {
       const parent = elements[parentIndex];
 
       if (lessThan(element, parent)) {
-        // The parent is larger. Swap position.
+        // The parent is larger. Swap positions.
         elements[parentIndex] = element;
         elements[index] = parent;
         index = parentIndex;
@@ -86,7 +103,8 @@ export class BinaryHeap<T> {
       const rightIndex = leftIndex + 1;
       const right = elements[rightIndex];
 
-      // If the left or right element is smaller, swap with the smaller of those.
+      // If the left or right element is smaller, swap with the smaller of
+      // those.
       if (leftIndex < length && lessThan(left, element)) {
         if (rightIndex < length && lessThan(right, left)) {
           elements[index] = right;
