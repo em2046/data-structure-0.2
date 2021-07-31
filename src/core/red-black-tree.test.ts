@@ -10,5 +10,9 @@ describe("red-black-tree", () => {
 
       expect(redBlackTree.get(element)).toBe(element);
     });
+
+    origin.forEach((element) => {
+      redBlackTree.delete(element);
+    });
   });
 });
