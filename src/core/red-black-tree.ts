@@ -253,10 +253,10 @@ export class RedBlackTree<Key, Value> {
         if (!isRed(node.left.left)) {
           node = moveRedLeft(node);
         }
-
-        assert(node.left !== null);
-        node.left = this.#delete(node.left, key);
       }
+
+      assert(node.left !== null);
+      node.left = this.#delete(node.left, key);
     } else {
       if (isRed(node.left)) {
         node = rotateRight(node);
@@ -282,6 +282,9 @@ export class RedBlackTree<Key, Value> {
         node.value = value;
         node.key = this.#min(node.right);
         node.right = this.#deleteMin(node.right);
+      } else {
+        assert(node.right !== null);
+        node.right = this.#delete(node.right, key);
       }
     }
 
