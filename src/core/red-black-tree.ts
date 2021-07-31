@@ -1,4 +1,5 @@
 /***
+ * https://www.cs.princeton.edu/~rs/talks/LLRB/LLRB.pdf
  * https://www.cs.princeton.edu/~rs/talks/LLRB/RedBlack.pdf
  */
 
@@ -8,46 +9,50 @@ import { equality } from "./equatable";
 import { assert } from "../shared";
 
 function rotateLeft<Key, Value>(node: Node<Key, Value>) {
-  const temp = node.right;
+  const right = node.right;
 
-  assert(temp !== null);
-  node.right = temp.left;
-  temp.left = node;
-  temp.color = temp.left.color;
-  temp.left.color = Color.RED;
+  assert(right !== null);
+  node.right = right.left;
+  right.left = node;
+  right.color = node.color;
+  node.color = Color.RED;
 
-  return temp;
+  return right;
 }
 
 function rotateRight<Key, Value>(node: Node<Key, Value>) {
-  const temp = node.left;
+  const left = node.left;
 
-  assert(temp !== null);
-  node.left = temp.right;
-  temp.right = node;
-  temp.color = temp.right.color;
-  temp.right.color = Color.RED;
+  assert(left !== null);
+  node.left = left.right;
+  left.right = node;
+  left.color = node.color;
+  node.color = Color.RED;
 
-  return temp;
+  return left;
 }
 
-function colorFlip<Key, Value>(node: Node<Key, Value>): Node<Key, Value> {
+function flipColor<Key, Value>(node: Node<Key, Value>): void {
   node.color = isRed(node) ? Color.BLACK : Color.RED;
+}
+
+function flipColors<Key, Value>(node: Node<Key, Value>): Node<Key, Value> {
+  flipColor(node);
 
   assert(node.left !== null);
-  node.left.color = isRed(node.left) ? Color.BLACK : Color.RED;
+  flipColor(node.left);
 
   assert(node.right !== null);
-  node.right.color = isRed(node.right) ? Color.BLACK : Color.RED;
+  flipColor(node.right);
 
   return node;
 }
 
 export class RedBlackTree<Key, Value> {
-  root: Node<Key, Value> | null = null;
+  #root: Node<Key, Value> | null = null;
 
   get(key: Key): Value | undefined {
-    let node = this.root;
+    let node = this.#root;
 
     while (node !== null) {
       if (equality(key, node.key)) {
@@ -65,10 +70,11 @@ export class RedBlackTree<Key, Value> {
   }
 
   put(key: Key, value: Value): void {
-    this.insert(this.root, key, value);
+    this.#root = this.#put(this.#root, key, value);
+    this.#root.color = Color.BLACK;
   }
 
-  insert(
+  #put(
     node: Node<Key, Value> | null,
     key: Key,
     value: Value
@@ -82,12 +88,12 @@ export class RedBlackTree<Key, Value> {
     }
 
     if (lessThan(key, node.key)) {
-      node.left = this.insert(node.left, key, value);
+      node.left = this.#put(node.left, key, value);
     } else {
-      node.left = this.insert(node.right, key, value);
+      node.right = this.#put(node.right, key, value);
     }
 
-    if (isRed(node.right)) {
+    if (isRed(node.right) && !isRed(node.left)) {
       node = rotateLeft(node);
     }
 
@@ -100,7 +106,7 @@ export class RedBlackTree<Key, Value> {
     }
 
     if (isRed(node.left) && isRed(node.right)) {
-      colorFlip(node);
+      flipColors(node);
     }
 
     return node;
