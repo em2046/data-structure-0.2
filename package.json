@@ -8,7 +8,8 @@
   "license": "MIT",
   "scripts": {
     "api": "tsc && api-extractor run --local --verbose",
-    "doc": "api-documenter markdown --input-folder temp --output-folder docs"
+    "doc": "api-documenter markdown --input-folder temp --output-folder docs",
+    "test": "jest"
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",
