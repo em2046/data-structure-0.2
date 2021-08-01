@@ -147,7 +147,6 @@ export class RedBlackTree<Key, Value> {
   put(key: Key, value: Value): void {
     this.#root = this.#put(this.#root, key, value);
     this.#root.color = Color.BLACK;
-    this.#size += 1;
   }
 
   /**
@@ -159,7 +158,6 @@ export class RedBlackTree<Key, Value> {
     }
 
     this.#root = this.#deleteMin(this.#root);
-    this.#size -= 1;
 
     if (this.#root === null) {
       return;
@@ -177,7 +175,6 @@ export class RedBlackTree<Key, Value> {
     }
 
     this.#root = this.#deleteMax(this.#root);
-    this.#size -= 1;
 
     if (this.#root === null) {
       return;
@@ -197,7 +194,6 @@ export class RedBlackTree<Key, Value> {
     }
 
     this.#root = this.#delete(this.#root, key);
-    this.#size -= 1;
 
     if (this.#root === null) {
       return;
@@ -234,6 +230,8 @@ export class RedBlackTree<Key, Value> {
     value: Value
   ): Node<Key, Value> {
     if (node === null) {
+      this.#size += 1;
+
       return new Node(key, value);
     }
 
@@ -250,6 +248,8 @@ export class RedBlackTree<Key, Value> {
 
   #deleteMin(node: Node<Key, Value>): Node<Key, Value> | null {
     if (node.left === null) {
+      this.#size -= 1;
+
       return null;
     }
 
@@ -257,10 +257,7 @@ export class RedBlackTree<Key, Value> {
       node = moveRedLeft(node);
     }
 
-    if (node.left === null) {
-      return null;
-    }
-
+    assert(node.left !== null);
     node.left = this.#deleteMin(node.left);
 
     return fixUp(node);
@@ -272,6 +269,8 @@ export class RedBlackTree<Key, Value> {
     }
 
     if (node.right === null) {
+      this.#size -= 1;
+
       return null;
     }
 
@@ -279,10 +278,7 @@ export class RedBlackTree<Key, Value> {
       node = moveRedRight(node);
     }
 
-    if (node.right === null) {
-      return null;
-    }
-
+    assert(node.right !== null);
     node.right = this.#deleteMax(node.right);
 
     return fixUp(node);
@@ -306,13 +302,13 @@ export class RedBlackTree<Key, Value> {
       }
 
       if (equality(key, node.key) && node.right === null) {
+        this.#size -= 1;
+
         return null;
       }
 
       if (!isRed(node.right)) {
-        assert(node.right !== null);
-
-        if (!isRed(node.right.left)) {
+        if (node.right !== null && !isRed(node.right.left)) {
           node = moveRedRight(node);
         }
       }
@@ -326,8 +322,9 @@ export class RedBlackTree<Key, Value> {
         node.key = this.#min(node.right);
         node.right = this.#deleteMin(node.right);
       } else {
-        assert(node.right !== null);
-        node.right = this.#delete(node.right, key);
+        if (node.right !== null) {
+          node.right = this.#delete(node.right, key);
+        }
       }
     }
 

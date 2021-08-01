@@ -1,6 +1,6 @@
 import { BinaryHeap } from "./binary-heap";
 
-describe("binary-heap", () => {
+describe("binary heap", () => {
   test("basic", () => {
     const binaryHeap = new BinaryHeap();
     const origin = [];
