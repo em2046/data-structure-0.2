@@ -34,7 +34,16 @@ export interface Identifiable {
 // @public
 export function lessThan<T>(lhs: T, rhs: T): boolean;
 
+// @public
+export class RedBlackTree<Key, Value> {
+    delete(key: Key): void;
+    deleteMax(): void;
+    deleteMin(): void;
+    get(key: Key): Value | undefined;
+    min(): Key | undefined;
+    put(key: Key, value: Value): void;
+    get size(): number;
+}
 
-// (No @packageDocumentation comment for this package)
 
 ```

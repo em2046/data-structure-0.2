@@ -8,14 +8,6 @@ export enum Color {
   BLACK = "BLACK",
 }
 
-export function isRed<Key, Value>(node: Node<Key, Value> | null): boolean {
-  if (node === null) {
-    return false;
-  }
-
-  return node.color === Color.RED;
-}
-
 export class Node<Key, Value> {
   key: Key;
   value: Value;
