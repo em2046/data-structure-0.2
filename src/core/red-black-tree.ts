@@ -138,6 +138,17 @@ export class RedBlackTree<Key, Value> {
   }
 
   /**
+   * Returns the key of the greatest element in the red black tree.
+   */
+  max(): Key | undefined {
+    if (this.#root === null) {
+      return undefined;
+    }
+
+    return this.#max(this.#root);
+  }
+
+  /**
    * Adds or updates an element with a specified key and a value to a red black
    * tree.
    *
@@ -224,6 +235,14 @@ export class RedBlackTree<Key, Value> {
     return this.#min(node.left);
   }
 
+  #max(node: Node<Key, Value>): Key {
+    if (node.right === null) {
+      return node.key;
+    }
+
+    return this.#max(node.right);
+  }
+
   #put(
     node: Node<Key, Value> | null,
     key: Key,
@@ -286,9 +305,9 @@ export class RedBlackTree<Key, Value> {
 
   #delete(node: Node<Key, Value>, key: Key): Node<Key, Value> | null {
     if (lessThan(key, node.key)) {
-      if (!isRed(node.left)) {
-        assert(node.left !== null);
+      assert(node.left !== null);
 
+      if (!isRed(node.left)) {
         if (!isRed(node.left.left)) {
           node = moveRedLeft(node);
         }

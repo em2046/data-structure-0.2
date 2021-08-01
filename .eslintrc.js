@@ -10,7 +10,7 @@ module.exports = {
   rules: {
     "padding-line-between-statements": [
       "error",
-      { blankLine: "always", prev: "*", next: "return" },
+      { blankLine: "always", prev: "*", next: ["return", "block-like"] },
       {
         blankLine: "always",
         prev: ["const", "let", "var", "block-like"],
