@@ -27,6 +27,7 @@ describe("red black tree", () => {
     });
 
     expect(redBlackTree.min()).toBe(undefined);
+    expect(redBlackTree.max()).toBe(undefined);
     expect(redBlackTree.size).toBe(0);
   });
 
@@ -120,6 +121,9 @@ describe("red black tree", () => {
   test("delete max", () => {
     const len = 1000;
     const origin = new Array(len).fill(0).map(() => Math.random());
+    const ordered = [...origin].sort((a, b) => {
+      return b - a;
+    });
     const redBlackTree = new RedBlackTree<number, number>();
 
     for (let i = 0; i < len; i++) {
@@ -129,6 +133,10 @@ describe("red black tree", () => {
     expect(redBlackTree.size).toEqual(len);
 
     for (let i = 0; i < len; i++) {
+      const max = redBlackTree.max();
+
+      expect(max).toBe(ordered[i]);
+
       redBlackTree.deleteMax();
     }
 
