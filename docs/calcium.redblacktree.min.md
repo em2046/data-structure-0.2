@@ -4,7 +4,7 @@
 
 ## RedBlackTree.min() method
 
-Returns the key of the least element in the red black tree.
+Returns the key of the least element in the provided red black tree.
 
 <b>Signature:</b>
 

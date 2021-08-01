@@ -40,6 +40,7 @@ export class RedBlackTree<Key, Value> {
     deleteMax(): void;
     deleteMin(): void;
     get(key: Key): Value | undefined;
+    max(): Key | undefined;
     min(): Key | undefined;
     put(key: Key, value: Value): void;
     get size(): number;

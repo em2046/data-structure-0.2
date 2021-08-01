@@ -27,6 +27,7 @@ describe("red black tree", () => {
     });
 
     expect(redBlackTree.min()).toBe(undefined);
+    expect(redBlackTree.max()).toBe(undefined);
     expect(redBlackTree.size).toBe(0);
   });
 

@@ -127,7 +127,7 @@ export class RedBlackTree<Key, Value> {
   }
 
   /**
-   * Returns the key of the least element in the red black tree.
+   * Returns the key of the least element in the provided red black tree.
    */
   min(): Key | undefined {
     if (this.#root === null) {
@@ -138,7 +138,7 @@ export class RedBlackTree<Key, Value> {
   }
 
   /**
-   * Returns the key of the greatest element in the red black tree.
+   * Returns the key of the greatest element in the provided red black tree.
    */
   max(): Key | undefined {
     if (this.#root === null) {
