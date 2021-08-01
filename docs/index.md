@@ -8,5 +8,5 @@
 
 |  Package | Description |
 |  --- | --- |
-|  [calcium](./calcium.md) |  |
+|  [calcium](./calcium.md) | Data Structures in TypeScript. |
 

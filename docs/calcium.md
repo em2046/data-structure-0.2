@@ -4,11 +4,14 @@
 
 ## calcium package
 
+Data Structures in TypeScript.
+
 ## Classes
 
 |  Class | Description |
 |  --- | --- |
 |  [BinaryHeap](./calcium.binaryheap.md) | A priority queue implemented with a binary heap.<!-- -->This will be a min-heap. |
+|  [RedBlackTree](./calcium.redblacktree.md) | The red black tree holds key-value pairs. |
 
 ## Functions
 
