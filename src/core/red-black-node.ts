@@ -1,7 +1,6 @@
-/***
- * https://www.cs.princeton.edu/~rs/talks/LLRB/LLRB.pdf
- * https://www.cs.princeton.edu/~rs/talks/LLRB/RedBlack.pdf
- */
+// Copied from
+// https://www.cs.princeton.edu/~rs/talks/LLRB/LLRB.pdf
+// https://www.cs.princeton.edu/~rs/talks/LLRB/RedBlack.pdf
 
 export enum Color {
   RED = "RED",

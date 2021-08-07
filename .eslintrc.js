@@ -24,5 +24,11 @@ module.exports = {
       { blankLine: "always", prev: "directive", next: "*" },
       { blankLine: "any", prev: "directive", next: "directive" },
     ],
+    "capitalized-comments": [
+      "error",
+      "always",
+      { ignoreConsecutiveComments: true },
+    ],
+    "spaced-comment": ["error", "always"],
   },
 };

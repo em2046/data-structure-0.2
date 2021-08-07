@@ -1,12 +1,11 @@
-/***
- * https://www.cs.princeton.edu/~rs/talks/LLRB/LLRB.pdf
- * https://www.cs.princeton.edu/~rs/talks/LLRB/RedBlack.pdf
- */
-
 import { Color, Node } from "./red-black-node";
 import { lessThan } from "./comparable";
 import { equality } from "./equatable";
 import { assert } from "../shared";
+
+// Copied from
+// https://www.cs.princeton.edu/~rs/talks/LLRB/LLRB.pdf
+// https://www.cs.princeton.edu/~rs/talks/LLRB/RedBlack.pdf
 
 function isRed<Key, Value>(node: Node<Key, Value> | null): boolean {
   if (node === null) {
@@ -31,6 +30,7 @@ function flipColors<Key, Value>(node: Node<Key, Value>): void {
 }
 
 function rotateLeft<Key, Value>(node: Node<Key, Value>) {
+  // Make a right-leaning 3-node lean to the left.
   const right = node.right;
 
   assert(right !== null);
@@ -43,6 +43,7 @@ function rotateLeft<Key, Value>(node: Node<Key, Value>) {
 }
 
 function rotateRight<Key, Value>(node: Node<Key, Value>) {
+  // Make a left-leaning 3-node lean to the right.
   const left = node.left;
 
   assert(left !== null);
@@ -55,6 +56,8 @@ function rotateRight<Key, Value>(node: Node<Key, Value>) {
 }
 
 function moveRedLeft<Key, Value>(node: Node<Key, Value>): Node<Key, Value> {
+  // Assuming that node is red and both node.left and node.left.left
+  // are black, make node.left or one of its children red.
   flipColors(node);
 
   assert(node.right !== null);
@@ -69,6 +72,8 @@ function moveRedLeft<Key, Value>(node: Node<Key, Value>): Node<Key, Value> {
 }
 
 function moveRedRight<Key, Value>(node: Node<Key, Value>): Node<Key, Value> {
+  // Assuming that node is red and both node.right and node.right.left
+  // are black, make node.right or one of its children red.
   flipColors(node);
 
   assert(node.left !== null);
