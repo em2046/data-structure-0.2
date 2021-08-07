@@ -12,11 +12,11 @@ function isRed<Key, Value>(node: Node<Key, Value> | null): boolean {
     return false;
   }
 
-  return node.color === Color.RED;
+  return node.color === Color.Red;
 }
 
 function flipColor<Key, Value>(node: Node<Key, Value>): void {
-  node.color = isRed(node) ? Color.BLACK : Color.RED;
+  node.color = isRed(node) ? Color.Black : Color.Red;
 }
 
 function flipColors<Key, Value>(node: Node<Key, Value>): void {
@@ -37,7 +37,7 @@ function rotateLeft<Key, Value>(node: Node<Key, Value>) {
   node.right = right.left;
   right.left = node;
   right.color = node.color;
-  node.color = Color.RED;
+  node.color = Color.Red;
 
   return right;
 }
@@ -50,7 +50,7 @@ function rotateRight<Key, Value>(node: Node<Key, Value>) {
   node.left = left.right;
   left.right = node;
   left.color = node.color;
-  node.color = Color.RED;
+  node.color = Color.Red;
 
   return left;
 }
@@ -162,7 +162,7 @@ export class RedBlackTree<Key, Value> {
    */
   put(key: Key, value: Value): void {
     this.#root = this.#put(this.#root, key, value);
-    this.#root.color = Color.BLACK;
+    this.#root.color = Color.Black;
   }
 
   /**
@@ -179,7 +179,7 @@ export class RedBlackTree<Key, Value> {
       return;
     }
 
-    this.#root.color = Color.BLACK;
+    this.#root.color = Color.Black;
   }
 
   /**
@@ -196,7 +196,7 @@ export class RedBlackTree<Key, Value> {
       return;
     }
 
-    this.#root.color = Color.BLACK;
+    this.#root.color = Color.Black;
   }
 
   /**
@@ -215,7 +215,7 @@ export class RedBlackTree<Key, Value> {
       return;
     }
 
-    this.#root.color = Color.BLACK;
+    this.#root.color = Color.Black;
   }
 
   #get(node: Node<Key, Value> | null, key: Key): Value | undefined {

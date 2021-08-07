@@ -3,8 +3,8 @@
 // https://www.cs.princeton.edu/~rs/talks/LLRB/RedBlack.pdf
 
 export enum Color {
-  RED = "RED",
-  BLACK = "BLACK",
+  Red = "RED",
+  Black = "BLACK",
 }
 
 export class Node<Key, Value> {
@@ -14,7 +14,7 @@ export class Node<Key, Value> {
   right: Node<Key, Value> | null = null;
   color: Color;
 
-  constructor(key: Key, value: Value, color: Color = Color.RED) {
+  constructor(key: Key, value: Value, color: Color = Color.Red) {
     this.key = key;
     this.value = value;
     this.color = color;

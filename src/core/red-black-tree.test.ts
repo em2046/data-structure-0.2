@@ -33,15 +33,15 @@ describe("red black tree", () => {
 
   test("change", () => {
     const redBlackTree = new RedBlackTree<number, number>();
-    const len = 1000;
+    const size = 1000;
 
-    for (let i = 0; i < len; i++) {
+    for (let i = 0; i < size; i++) {
       redBlackTree.put(i, i);
     }
 
-    expect(redBlackTree.size).toEqual(len);
+    expect(redBlackTree.size).toEqual(size);
 
-    for (let i = 0; i < len; i++) {
+    for (let i = 0; i < size; i++) {
       redBlackTree.delete(i);
     }
 
@@ -56,15 +56,15 @@ describe("red black tree", () => {
       43, 69, 19, 0, 53, 80, 33, 47, 44,
     ];
     const redBlackTree = new RedBlackTree<number, number>();
-    const len = origin.length;
+    const size = origin.length;
 
-    for (let i = 0; i < len; i++) {
+    for (let i = 0; i < size; i++) {
       redBlackTree.put(origin[i], origin[i]);
     }
 
-    expect(redBlackTree.size).toEqual(len);
+    expect(redBlackTree.size).toEqual(size);
 
-    for (let i = 0; i < len; i++) {
+    for (let i = 0; i < size; i++) {
       redBlackTree.delete(origin[i]);
     }
 
@@ -72,17 +72,17 @@ describe("red black tree", () => {
   });
 
   test("random", () => {
-    const len = 1000;
-    const origin = new Array(len).fill(0).map(() => Math.random());
+    const size = 1000;
+    const origin = new Array(size).fill(0).map(() => Math.random());
     const redBlackTree = new RedBlackTree<number, number>();
 
-    for (let i = 0; i < len; i++) {
+    for (let i = 0; i < size; i++) {
       redBlackTree.put(origin[i], origin[i]);
     }
 
-    expect(redBlackTree.size).toEqual(len);
+    expect(redBlackTree.size).toEqual(size);
 
-    for (let i = 0; i < len; i++) {
+    for (let i = 0; i < size; i++) {
       redBlackTree.delete(origin[i]);
     }
 
@@ -90,20 +90,20 @@ describe("red black tree", () => {
   });
 
   test("delete min", () => {
-    const len = 1000;
-    const origin = new Array(len).fill(0).map(() => Math.random());
+    const size = 1000;
+    const origin = new Array(size).fill(0).map(() => Math.random());
     const ordered = [...origin].sort((a, b) => {
       return a - b;
     });
     const redBlackTree = new RedBlackTree<number, number>();
 
-    for (let i = 0; i < len; i++) {
+    for (let i = 0; i < size; i++) {
       redBlackTree.put(origin[i], origin[i]);
     }
 
-    expect(redBlackTree.size).toEqual(len);
+    expect(redBlackTree.size).toEqual(size);
 
-    for (let i = 0; i < len; i++) {
+    for (let i = 0; i < size; i++) {
       const min = redBlackTree.min();
 
       expect(min).toBe(ordered[i]);
@@ -119,20 +119,20 @@ describe("red black tree", () => {
   });
 
   test("delete max", () => {
-    const len = 1000;
-    const origin = new Array(len).fill(0).map(() => Math.random());
+    const size = 1000;
+    const origin = new Array(size).fill(0).map(() => Math.random());
     const ordered = [...origin].sort((a, b) => {
       return b - a;
     });
     const redBlackTree = new RedBlackTree<number, number>();
 
-    for (let i = 0; i < len; i++) {
+    for (let i = 0; i < size; i++) {
       redBlackTree.put(origin[i], origin[i]);
     }
 
-    expect(redBlackTree.size).toEqual(len);
+    expect(redBlackTree.size).toEqual(size);
 
-    for (let i = 0; i < len; i++) {
+    for (let i = 0; i < size; i++) {
       const max = redBlackTree.max();
 
       expect(max).toBe(ordered[i]);
