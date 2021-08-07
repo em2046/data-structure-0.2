@@ -1,6 +1,5 @@
-/***
- * https://github.com/apple/swift/blob/7123d2614b5f222d03b3762cb110d27a9dd98e24/stdlib/public/core/Equatable.swift
- */
+// Copied from
+// https://github.com/apple/swift/blob/7123d2614b5f222d03b3762cb110d27a9dd98e24/stdlib/public/core/Equatable.swift
 
 /**
  * @public

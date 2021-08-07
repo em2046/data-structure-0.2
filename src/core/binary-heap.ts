@@ -1,9 +1,8 @@
-/***
- * https://github.com/facebook/react/blob/3f62dec84aba5d7ae6dfc73d68752254e8f06384/packages/scheduler/src/SchedulerMinHeap.js
- */
-
 import { assert } from "../shared";
 import { lessThan } from "./comparable";
+
+// Copied from
+// https://github.com/facebook/react/blob/3f62dec84aba5d7ae6dfc73d68752254e8f06384/packages/scheduler/src/SchedulerMinHeap.js
 
 /**
  * @public

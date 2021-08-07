@@ -1,23 +1,22 @@
-/***
- * https://www.cs.princeton.edu/~rs/talks/LLRB/LLRB.pdf
- * https://www.cs.princeton.edu/~rs/talks/LLRB/RedBlack.pdf
- */
-
 import { Color, Node } from "./red-black-node";
 import { lessThan } from "./comparable";
 import { equality } from "./equatable";
 import { assert } from "../shared";
+
+// Copied from
+// https://www.cs.princeton.edu/~rs/talks/LLRB/LLRB.pdf
+// https://www.cs.princeton.edu/~rs/talks/LLRB/RedBlack.pdf
 
 function isRed<Key, Value>(node: Node<Key, Value> | null): boolean {
   if (node === null) {
     return false;
   }
 
-  return node.color === Color.RED;
+  return node.color === Color.Red;
 }
 
 function flipColor<Key, Value>(node: Node<Key, Value>): void {
-  node.color = isRed(node) ? Color.BLACK : Color.RED;
+  node.color = isRed(node) ? Color.Black : Color.Red;
 }
 
 function flipColors<Key, Value>(node: Node<Key, Value>): void {
@@ -31,30 +30,34 @@ function flipColors<Key, Value>(node: Node<Key, Value>): void {
 }
 
 function rotateLeft<Key, Value>(node: Node<Key, Value>) {
+  // Make a right-leaning 3-node lean to the left.
   const right = node.right;
 
   assert(right !== null);
   node.right = right.left;
   right.left = node;
   right.color = node.color;
-  node.color = Color.RED;
+  node.color = Color.Red;
 
   return right;
 }
 
 function rotateRight<Key, Value>(node: Node<Key, Value>) {
+  // Make a left-leaning 3-node lean to the right.
   const left = node.left;
 
   assert(left !== null);
   node.left = left.right;
   left.right = node;
   left.color = node.color;
-  node.color = Color.RED;
+  node.color = Color.Red;
 
   return left;
 }
 
 function moveRedLeft<Key, Value>(node: Node<Key, Value>): Node<Key, Value> {
+  // Assuming that node is red and both node.left and node.left.left
+  // are black, make node.left or one of its children red.
   flipColors(node);
 
   assert(node.right !== null);
@@ -69,6 +72,8 @@ function moveRedLeft<Key, Value>(node: Node<Key, Value>): Node<Key, Value> {
 }
 
 function moveRedRight<Key, Value>(node: Node<Key, Value>): Node<Key, Value> {
+  // Assuming that node is red and both node.right and node.right.left
+  // are black, make node.right or one of its children red.
   flipColors(node);
 
   assert(node.left !== null);
@@ -157,7 +162,7 @@ export class RedBlackTree<Key, Value> {
    */
   put(key: Key, value: Value): void {
     this.#root = this.#put(this.#root, key, value);
-    this.#root.color = Color.BLACK;
+    this.#root.color = Color.Black;
   }
 
   /**
@@ -174,7 +179,7 @@ export class RedBlackTree<Key, Value> {
       return;
     }
 
-    this.#root.color = Color.BLACK;
+    this.#root.color = Color.Black;
   }
 
   /**
@@ -191,7 +196,7 @@ export class RedBlackTree<Key, Value> {
       return;
     }
 
-    this.#root.color = Color.BLACK;
+    this.#root.color = Color.Black;
   }
 
   /**
@@ -210,7 +215,7 @@ export class RedBlackTree<Key, Value> {
       return;
     }
 
-    this.#root.color = Color.BLACK;
+    this.#root.color = Color.Black;
   }
 
   #get(node: Node<Key, Value> | null, key: Key): Value | undefined {
