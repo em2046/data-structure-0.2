@@ -16,6 +16,7 @@ describe("red black tree", () => {
 
     expect(redBlackTree.size).toBe(size);
     expect(redBlackTree.get(20)).toBe(undefined);
+    expect(redBlackTree.get(-1)).toBe(undefined);
 
     redBlackTree.put(1, 1);
     redBlackTree.delete(20);

@@ -1,5 +1,5 @@
 import { Color, Node } from "./red-black-node";
-import { lessThan } from "./comparable";
+import { greaterThanOrEqual, lessThan, lessThanOrEqual } from "./comparable";
 import { equality } from "./equatable";
 import { assert } from "../shared";
 
@@ -289,7 +289,7 @@ export class RedBlackTree<Key, Value> {
       return null;
     }
 
-    if (equality(key, node.key) || lessThan(key, node.key)) {
+    if (lessThanOrEqual(key, node.key)) {
       return this.#previous(node.left, key);
     } else {
       const previous = this.#previous(node.right, key);
@@ -307,7 +307,7 @@ export class RedBlackTree<Key, Value> {
       return null;
     }
 
-    if (equality(key, node.key) || !lessThan(key, node.key)) {
+    if (greaterThanOrEqual(key, node.key)) {
       return this.#next(node.right, key);
     } else {
       const next = this.#next(node.left, key);
