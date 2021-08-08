@@ -4,7 +4,7 @@
 
 ## RedBlackTree.next() method
 
-Returns the key of the smallest element greater than to the given key
+Returns the key of the smallest element greater than to the given key.
 
 <b>Signature:</b>
 

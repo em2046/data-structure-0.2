@@ -7,10 +7,10 @@
 // @public
 export class BinaryHeap<T> {
     clear(): void;
-    get length(): number;
     peek(): T | undefined;
     pop(): T | undefined;
     push(newElement: T): void;
+    get size(): number;
 }
 
 // @public
