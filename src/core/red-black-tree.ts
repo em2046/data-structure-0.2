@@ -1,5 +1,5 @@
 import { Color, Node } from "./red-black-node";
-import { lessThan } from "./comparable";
+import { greaterThanOrEqual, lessThan, lessThanOrEqual } from "./comparable";
 import { equality } from "./equatable";
 import { assert } from "../shared";
 
@@ -128,29 +128,65 @@ export class RedBlackTree<Key, Value> {
    * @param key - The key of the element to return from the red black tree.
    */
   get(key: Key): Value | undefined {
-    return this.#get(this.#root, key);
+    const node = this.#get(this.#root, key);
+
+    if (node === null) {
+      return undefined;
+    }
+
+    return node.value;
   }
 
   /**
-   * Returns the key of the least element in the provided red black tree.
+   * Returns the key of the smallest element from a red black tree.
    */
   min(): Key | undefined {
     if (this.#root === null) {
       return undefined;
     }
 
-    return this.#min(this.#root);
+    return this.#min(this.#root).key;
   }
 
   /**
-   * Returns the key of the greatest element in the provided red black tree.
+   * Returns the key of the largest element from a red black tree.
    */
   max(): Key | undefined {
     if (this.#root === null) {
       return undefined;
     }
 
-    return this.#max(this.#root);
+    return this.#max(this.#root).key;
+  }
+
+  /**
+   * Returns the key of the largest element less than to the given key.
+   *
+   * @param key - The given key.
+   */
+  previous(key: Key): Key | undefined {
+    const node = this.#previous(this.#root, key);
+
+    if (node === null) {
+      return undefined;
+    }
+
+    return node.key;
+  }
+
+  /**
+   * Returns the key of the smallest element greater than to the given key
+   *
+   * @param key - The given key.
+   */
+  next(key: Key): Key | undefined {
+    const node = this.#next(this.#root, key);
+
+    if (node === null) {
+      return undefined;
+    }
+
+    return node.key;
   }
 
   /**
@@ -166,7 +202,7 @@ export class RedBlackTree<Key, Value> {
   }
 
   /**
-   * Removes the least element from a red black tree.
+   * Removes the smallest element from a red black tree.
    */
   deleteMin(): void {
     if (this.#root === null) {
@@ -183,7 +219,7 @@ export class RedBlackTree<Key, Value> {
   }
 
   /**
-   * Removes the greatest element from a red black tree.
+   * Removes the largest element from a red black tree.
    */
   deleteMax(): void {
     if (this.#root === null) {
@@ -218,13 +254,13 @@ export class RedBlackTree<Key, Value> {
     this.#root.color = Color.Black;
   }
 
-  #get(node: Node<Key, Value> | null, key: Key): Value | undefined {
+  #get(node: Node<Key, Value> | null, key: Key): Node<Key, Value> | null {
     if (node === null) {
-      return undefined;
+      return null;
     }
 
     if (equality(key, node.key)) {
-      return node.value;
+      return node;
     } else if (lessThan(key, node.key)) {
       return this.#get(node.left, key);
     } else {
@@ -232,20 +268,56 @@ export class RedBlackTree<Key, Value> {
     }
   }
 
-  #min(node: Node<Key, Value>): Key {
+  #min(node: Node<Key, Value>): Node<Key, Value> {
     if (node.left === null) {
-      return node.key;
+      return node;
     }
 
     return this.#min(node.left);
   }
 
-  #max(node: Node<Key, Value>): Key {
+  #max(node: Node<Key, Value>): Node<Key, Value> {
     if (node.right === null) {
-      return node.key;
+      return node;
     }
 
     return this.#max(node.right);
+  }
+
+  #previous(node: Node<Key, Value> | null, key: Key): Node<Key, Value> | null {
+    if (node === null) {
+      return null;
+    }
+
+    if (lessThanOrEqual(key, node.key)) {
+      return this.#previous(node.left, key);
+    } else {
+      const previous = this.#previous(node.right, key);
+
+      if (previous !== null) {
+        return previous;
+      } else {
+        return node;
+      }
+    }
+  }
+
+  #next(node: Node<Key, Value> | null, key: Key): Node<Key, Value> | null {
+    if (node === null) {
+      return null;
+    }
+
+    if (greaterThanOrEqual(key, node.key)) {
+      return this.#next(node.right, key);
+    } else {
+      const next = this.#next(node.left, key);
+
+      if (next !== null) {
+        return next;
+      } else {
+        return node;
+      }
+    }
   }
 
   #put(
@@ -339,11 +411,10 @@ export class RedBlackTree<Key, Value> {
 
       if (equality(key, node.key)) {
         assert(node.right !== null);
-        const value = this.#get(node.right, this.#min(node.right));
+        const min = this.#min(node.right);
 
-        assert(value !== undefined);
-        node.value = value;
-        node.key = this.#min(node.right);
+        node.key = min.key;
+        node.value = min.value;
         node.right = this.#deleteMin(node.right);
       } else {
         if (node.right !== null) {

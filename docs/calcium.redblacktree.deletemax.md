@@ -4,7 +4,7 @@
 
 ## RedBlackTree.deleteMax() method
 
-Removes the greatest element from a red black tree.
+Removes the largest element from a red black tree.
 
 <b>Signature:</b>
 

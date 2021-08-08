@@ -4,7 +4,7 @@
 
 ## BinaryHeap.peek() method
 
-Returns the least element in the binary heap, or `undefined` if it is empty.
+Returns the smallest element in the binary heap, or `undefined` if it is empty.
 
 <b>Signature:</b>
 

@@ -16,11 +16,16 @@ describe("red black tree", () => {
 
     expect(redBlackTree.size).toBe(size);
     expect(redBlackTree.get(20)).toBe(undefined);
+    expect(redBlackTree.get(-1)).toBe(undefined);
 
     redBlackTree.put(1, 1);
     redBlackTree.delete(20);
 
     expect(redBlackTree.size).toBe(size);
+    expect(redBlackTree.previous(1)).toBe(0);
+    expect(redBlackTree.previous(0)).toBe(undefined);
+    expect(redBlackTree.next(8)).toBe(9);
+    expect(redBlackTree.next(9)).toBe(undefined);
 
     origin.forEach((element) => {
       redBlackTree.delete(element);
@@ -28,6 +33,8 @@ describe("red black tree", () => {
 
     expect(redBlackTree.min()).toBe(undefined);
     expect(redBlackTree.max()).toBe(undefined);
+    expect(redBlackTree.previous(1)).toBe(undefined);
+    expect(redBlackTree.next(8)).toBe(undefined);
     expect(redBlackTree.size).toBe(0);
   });
 
@@ -145,5 +152,45 @@ describe("red black tree", () => {
     redBlackTree.deleteMax();
 
     expect(redBlackTree.size).toEqual(0);
+  });
+
+  test("previous", () => {
+    const size = 1000;
+    const origin = new Array(size).fill(0).map(() => Math.random());
+    const ordered = [...origin].sort((a, b) => {
+      return a - b;
+    });
+    const redBlackTree = new RedBlackTree<number, number>();
+
+    for (let i = 0; i < size; i++) {
+      redBlackTree.put(origin[i], origin[i]);
+    }
+
+    for (let i = 0; i < size; i++) {
+      const current = ordered[i];
+      const previous = ordered[i - 1];
+
+      expect(redBlackTree.previous(current)).toBe(previous);
+    }
+  });
+
+  test("next", () => {
+    const size = 1000;
+    const origin = new Array(size).fill(0).map(() => Math.random());
+    const ordered = [...origin].sort((a, b) => {
+      return a - b;
+    });
+    const redBlackTree = new RedBlackTree<number, number>();
+
+    for (let i = 0; i < size; i++) {
+      redBlackTree.put(origin[i], origin[i]);
+    }
+
+    for (let i = 0; i < size; i++) {
+      const current = ordered[i];
+      const next = ordered[i + 1];
+
+      expect(redBlackTree.next(current)).toBe(next);
+    }
   });
 });

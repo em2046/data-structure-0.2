@@ -1,4 +1,10 @@
-import { Comparable, lessThan } from "./comparable";
+import {
+  Comparable,
+  greaterThan,
+  greaterThanOrEqual,
+  lessThan,
+  lessThanOrEqual,
+} from "./comparable";
 
 class Point implements Comparable {
   x: number;
@@ -29,5 +35,10 @@ describe("comparable", () => {
 
     expect(a.lessThan(b)).toBe(true);
     expect(lessThan(a, b)).toBe(true);
+    expect(lessThanOrEqual(a, b)).toBe(true);
+    expect(lessThanOrEqual(a, a)).toBe(true);
+    expect(greaterThan(b, a)).toBe(true);
+    expect(greaterThanOrEqual(b, a)).toBe(true);
+    expect(greaterThanOrEqual(b, b)).toBe(true);
   });
 });

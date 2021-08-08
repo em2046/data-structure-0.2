@@ -18,7 +18,11 @@ Data Structures in TypeScript.
 |  Function | Description |
 |  --- | --- |
 |  [equality(lhs, rhs)](./calcium.equality.md) | Returns a Boolean value indicating whether two values are equal. |
+|  [greaterThan(lhs, rhs)](./calcium.greaterthan.md) | Returns a Boolean value indicating whether the value of the first argument is greater than that of the second argument. |
+|  [greaterThanOrEqual(lhs, rhs)](./calcium.greaterthanorequal.md) | Returns a Boolean value indicating whether the value of the first argument is greater than or equal to that of the second argument. |
+|  [inequality(lhs, rhs)](./calcium.inequality.md) | Returns a Boolean value indicating whether two values are not equal. |
 |  [lessThan(lhs, rhs)](./calcium.lessthan.md) | Returns a Boolean value indicating whether the value of the first argument is less than that of the second argument. |
+|  [lessThanOrEqual(lhs, rhs)](./calcium.lessthanorequal.md) | Returns a Boolean value indicating whether the value of the first argument is less than or equal to that of the second argument. |
 
 ## Interfaces
 

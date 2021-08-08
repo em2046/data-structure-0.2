@@ -36,3 +36,15 @@ export function equality<T>(lhs: T, rhs: T): boolean {
 
   return lhs === rhs;
 }
+
+/**
+ * @public
+ *
+ * Returns a Boolean value indicating whether two values are not equal.
+ *
+ * @param lhs - A value to compare.
+ * @param rhs - Another value to compare.
+ */
+export function inequality<T>(lhs: T, rhs: T): boolean {
+  return !equality(lhs, rhs);
+}

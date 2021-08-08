@@ -27,12 +27,24 @@ export interface Equatable {
 }
 
 // @public
+export function greaterThan<T>(lhs: T, rhs: T): boolean;
+
+// @public
+export function greaterThanOrEqual<T>(lhs: T, rhs: T): boolean;
+
+// @public
 export interface Identifiable {
     id: unknown;
 }
 
 // @public
+export function inequality<T>(lhs: T, rhs: T): boolean;
+
+// @public
 export function lessThan<T>(lhs: T, rhs: T): boolean;
+
+// @public
+export function lessThanOrEqual<T>(lhs: T, rhs: T): boolean;
 
 // @public
 export class RedBlackTree<Key, Value> {
@@ -42,9 +54,10 @@ export class RedBlackTree<Key, Value> {
     get(key: Key): Value | undefined;
     max(): Key | undefined;
     min(): Key | undefined;
+    next(key: Key): Key | undefined;
+    previous(key: Key): Key | undefined;
     put(key: Key, value: Value): void;
     get size(): number;
 }
-
 
 ```

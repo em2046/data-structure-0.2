@@ -1,4 +1,4 @@
-import { equality, Equatable } from "./equatable";
+import { equality, Equatable, inequality } from "./equatable";
 
 class Point implements Equatable {
   x: number;
@@ -21,6 +21,7 @@ describe("equatable", () => {
 
     expect(a.equality(b)).toBe(true);
     expect(equality(a, b)).toBe(true);
+    expect(inequality(a, b)).toBe(false);
   });
 
   test("primitive", () => {
@@ -28,5 +29,6 @@ describe("equatable", () => {
     const b = 2;
 
     expect(equality(a, b)).toBe(false);
+    expect(inequality(a, b)).toBe(true);
   });
 });
