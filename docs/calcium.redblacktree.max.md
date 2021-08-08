@@ -4,7 +4,7 @@
 
 ## RedBlackTree.max() method
 
-Returns the key of the largest element in the provided red black tree.
+Returns the key of the largest element from a red black tree.
 
 <b>Signature:</b>
 

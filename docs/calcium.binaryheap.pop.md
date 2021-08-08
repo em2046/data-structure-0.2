@@ -4,7 +4,7 @@
 
 ## BinaryHeap.pop() method
 
-Removes the least element from the binary heap and returns it, or `undefined` if it is empty.
+Removes the smallest element from the binary heap and returns it, or `undefined` if it is empty.
 
 <b>Signature:</b>
 

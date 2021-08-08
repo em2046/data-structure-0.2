@@ -35,7 +35,7 @@ export class BinaryHeap<T> {
   }
 
   /**
-   * Returns the least element in the binary heap, or `undefined` if it is
+   * Returns the smallest element in the binary heap, or `undefined` if it is
    * empty.
    */
   peek(): T | undefined {
@@ -43,7 +43,7 @@ export class BinaryHeap<T> {
   }
 
   /**
-   * Removes the least element from the binary heap and returns it, or
+   * Removes the smallest element from the binary heap and returns it, or
    * `undefined` if it is empty.
    */
   pop(): T | undefined {

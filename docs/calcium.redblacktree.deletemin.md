@@ -4,7 +4,7 @@
 
 ## RedBlackTree.deleteMin() method
 
-Removes the least element from a red black tree.
+Removes the smallest element from a red black tree.
 
 <b>Signature:</b>
 

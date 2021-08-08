@@ -138,7 +138,7 @@ export class RedBlackTree<Key, Value> {
   }
 
   /**
-   * Returns the key of the smallest element in the provided red black tree.
+   * Returns the key of the smallest element from a red black tree.
    */
   min(): Key | undefined {
     if (this.#root === null) {
@@ -149,7 +149,7 @@ export class RedBlackTree<Key, Value> {
   }
 
   /**
-   * Returns the key of the largest element in the provided red black tree.
+   * Returns the key of the largest element from a red black tree.
    */
   max(): Key | undefined {
     if (this.#root === null) {
@@ -160,9 +160,9 @@ export class RedBlackTree<Key, Value> {
   }
 
   /**
-   * Returns the key of the largest element less than to the given element.
+   * Returns the key of the largest element less than to the given key.
    *
-   * @param key - The key of the given element.
+   * @param key - The given key.
    */
   previous(key: Key): Key | undefined {
     const node = this.#previous(this.#root, key);
@@ -175,9 +175,9 @@ export class RedBlackTree<Key, Value> {
   }
 
   /**
-   * Returns the key of the smallest element greater than to the given element.
+   * Returns the key of the smallest element greater than to the given key
    *
-   * @param key - The key of the given element.
+   * @param key - The given key.
    */
   next(key: Key): Key | undefined {
     const node = this.#next(this.#root, key);
@@ -202,7 +202,7 @@ export class RedBlackTree<Key, Value> {
   }
 
   /**
-   * Removes the least element from a red black tree.
+   * Removes the smallest element from a red black tree.
    */
   deleteMin(): void {
     if (this.#root === null) {
@@ -219,7 +219,7 @@ export class RedBlackTree<Key, Value> {
   }
 
   /**
-   * Removes the greatest element from a red black tree.
+   * Removes the largest element from a red black tree.
    */
   deleteMax(): void {
     if (this.#root === null) {

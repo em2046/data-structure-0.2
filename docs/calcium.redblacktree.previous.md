@@ -4,7 +4,7 @@
 
 ## RedBlackTree.previous() method
 
-Returns the key of the largest element less than to the given element.
+Returns the key of the largest element less than to the given key.
 
 <b>Signature:</b>
 
@@ -16,7 +16,7 @@ previous(key: Key): Key | undefined;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  key | Key | The key of the given element. |
+|  key | Key | The given key. |
 
 <b>Returns:</b>
 
