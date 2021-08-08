@@ -22,6 +22,7 @@ export declare class RedBlackTree<Key, Value>
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
+|  [clear()](./calcium.redblacktree.clear.md) |  | Removes all elements from a red black tree. |
 |  [delete(key)](./calcium.redblacktree.delete.md) |  | Removes the specified element from a red black tree by key. |
 |  [deleteMax()](./calcium.redblacktree.deletemax.md) |  | Removes the largest element from a red black tree. |
 |  [deleteMin()](./calcium.redblacktree.deletemin.md) |  | Removes the smallest element from a red black tree. |
@@ -30,5 +31,5 @@ export declare class RedBlackTree<Key, Value>
 |  [min()](./calcium.redblacktree.min.md) |  | Returns the key of the smallest element from a red black tree. |
 |  [next(key)](./calcium.redblacktree.next.md) |  | Returns the key of the smallest element greater than to the given key. |
 |  [previous(key)](./calcium.redblacktree.previous.md) |  | Returns the key of the largest element less than to the given key. |
-|  [put(key, value)](./calcium.redblacktree.put.md) |  | Adds or updates an element with a specified key and a value to a red black tree. |
+|  [set(key, value)](./calcium.redblacktree.set.md) |  | Adds or updates an element with a specified key and a value to a red black tree. |
 

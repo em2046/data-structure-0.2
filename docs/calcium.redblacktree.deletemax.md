@@ -9,9 +9,9 @@ Removes the largest element from a red black tree.
 <b>Signature:</b>
 
 ```typescript
-deleteMax(): void;
+deleteMax(): boolean;
 ```
 <b>Returns:</b>
 
-void
+boolean
 
