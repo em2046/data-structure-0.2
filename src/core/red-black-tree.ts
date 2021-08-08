@@ -128,7 +128,13 @@ export class RedBlackTree<Key, Value> {
    * @param key - The key of the element to return from the red black tree.
    */
   get(key: Key): Value | undefined {
-    return this.#get(this.#root, key);
+    const node = this.#get(this.#root, key);
+
+    if (node === null) {
+      return undefined;
+    }
+
+    return node.value;
   }
 
   /**
@@ -139,7 +145,7 @@ export class RedBlackTree<Key, Value> {
       return undefined;
     }
 
-    return this.#min(this.#root);
+    return this.#min(this.#root).key;
   }
 
   /**
@@ -150,7 +156,7 @@ export class RedBlackTree<Key, Value> {
       return undefined;
     }
 
-    return this.#max(this.#root);
+    return this.#max(this.#root).key;
   }
 
   /**
@@ -218,13 +224,13 @@ export class RedBlackTree<Key, Value> {
     this.#root.color = Color.Black;
   }
 
-  #get(node: Node<Key, Value> | null, key: Key): Value | undefined {
+  #get(node: Node<Key, Value> | null, key: Key): Node<Key, Value> | null {
     if (node === null) {
-      return undefined;
+      return null;
     }
 
     if (equality(key, node.key)) {
-      return node.value;
+      return node;
     } else if (lessThan(key, node.key)) {
       return this.#get(node.left, key);
     } else {
@@ -232,17 +238,17 @@ export class RedBlackTree<Key, Value> {
     }
   }
 
-  #min(node: Node<Key, Value>): Key {
+  #min(node: Node<Key, Value>): Node<Key, Value> {
     if (node.left === null) {
-      return node.key;
+      return node;
     }
 
     return this.#min(node.left);
   }
 
-  #max(node: Node<Key, Value>): Key {
+  #max(node: Node<Key, Value>): Node<Key, Value> {
     if (node.right === null) {
-      return node.key;
+      return node;
     }
 
     return this.#max(node.right);
@@ -339,11 +345,10 @@ export class RedBlackTree<Key, Value> {
 
       if (equality(key, node.key)) {
         assert(node.right !== null);
-        const value = this.#get(node.right, this.#min(node.right));
+        const min = this.#min(node.right);
 
-        assert(value !== undefined);
-        node.value = value;
-        node.key = this.#min(node.right);
+        node.key = min.key;
+        node.value = min.value;
         node.right = this.#deleteMin(node.right);
       } else {
         if (node.right !== null) {
