@@ -138,7 +138,7 @@ export class RedBlackTree<Key, Value> {
   }
 
   /**
-   * Returns the key of the least element in the provided red black tree.
+   * Returns the key of the smallest element in the provided red black tree.
    */
   min(): Key | undefined {
     if (this.#root === null) {
@@ -149,7 +149,7 @@ export class RedBlackTree<Key, Value> {
   }
 
   /**
-   * Returns the key of the greatest element in the provided red black tree.
+   * Returns the key of the largest element in the provided red black tree.
    */
   max(): Key | undefined {
     if (this.#root === null) {
@@ -157,6 +157,36 @@ export class RedBlackTree<Key, Value> {
     }
 
     return this.#max(this.#root).key;
+  }
+
+  /**
+   * Returns the key of the largest element less than to the given element.
+   *
+   * @param key - The key of the given element.
+   */
+  previous(key: Key): Key | undefined {
+    const node = this.#previous(this.#root, key);
+
+    if (node === null) {
+      return undefined;
+    }
+
+    return node.key;
+  }
+
+  /**
+   * Returns the key of the smallest element greater than to the given element.
+   *
+   * @param key - The key of the given element.
+   */
+  next(key: Key): Key | undefined {
+    const node = this.#next(this.#root, key);
+
+    if (node === null) {
+      return undefined;
+    }
+
+    return node.key;
   }
 
   /**
@@ -252,6 +282,42 @@ export class RedBlackTree<Key, Value> {
     }
 
     return this.#max(node.right);
+  }
+
+  #previous(node: Node<Key, Value> | null, key: Key): Node<Key, Value> | null {
+    if (node === null) {
+      return null;
+    }
+
+    if (equality(key, node.key) || lessThan(key, node.key)) {
+      return this.#previous(node.left, key);
+    } else {
+      const previous = this.#previous(node.right, key);
+
+      if (previous !== null) {
+        return previous;
+      } else {
+        return node;
+      }
+    }
+  }
+
+  #next(node: Node<Key, Value> | null, key: Key): Node<Key, Value> | null {
+    if (node === null) {
+      return null;
+    }
+
+    if (equality(key, node.key) || !lessThan(key, node.key)) {
+      return this.#next(node.right, key);
+    } else {
+      const next = this.#next(node.left, key);
+
+      if (next !== null) {
+        return next;
+      } else {
+        return node;
+      }
+    }
   }
 
   #put(
