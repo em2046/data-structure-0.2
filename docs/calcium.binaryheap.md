@@ -18,7 +18,7 @@ export declare class BinaryHeap<T>
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [length](./calcium.binaryheap.length.md) |  | number | Returns the length of the binary heap. |
+|  [size](./calcium.binaryheap.size.md) |  | number | Returns the size of the binary heap. |
 
 ## Methods
 

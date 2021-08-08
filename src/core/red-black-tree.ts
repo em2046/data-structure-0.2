@@ -175,7 +175,7 @@ export class RedBlackTree<Key, Value> {
   }
 
   /**
-   * Returns the key of the smallest element greater than to the given key
+   * Returns the key of the smallest element greater than to the given key.
    *
    * @param key - The given key.
    */

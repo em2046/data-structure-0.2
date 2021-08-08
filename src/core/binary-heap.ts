@@ -15,9 +15,9 @@ export class BinaryHeap<T> {
   #elements: T[] = [];
 
   /**
-   * Returns the length of the binary heap.
+   * Returns the size of the binary heap.
    */
-  get length(): number {
+  get size(): number {
     return this.#elements.length;
   }
 
@@ -48,16 +48,16 @@ export class BinaryHeap<T> {
    */
   pop(): T | undefined {
     const elements = this.#elements;
-    const length = elements.length;
+    const size = elements.length;
 
-    if (length < 1) {
+    if (size < 1) {
       return undefined;
     }
 
     const first = elements[0];
     const last = elements.pop();
 
-    if (length > 1) {
+    if (size > 1) {
       assert(last !== undefined);
       elements[0] = last;
       this.#siftDown(last, 0);
@@ -94,9 +94,9 @@ export class BinaryHeap<T> {
 
   #siftDown(element: T, index: number): void {
     const elements = this.#elements;
-    const length = elements.length;
+    const size = elements.length;
 
-    while (index < length) {
+    while (index < size) {
       const leftIndex = index * 2 + 1;
       const left = elements[leftIndex];
       const rightIndex = leftIndex + 1;
@@ -104,8 +104,8 @@ export class BinaryHeap<T> {
 
       // If the left or right element is smaller, swap with the smaller of
       // those.
-      if (leftIndex < length && lessThan(left, element)) {
-        if (rightIndex < length && lessThan(right, left)) {
+      if (leftIndex < size && lessThan(left, element)) {
+        if (rightIndex < size && lessThan(right, left)) {
           elements[index] = right;
           elements[rightIndex] = element;
           index = rightIndex;
@@ -114,7 +114,7 @@ export class BinaryHeap<T> {
           elements[leftIndex] = element;
           index = leftIndex;
         }
-      } else if (rightIndex < length && lessThan(right, element)) {
+      } else if (rightIndex < size && lessThan(right, element)) {
         elements[index] = right;
         elements[rightIndex] = element;
         index = rightIndex;
