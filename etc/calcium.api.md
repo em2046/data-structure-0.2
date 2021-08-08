@@ -9,7 +9,7 @@ export class BinaryHeap<T> {
     clear(): void;
     peek(): T | undefined;
     pop(): T | undefined;
-    push(newElement: T): void;
+    push(newElement: T): BinaryHeap<T>;
     get size(): number;
 }
 
@@ -48,15 +48,16 @@ export function lessThanOrEqual<T>(lhs: T, rhs: T): boolean;
 
 // @public
 export class RedBlackTree<Key, Value> {
-    delete(key: Key): void;
-    deleteMax(): void;
-    deleteMin(): void;
+    clear(): void;
+    delete(key: Key): boolean;
+    deleteMax(): boolean;
+    deleteMin(): boolean;
     get(key: Key): Value | undefined;
     max(): Key | undefined;
     min(): Key | undefined;
     next(key: Key): Key | undefined;
     previous(key: Key): Key | undefined;
-    put(key: Key, value: Value): void;
+    set(key: Key, value: Value): RedBlackTree<Key, Value>;
     get size(): number;
 }
 

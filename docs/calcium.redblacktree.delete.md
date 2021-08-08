@@ -9,7 +9,7 @@ Removes the specified element from a red black tree by key.
 <b>Signature:</b>
 
 ```typescript
-delete(key: Key): void;
+delete(key: Key): boolean;
 ```
 
 ## Parameters
@@ -20,5 +20,5 @@ delete(key: Key): void;
 
 <b>Returns:</b>
 
-void
+boolean
 

@@ -9,7 +9,7 @@ Pushes a new element onto the binary heap.
 <b>Signature:</b>
 
 ```typescript
-push(newElement: T): void;
+push(newElement: T): BinaryHeap<T>;
 ```
 
 ## Parameters
@@ -20,5 +20,5 @@ push(newElement: T): void;
 
 <b>Returns:</b>
 
-void
+[BinaryHeap](./calcium.binaryheap.md)<!-- -->&lt;T&gt;
 
