@@ -29,7 +29,7 @@ function flipColors<Key, Value>(node: Node<Key, Value>): void {
   flipColor(node.right);
 }
 
-function rotateLeft<Key, Value>(node: Node<Key, Value>) {
+function rotateLeft<Key, Value>(node: Node<Key, Value>): Node<Key, Value> {
   // Make a right-leaning 3-node lean to the left.
   const right = node.right;
 
@@ -42,7 +42,7 @@ function rotateLeft<Key, Value>(node: Node<Key, Value>) {
   return right;
 }
 
-function rotateRight<Key, Value>(node: Node<Key, Value>) {
+function rotateRight<Key, Value>(node: Node<Key, Value>): Node<Key, Value> {
   // Make a left-leaning 3-node lean to the right.
   const left = node.left;
 
@@ -123,6 +123,14 @@ export class RedBlackTree<Key, Value> {
   }
 
   /**
+   * Removes all elements from a red black tree.
+   */
+  clear(): void {
+    this.#root = null;
+    this.#size = 0;
+  }
+
+  /**
    * Returns a specified element from a red black tree.
    *
    * @param key - The key of the element to return from the red black tree.
@@ -196,43 +204,53 @@ export class RedBlackTree<Key, Value> {
    * @param key - The key of the element to add to the red black tree.
    * @param value - The value of the element to add to the red black tree.
    */
-  put(key: Key, value: Value): void {
-    this.#root = this.#put(this.#root, key, value);
+  set(key: Key, value: Value): RedBlackTree<Key, Value> {
+    this.#root = this.#set(this.#root, key, value);
     this.#root.color = Color.Black;
+
+    return this;
   }
 
   /**
    * Removes the smallest element from a red black tree.
    */
-  deleteMin(): void {
+  deleteMin(): boolean {
     if (this.#root === null) {
-      return;
+      return false;
     }
+
+    const size = this.#size;
 
     this.#root = this.#deleteMin(this.#root);
 
     if (this.#root === null) {
-      return;
+      return this.#size < size;
     }
 
     this.#root.color = Color.Black;
+
+    return this.#size < size;
   }
 
   /**
    * Removes the largest element from a red black tree.
    */
-  deleteMax(): void {
+  deleteMax(): boolean {
     if (this.#root === null) {
-      return;
+      return false;
     }
+
+    const size = this.#size;
 
     this.#root = this.#deleteMax(this.#root);
 
     if (this.#root === null) {
-      return;
+      return this.#size < size;
     }
 
     this.#root.color = Color.Black;
+
+    return this.#size < size;
   }
 
   /**
@@ -240,18 +258,22 @@ export class RedBlackTree<Key, Value> {
    *
    * @param key - The key of the element to remove from the red black tree.
    */
-  delete(key: Key): void {
+  delete(key: Key): boolean {
     if (this.#root === null) {
-      return;
+      return false;
     }
+
+    const size = this.#size;
 
     this.#root = this.#delete(this.#root, key);
 
     if (this.#root === null) {
-      return;
+      return this.#size < size;
     }
 
     this.#root.color = Color.Black;
+
+    return this.#size < size;
   }
 
   #get(node: Node<Key, Value> | null, key: Key): Node<Key, Value> | null {
@@ -320,7 +342,7 @@ export class RedBlackTree<Key, Value> {
     }
   }
 
-  #put(
+  #set(
     node: Node<Key, Value> | null,
     key: Key,
     value: Value
@@ -334,9 +356,9 @@ export class RedBlackTree<Key, Value> {
     if (equality(key, node.key)) {
       node.value = value;
     } else if (lessThan(key, node.key)) {
-      node.left = this.#put(node.left, key, value);
+      node.left = this.#set(node.left, key, value);
     } else {
-      node.right = this.#put(node.right, key, value);
+      node.right = this.#set(node.right, key, value);
     }
 
     return fixUp(node);

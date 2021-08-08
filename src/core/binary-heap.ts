@@ -26,12 +26,14 @@ export class BinaryHeap<T> {
    *
    * @param newElement - The element to push to the binary heap.
    */
-  push(newElement: T): void {
+  push(newElement: T): BinaryHeap<T> {
     const elements = this.#elements;
     const index = elements.length;
 
     elements.push(newElement);
     this.#siftUp(newElement, index);
+
+    return this;
   }
 
   /**
