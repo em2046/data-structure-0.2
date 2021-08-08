@@ -42,9 +42,10 @@ export class RedBlackTree<Key, Value> {
     get(key: Key): Value | undefined;
     max(): Key | undefined;
     min(): Key | undefined;
+    next(key: Key): Key | undefined;
+    previous(key: Key): Key | undefined;
     put(key: Key, value: Value): void;
     get size(): number;
 }
-
 
 ```
