@@ -11,8 +11,9 @@ This will be a min-heap.
 <b>Signature:</b>
 
 ```typescript
-export declare class BinaryHeap<T> 
+export declare class BinaryHeap<T> implements Iterable<T> 
 ```
+<b>Implements:</b> Iterable&lt;T&gt;
 
 ## Properties
 
@@ -24,7 +25,9 @@ export declare class BinaryHeap<T>
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
+|  [\[Symbol.iterator\]()](./calcium.binaryheap._symbol.iterator_.md) |  | Returns an iterator that iterates over the elements on this binary heap in ascending order. |
 |  [clear()](./calcium.binaryheap.clear.md) |  | Drops all elements from the binary heap. |
+|  [from(arrayLike)](./calcium.binaryheap.from.md) | <code>static</code> | Creates a new, shallow-copied binary heap instance from an array-like or iterable object. |
 |  [peek()](./calcium.binaryheap.peek.md) |  | Returns the smallest element in the binary heap, or <code>undefined</code> if it is empty. |
 |  [pop()](./calcium.binaryheap.pop.md) |  | Removes the smallest element from the binary heap and returns it, or <code>undefined</code> if it is empty. |
 |  [push(newElement)](./calcium.binaryheap.push.md) |  | Pushes a new element onto the binary heap. |

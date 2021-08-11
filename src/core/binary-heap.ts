@@ -2,6 +2,7 @@ import { assert } from "../shared";
 import { lessThan } from "./comparable";
 
 // Copied from
+// https://github.com/rust-lang/rust/blob/362e0f55eb1f36d279e5c4a58fb0fe5f9a2c579d/library/alloc/src/collections/binary_heap.rs
 // https://github.com/facebook/react/blob/3f62dec84aba5d7ae6dfc73d68752254e8f06384/packages/scheduler/src/SchedulerMinHeap.js
 
 /**
@@ -11,7 +12,7 @@ import { lessThan } from "./comparable";
  *
  * This will be a min-heap.
  */
-export class BinaryHeap<T> {
+export class BinaryHeap<T> implements Iterable<T> {
   #elements: T[] = [];
 
   /**
@@ -19,6 +20,51 @@ export class BinaryHeap<T> {
    */
   get size(): number {
     return this.#elements.length;
+  }
+
+  /**
+   * Creates a new, shallow-copied binary heap instance from an array-like or
+   * iterable object.
+   *
+   * @param arrayLike - An array-like or iterable object to convert to an
+   * binary heap.
+   */
+  static from<T>(arrayLike: Iterable<T>): BinaryHeap<T> {
+    const heap = new BinaryHeap<T>();
+
+    for (const element of arrayLike) {
+      heap.push(element);
+    }
+
+    return heap;
+  }
+
+  /**
+   * Returns an iterator that iterates over the elements on this binary heap in
+   * ascending order.
+   */
+  [Symbol.iterator](): Iterator<T> {
+    const clone = BinaryHeap.from(this.#elements);
+
+    return {
+      next(): IteratorResult<T> {
+        if (clone.size > 0) {
+          const value = clone.pop();
+
+          assert(value !== undefined);
+
+          return {
+            value,
+            done: false,
+          };
+        } else {
+          return {
+            value: undefined,
+            done: true,
+          };
+        }
+      },
+    };
   }
 
   /**

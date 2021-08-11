@@ -5,8 +5,10 @@
 ```ts
 
 // @public
-export class BinaryHeap<T> {
+export class BinaryHeap<T> implements Iterable<T> {
+    [Symbol.iterator](): Iterator<T>;
     clear(): void;
+    static from<T>(arrayLike: Iterable<T>): BinaryHeap<T>;
     peek(): T | undefined;
     pop(): T | undefined;
     push(newElement: T): BinaryHeap<T>;
