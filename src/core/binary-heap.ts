@@ -16,7 +16,7 @@ export class BinaryHeap<T> implements Iterable<T> {
   #elements: T[] = [];
 
   /**
-   * Returns the size of the binary heap.
+   * Returns the number of elements in a binary heap.
    */
   get size(): number {
     return this.#elements.length;
@@ -26,8 +26,8 @@ export class BinaryHeap<T> implements Iterable<T> {
    * Creates a new, shallow-copied binary heap instance from an array-like or
    * iterable object.
    *
-   * @param arrayLike - An array-like or iterable object to convert to an
-   * binary heap.
+   * @param arrayLike - An array-like or iterable object to convert to a binary
+   * heap.
    */
   static from<T>(arrayLike: Iterable<T>): BinaryHeap<T> {
     const heap = new BinaryHeap<T>();
@@ -40,8 +40,9 @@ export class BinaryHeap<T> implements Iterable<T> {
   }
 
   /**
-   * Returns an iterator that iterates over the elements on this binary heap in
-   * ascending order.
+   * Returns an iterator which retrieves elements in heap order.
+   *
+   * This method does not change the existing binary heap.
    */
   [Symbol.iterator](): Iterator<T> {
     const clone = BinaryHeap.from(this.#elements);
@@ -115,7 +116,7 @@ export class BinaryHeap<T> implements Iterable<T> {
   }
 
   /**
-   * Drops all elements from the binary heap.
+   * Removes all elements from a binary heap.
    */
   clear(): void {
     this.#elements = [];

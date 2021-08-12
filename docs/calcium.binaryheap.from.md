@@ -16,7 +16,7 @@ static from<T>(arrayLike: Iterable<T>): BinaryHeap<T>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  arrayLike | Iterable&lt;T&gt; | An array-like or iterable object to convert to an binary heap. |
+|  arrayLike | Iterable&lt;T&gt; | An array-like or iterable object to convert to a binary heap. |
 
 <b>Returns:</b>
 

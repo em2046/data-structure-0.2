@@ -4,7 +4,9 @@
 
 ## BinaryHeap.\[Symbol.iterator\]() method
 
-Returns an iterator that iterates over the elements on this binary heap in ascending order.
+Returns an iterator which retrieves elements in heap order.
+
+This method does not change the existing binary heap.
 
 <b>Signature:</b>
 
