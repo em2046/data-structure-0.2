@@ -7,8 +7,10 @@
 // @public
 export class BinaryHeap<T> implements Iterable<T> {
     [Symbol.iterator](): Iterator<T>;
+    constructor();
+    constructor(iterable: Iterable<T>);
     clear(): void;
-    static from<T>(arrayLike: Iterable<T>): BinaryHeap<T>;
+    static from<T>(iterable: Iterable<T>): BinaryHeap<T>;
     peek(): T | undefined;
     pop(): T | undefined;
     push(newElement: T): BinaryHeap<T>;

@@ -37,10 +37,7 @@ describe("binary heap", () => {
 
   test("peek and pop", () => {
     const data = [2, 4, 6, 2, 1, 8, 10, 3, 5, 7, 0, 9, 1];
-    const sorted = [...data];
-
-    sorted.sort((a, b) => a - b);
-
+    const sorted = [...data].sort((a, b) => a - b);
     const heap = BinaryHeap.from(data);
 
     while (heap.size > 0) {
@@ -121,11 +118,8 @@ describe("binary heap", () => {
 
   test("to vector", () => {
     function checkToVector(data: number[]) {
-      const heap = BinaryHeap.from([...data]);
-      const vector = [...heap];
-
-      vector.sort((a, b) => a - b);
-
+      const heap = BinaryHeap.from(data);
+      const vector = [...heap].sort((a, b) => a - b);
       const sorted = [...data].sort((a, b) => a - b);
 
       expect(vector).toStrictEqual(sorted);
@@ -160,11 +154,12 @@ describe("binary heap", () => {
   });
 
   test("from iterator", () => {
-    const data = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const data = [9, 8, 7, 6, 5, 4, 3, 2, 1];
+    const out = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     const heap = BinaryHeap.from(data);
 
-    for (const datum of data) {
-      expect(heap.pop()).toBe(datum);
+    for (const element of out) {
+      expect(heap.pop()).toBe(element);
     }
   });
 
