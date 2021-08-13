@@ -4,7 +4,7 @@
 
 ## BinaryHeap.size property
 
-Returns the size of the binary heap.
+Returns the number of elements in a binary heap.
 
 <b>Signature:</b>
 

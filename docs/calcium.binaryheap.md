@@ -11,20 +11,23 @@ This will be a min-heap.
 <b>Signature:</b>
 
 ```typescript
-export declare class BinaryHeap<T> 
+export declare class BinaryHeap<T> implements Iterable<T> 
 ```
+<b>Implements:</b> Iterable&lt;T&gt;
 
 ## Properties
 
 |  Property | Modifiers | Type | Description |
 |  --- | --- | --- | --- |
-|  [size](./calcium.binaryheap.size.md) |  | number | Returns the size of the binary heap. |
+|  [size](./calcium.binaryheap.size.md) |  | number | Returns the number of elements in a binary heap. |
 
 ## Methods
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [clear()](./calcium.binaryheap.clear.md) |  | Drops all elements from the binary heap. |
+|  [\[Symbol.iterator\]()](./calcium.binaryheap._symbol.iterator_.md) |  | Returns an iterator which retrieves elements in heap order.<!-- -->This method does not change the existing binary heap. |
+|  [clear()](./calcium.binaryheap.clear.md) |  | Removes all elements from a binary heap. |
+|  [from(arrayLike)](./calcium.binaryheap.from.md) | <code>static</code> | Creates a new, shallow-copied binary heap instance from an array-like or iterable object. |
 |  [peek()](./calcium.binaryheap.peek.md) |  | Returns the smallest element in the binary heap, or <code>undefined</code> if it is empty. |
 |  [pop()](./calcium.binaryheap.pop.md) |  | Removes the smallest element from the binary heap and returns it, or <code>undefined</code> if it is empty. |
 |  [push(newElement)](./calcium.binaryheap.push.md) |  | Pushes a new element onto the binary heap. |

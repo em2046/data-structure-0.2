@@ -4,7 +4,7 @@
 
 ## BinaryHeap.clear() method
 
-Drops all elements from the binary heap.
+Removes all elements from a binary heap.
 
 <b>Signature:</b>
 
