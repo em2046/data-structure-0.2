@@ -433,6 +433,7 @@ export class RedBlackTree<Key, Value> {
 
       if (equality(key, node.key)) {
         assert(node.right !== null);
+
         const min = this.#min(node.right);
 
         node.key = min.key;
