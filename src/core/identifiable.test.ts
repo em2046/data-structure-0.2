@@ -1,21 +1,16 @@
 import { Identifiable } from "./identifiable";
 
-class Point implements Identifiable {
-  id: string;
-  x: number;
-  y: number;
-
-  constructor(id: string, x: number, y: number) {
-    this.id = id;
-    this.x = x;
-    this.y = y;
-  }
-}
+// Copied from
+// https://github.com/apple/swift/blob/392ba002c88346bc8d5cf8e19cb233d17794e844/test/stdlib/Identifiable.swift
 
 describe("identifiable", () => {
-  test("basic", () => {
-    const point = new Point("0001", 1, 2);
+  test("type check", () => {
+    class IdentifiableClass implements Identifiable {
+      id = 42;
+    }
 
-    expect(point.id).toBeDefined();
+    const instance = new IdentifiableClass();
+
+    expect(instance.id).toBe(42);
   });
 });

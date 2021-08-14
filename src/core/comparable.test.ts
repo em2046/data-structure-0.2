@@ -7,6 +7,9 @@ import {
 } from "./comparable";
 import { equality, Equatable, inequality } from "./equatable";
 
+// Copied from
+// https://github.com/rust-lang/rust/blob/673d0db5e393e9c64897005b470bfeb6d5aec61b/library/core/tests/cmp.rs
+
 describe("comparable", () => {
   test("int total order", () => {
     expect(lessThan(5, 10)).toBe(true);
