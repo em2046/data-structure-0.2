@@ -1,7 +1,7 @@
 import { assert } from "./assert";
 
 describe("assert", () => {
-  test("basic", () => {
+  test("throw", () => {
     expect(() => {
       assert(false);
     }).toThrowError();
