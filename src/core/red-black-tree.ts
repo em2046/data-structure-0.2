@@ -111,7 +111,7 @@ function fixUp<Key, Value>(node: Node<Key, Value>): Node<Key, Value> {
  *
  * The red black tree holds key-value pairs.
  */
-export class RedBlackTree<Key, Value> {
+export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
   #root: Node<Key, Value> | null = null;
   #size = 0;
 
@@ -120,6 +120,41 @@ export class RedBlackTree<Key, Value> {
    */
   get size(): number {
     return this.#size;
+  }
+
+  [Symbol.iterator](): Iterator<[Key, Value]> {
+    let node = this.#root;
+    const stack: Node<Key, Value>[] = [];
+
+    return {
+      next(): IteratorResult<[Key, Value]> {
+        while (node != null || stack.length > 0) {
+          if (node != null) {
+            stack.push(node);
+            node = node.left;
+          } else {
+            const pop = stack.pop();
+
+            assert(pop !== undefined);
+            node = pop;
+
+            const ret: [Key, Value] = [node.key, node.value];
+
+            node = node.right;
+
+            return {
+              value: ret,
+              done: false,
+            };
+          }
+        }
+
+        return {
+          done: true,
+          value: undefined,
+        };
+      },
+    };
   }
 
   /**
