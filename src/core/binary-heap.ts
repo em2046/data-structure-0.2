@@ -16,6 +16,23 @@ export class BinaryHeap<T> implements Iterable<T> {
   #elements: T[] = [];
 
   /**
+   * Creates a new binary heap.
+   */
+  constructor();
+
+  /**
+   * Creates a new, shallow-copied binary heap instance from an iterable object.
+   *
+   * @param iterable - An iterable object to convert to a binary heap.
+   */
+  constructor(iterable: Iterable<T>);
+
+  constructor(iterable: Iterable<T> = []) {
+    this.#elements = Array.from(iterable);
+    this.#rebuild();
+  }
+
+  /**
    * Returns the number of elements in a binary heap.
    */
   get size(): number {
@@ -23,20 +40,12 @@ export class BinaryHeap<T> implements Iterable<T> {
   }
 
   /**
-   * Creates a new, shallow-copied binary heap instance from an array-like or
-   * iterable object.
+   * Creates a new, shallow-copied binary heap instance from an iterable object.
    *
-   * @param arrayLike - An array-like or iterable object to convert to a binary
-   * heap.
+   * @param iterable - An iterable object to convert to a binary heap.
    */
-  static from<T>(arrayLike: Iterable<T>): BinaryHeap<T> {
-    const heap = new BinaryHeap<T>();
-
-    for (const element of arrayLike) {
-      heap.push(element);
-    }
-
-    return heap;
+  static from<T>(iterable: Iterable<T>): BinaryHeap<T> {
+    return new BinaryHeap<T>(iterable);
   }
 
   /**
@@ -120,6 +129,15 @@ export class BinaryHeap<T> implements Iterable<T> {
    */
   clear(): void {
     this.#elements = [];
+  }
+
+  #rebuild(): void {
+    let index = Math.floor(this.size / 2);
+
+    while (index > 0) {
+      index -= 1;
+      this.#siftDown(this.#elements[index], index);
+    }
   }
 
   #siftUp(element: T, index: number): void {

@@ -15,6 +15,13 @@ export declare class BinaryHeap<T> implements Iterable<T>
 ```
 <b>Implements:</b> Iterable&lt;T&gt;
 
+## Constructors
+
+|  Constructor | Modifiers | Description |
+|  --- | --- | --- |
+|  [(constructor)()](./calcium.binaryheap._constructor_.md) |  | Creates a new binary heap. |
+|  [(constructor)(iterable)](./calcium.binaryheap._constructor__1.md) |  | Creates a new, shallow-copied binary heap instance from an iterable object. |
+
 ## Properties
 
 |  Property | Modifiers | Type | Description |
@@ -27,7 +34,7 @@ export declare class BinaryHeap<T> implements Iterable<T>
 |  --- | --- | --- |
 |  [\[Symbol.iterator\]()](./calcium.binaryheap._symbol.iterator_.md) |  | Returns an iterator which retrieves elements in heap order.<!-- -->This method does not change the existing binary heap. |
 |  [clear()](./calcium.binaryheap.clear.md) |  | Removes all elements from a binary heap. |
-|  [from(arrayLike)](./calcium.binaryheap.from.md) | <code>static</code> | Creates a new, shallow-copied binary heap instance from an array-like or iterable object. |
+|  [from(iterable)](./calcium.binaryheap.from.md) | <code>static</code> | Creates a new, shallow-copied binary heap instance from an iterable object. |
 |  [peek()](./calcium.binaryheap.peek.md) |  | Returns the smallest element in the binary heap, or <code>undefined</code> if it is empty. |
 |  [pop()](./calcium.binaryheap.pop.md) |  | Removes the smallest element from the binary heap and returns it, or <code>undefined</code> if it is empty. |
 |  [push(newElement)](./calcium.binaryheap.push.md) |  | Pushes a new element onto the binary heap. |
