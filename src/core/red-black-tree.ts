@@ -116,35 +116,69 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
   #size = 0;
 
   /**
+   * Creates a new red black tree.
+   */
+  constructor();
+
+  /**
+   * Creates a new, shallow-copied red black tree instance from an iterable
+   * object.
+   *
+   * @param iterable - An `Array` or other iterable object whose elements are
+   * key-value pairs. (For example, arrays with two elements, such as
+   * `[[ 1, 'one' ],[ 2, 'two' ]]`.) Each key-value pair is added to the new
+   * red black tree.
+   */
+  constructor(iterable: Iterable<[Key, Value]>);
+
+  constructor(iterable: Iterable<[Key, Value]> = []) {
+    for (const entry of iterable) {
+      this.set(entry[0], entry[1]);
+    }
+  }
+
+  /**
    * Returns the number of elements in a red black tree.
    */
   get size(): number {
     return this.#size;
   }
 
+  /**
+   * Returns a new Iterator object that contains the `[key, value]` pairs for
+   * each element in the red black tree in in-order.
+   */
   [Symbol.iterator](): Iterator<[Key, Value]> {
+    return this.entries();
+  }
+
+  /**
+   * Returns a new Iterator object that contains the `[key, value]` pairs for
+   * each element in the red black tree in in-order.
+   */
+  entries(): Iterator<[Key, Value]> {
     let node = this.#root;
     const stack: Node<Key, Value>[] = [];
 
     return {
       next(): IteratorResult<[Key, Value]> {
-        while (node != null || stack.length > 0) {
-          if (node != null) {
+        while (node !== null || stack.length > 0) {
+          if (node !== null) {
             stack.push(node);
             node = node.left;
           } else {
-            const pop = stack.pop();
+            const last = stack.pop();
 
-            assert(pop !== undefined);
-            node = pop;
+            assert(last !== undefined);
+            node = last;
 
-            const ret: [Key, Value] = [node.key, node.value];
+            const entry: [Key, Value] = [node.key, node.value];
 
             node = node.right;
 
             return {
-              value: ret,
               done: false,
+              value: entry,
             };
           }
         }
@@ -152,6 +186,62 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
         return {
           done: true,
           value: undefined,
+        };
+      },
+    };
+  }
+
+  /**
+   * Returns a new Iterator object that contains the keys for each element in
+   * the red black tree in in-order.
+   */
+  keys(): Iterator<Key> {
+    const iterator = this.entries();
+
+    return {
+      next(): IteratorResult<Key> {
+        const next = iterator.next();
+
+        if (next.done) {
+          return {
+            done: true,
+            value: undefined,
+          };
+        }
+
+        const entry = next.value;
+
+        return {
+          done: false,
+          value: entry[0],
+        };
+      },
+    };
+  }
+
+  /**
+   * Returns a new Iterator object that contains the values for each element in
+   * the red black tree in in-order.
+   */
+  values(): Iterator<Value> {
+    const iterator = this.entries();
+
+    return {
+      next(): IteratorResult<Value> {
+        const next = iterator.next();
+
+        if (next.done) {
+          return {
+            done: true,
+            value: undefined,
+          };
+        }
+
+        const entry = next.value;
+
+        return {
+          done: false,
+          value: entry[1],
         };
       },
     };

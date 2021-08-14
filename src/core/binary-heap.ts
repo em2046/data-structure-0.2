@@ -60,8 +60,8 @@ export class BinaryHeap<T> implements Iterable<T> {
       next(): IteratorResult<T> {
         if (clone.size < 1) {
           return {
-            value: undefined,
             done: true,
+            value: undefined,
           };
         }
 
@@ -70,8 +70,8 @@ export class BinaryHeap<T> implements Iterable<T> {
         assert(element !== undefined);
 
         return {
-          value: element,
           done: false,
+          value: element,
         };
       },
     };
