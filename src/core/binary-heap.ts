@@ -58,21 +58,21 @@ export class BinaryHeap<T> implements Iterable<T> {
 
     return {
       next(): IteratorResult<T> {
-        if (clone.size > 0) {
-          const value = clone.pop();
-
-          assert(value !== undefined);
-
-          return {
-            value,
-            done: false,
-          };
-        } else {
+        if (clone.size < 1) {
           return {
             value: undefined,
             done: true,
           };
         }
+
+        const element = clone.pop();
+
+        assert(element !== undefined);
+
+        return {
+          value: element,
+          done: false,
+        };
       },
     };
   }
@@ -84,10 +84,10 @@ export class BinaryHeap<T> implements Iterable<T> {
    */
   push(newElement: T): BinaryHeap<T> {
     const elements = this.#elements;
-    const index = elements.length;
+    const size = elements.length;
 
     elements.push(newElement);
-    this.#siftUp(newElement, index);
+    this.#siftUp(newElement, size);
 
     return this;
   }
