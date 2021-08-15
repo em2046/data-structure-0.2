@@ -271,55 +271,59 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
   }
 
   /**
-   * Returns the key of the smallest element from a red black tree.
+   * Returns the key-value pair of the smallest element from a red black tree.
    */
-  min(): Key | undefined {
+  min(): [Key, Value] | null {
     if (this.#root === null) {
-      return undefined;
+      return null;
     }
 
-    return this.#min(this.#root).key;
+    const node = this.#min(this.#root);
+
+    return [node.key, node.value];
   }
 
   /**
-   * Returns the key of the largest element from a red black tree.
+   * Returns the key-value pair of the largest element from a red black tree.
    */
-  max(): Key | undefined {
+  max(): [Key, Value] | null {
     if (this.#root === null) {
-      return undefined;
+      return null;
     }
 
-    return this.#max(this.#root).key;
+    const node = this.#max(this.#root);
+
+    return [node.key, node.value];
   }
 
   /**
-   * Returns the key of the largest element less than to the given key.
+   * Returns the key-value pair of the largest element less than to the given key.
    *
    * @param key - The given key.
    */
-  previous(key: Key): Key | undefined {
+  previous(key: Key): [Key, Value] | null {
     const node = this.#previous(this.#root, key);
 
     if (node === null) {
-      return undefined;
+      return null;
     }
 
-    return node.key;
+    return [node.key, node.value];
   }
 
   /**
-   * Returns the key of the smallest element greater than to the given key.
+   * Returns the key-value pair of the smallest element greater than to the given key.
    *
    * @param key - The given key.
    */
-  next(key: Key): Key | undefined {
+  next(key: Key): [Key, Value] | null {
     const node = this.#next(this.#root, key);
 
     if (node === null) {
-      return undefined;
+      return null;
     }
 
-    return node.key;
+    return [node.key, node.value];
   }
 
   /**
