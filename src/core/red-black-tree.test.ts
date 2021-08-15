@@ -245,5 +245,43 @@ describe("red black tree", () => {
       map.set(i, 10 * i);
       expect(map.size).toBe(i + 1);
     }
+
+    expect(map.min()).toStrictEqual([0, 0]);
+    expect(map.max()).toStrictEqual([size - 1, 10 * (size - 1)]);
+    expect(map.min()?.[0]).toStrictEqual(0);
+    expect(map.max()?.[0]).toStrictEqual(size - 1);
+
+    for (let i = 0; i < size; i++) {
+      expect(map.get(i)).toBe(i * 10);
+    }
+
+    for (let i = size; i < size * 2; i++) {
+      expect(map.get(i)).toBe(undefined);
+    }
+
+    for (let i = 0; i < size; i++) {
+      map.set(i, 100 * i);
+      expect(map.size).toBe(size);
+    }
+
+    for (let i = 0; i < size; i++) {
+      expect(map.get(i)).toBe(i * 100);
+    }
+
+    for (let i = 0; i < size / 2; i++) {
+      expect(map.delete(i * 2)).toBe(true);
+      expect(map.size).toBe(size - i - 1);
+    }
+
+    for (let i = 0; i < size / 2; i++) {
+      expect(map.get(2 * i)).toBe(undefined);
+      expect(map.get(2 * i + 1)).toBe(i * 200 + 100);
+    }
+
+    for (let i = 0; i < size / 2; i++) {
+      expect(map.delete(2 * i)).toBe(false);
+      expect(map.delete(2 * i + 1)).toBe(true);
+      expect(map.size).toBe(size / 2 - i - 1);
+    }
   });
 });

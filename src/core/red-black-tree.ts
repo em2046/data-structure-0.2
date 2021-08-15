@@ -533,16 +533,17 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
 
   #delete(node: Node<Key, Value>, key: Key): Node<Key, Value> | null {
     if (lessThan(key, node.key)) {
-      assert(node.left !== null);
-
-      if (!isRed(node.left)) {
-        if (!isRed(node.left.left)) {
-          node = moveRedLeft(node);
+      if (node.left !== null) {
+        if (!isRed(node.left)) {
+          if (!isRed(node.left.left)) {
+            node = moveRedLeft(node);
+          }
         }
       }
 
-      assert(node.left !== null);
-      node.left = this.#delete(node.left, key);
+      if (node.left !== null) {
+        node.left = this.#delete(node.left, key);
+      }
     } else {
       if (isRed(node.left)) {
         node = rotateRight(node);
@@ -560,16 +561,14 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
         }
       }
 
-      if (equality(key, node.key)) {
-        assert(node.right !== null);
+      if (node.right !== null) {
+        if (equality(key, node.key)) {
+          const min = this.#min(node.right);
 
-        const min = this.#min(node.right);
-
-        node.key = min.key;
-        node.value = min.value;
-        node.right = this.#deleteMin(node.right);
-      } else {
-        if (node.right !== null) {
+          node.key = min.key;
+          node.value = min.value;
+          node.right = this.#deleteMin(node.right);
+        } else {
           node.right = this.#delete(node.right, key);
         }
       }
