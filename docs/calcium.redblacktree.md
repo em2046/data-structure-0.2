@@ -35,7 +35,7 @@ export declare class RedBlackTree<Key, Value> implements Iterable<[Key, Value]>
 |  [delete(key)](./calcium.redblacktree.delete.md) |  | Removes the specified element from a red black tree by key. |
 |  [deleteMax()](./calcium.redblacktree.deletemax.md) |  | Removes the largest element from a red black tree. |
 |  [deleteMin()](./calcium.redblacktree.deletemin.md) |  | Removes the smallest element from a red black tree. |
-|  [entries()](./calcium.redblacktree.entries.md) |  | Returns a new Iterator object that contains the <code>[key, value]</code> pairs for each element in the red black tree in in-order. |
+|  [entries()](./calcium.redblacktree.entries.md) |  | Returns a new Iterator object that contains the <code>[key, value]</code> pairs for each element in the red black tree in in-order. In this particular case, this iterator object is also an iterable, so the for-of loop can be used. When the protocol <code>[Symbol.iterator]</code> is used, it returns a function that, when invoked, returns this iterator itself. |
 |  [get(key)](./calcium.redblacktree.get.md) |  | Returns a specified element from a red black tree. |
 |  [keys()](./calcium.redblacktree.keys.md) |  | Returns a new Iterator object that contains the keys for each element in the red black tree in in-order. |
 |  [max()](./calcium.redblacktree.max.md) |  | Returns the key-value pair of the largest element from a red black tree. |

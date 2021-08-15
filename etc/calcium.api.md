@@ -6,7 +6,7 @@
 
 // @public
 export class BinaryHeap<T> implements Iterable<T> {
-    [Symbol.iterator](): Iterator<T>;
+    [Symbol.iterator](): IterableIterator<T>;
     constructor();
     constructor(iterable: Iterable<T>);
     clear(): void;
@@ -52,23 +52,23 @@ export function lessThanOrEqual<T>(lhs: T, rhs: T): boolean;
 
 // @public
 export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
-    [Symbol.iterator](): Iterator<[Key, Value]>;
+    [Symbol.iterator](): IterableIterator<[Key, Value]>;
     constructor();
     constructor(iterable: Iterable<[Key, Value]>);
     clear(): void;
     delete(key: Key): boolean;
     deleteMax(): boolean;
     deleteMin(): boolean;
-    entries(): Iterator<[Key, Value]>;
+    entries(): IterableIterator<[Key, Value]>;
     get(key: Key): Value | undefined;
-    keys(): Iterator<Key>;
+    keys(): IterableIterator<Key>;
     max(): [Key, Value] | null;
     min(): [Key, Value] | null;
     next(key: Key): [Key, Value] | null;
     previous(key: Key): [Key, Value] | null;
     set(key: Key, value: Value): RedBlackTree<Key, Value>;
     get size(): number;
-    values(): Iterator<Value>;
+    values(): IterableIterator<Value>;
 }
 
 ```

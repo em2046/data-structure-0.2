@@ -9,9 +9,9 @@ Returns a new Iterator object that contains the keys for each element in the red
 <b>Signature:</b>
 
 ```typescript
-keys(): Iterator<Key>;
+keys(): IterableIterator<Key>;
 ```
 <b>Returns:</b>
 
-Iterator&lt;Key&gt;
+IterableIterator&lt;Key&gt;
 
