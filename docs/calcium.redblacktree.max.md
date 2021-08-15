@@ -4,14 +4,14 @@
 
 ## RedBlackTree.max() method
 
-Returns the key of the largest element from a red black tree.
+Returns the key-value pair of the largest element from a red black tree.
 
 <b>Signature:</b>
 
 ```typescript
-max(): Key | undefined;
+max(): [Key, Value] | null;
 ```
 <b>Returns:</b>
 
-Key \| undefined
+\[Key, Value\] \| null
 

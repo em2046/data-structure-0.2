@@ -4,14 +4,14 @@
 
 ## RedBlackTree.min() method
 
-Returns the key of the smallest element from a red black tree.
+Returns the key-value pair of the smallest element from a red black tree.
 
 <b>Signature:</b>
 
 ```typescript
-min(): Key | undefined;
+min(): [Key, Value] | null;
 ```
 <b>Returns:</b>
 
-Key \| undefined
+\[Key, Value\] \| null
 

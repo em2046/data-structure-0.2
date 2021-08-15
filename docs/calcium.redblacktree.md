@@ -9,8 +9,16 @@ The red black tree holds key-value pairs.
 <b>Signature:</b>
 
 ```typescript
-export declare class RedBlackTree<Key, Value> 
+export declare class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> 
 ```
+<b>Implements:</b> Iterable&lt;\[Key, Value\]&gt;
+
+## Constructors
+
+|  Constructor | Modifiers | Description |
+|  --- | --- | --- |
+|  [(constructor)()](./calcium.redblacktree._constructor_.md) |  | Creates a new red black tree. |
+|  [(constructor)(iterable)](./calcium.redblacktree._constructor__1.md) |  | Creates a new, shallow-copied red black tree instance from an iterable object. |
 
 ## Properties
 
@@ -22,14 +30,18 @@ export declare class RedBlackTree<Key, Value>
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
+|  [\[Symbol.iterator\]()](./calcium.redblacktree._symbol.iterator_.md) |  | Returns a new Iterator object that contains the <code>[key, value]</code> pairs for each element in the red black tree in in-order. |
 |  [clear()](./calcium.redblacktree.clear.md) |  | Removes all elements from a red black tree. |
 |  [delete(key)](./calcium.redblacktree.delete.md) |  | Removes the specified element from a red black tree by key. |
 |  [deleteMax()](./calcium.redblacktree.deletemax.md) |  | Removes the largest element from a red black tree. |
 |  [deleteMin()](./calcium.redblacktree.deletemin.md) |  | Removes the smallest element from a red black tree. |
+|  [entries()](./calcium.redblacktree.entries.md) |  | Returns a new Iterator object that contains the <code>[key, value]</code> pairs for each element in the red black tree in in-order. |
 |  [get(key)](./calcium.redblacktree.get.md) |  | Returns a specified element from a red black tree. |
-|  [max()](./calcium.redblacktree.max.md) |  | Returns the key of the largest element from a red black tree. |
-|  [min()](./calcium.redblacktree.min.md) |  | Returns the key of the smallest element from a red black tree. |
-|  [next(key)](./calcium.redblacktree.next.md) |  | Returns the key of the smallest element greater than to the given key. |
-|  [previous(key)](./calcium.redblacktree.previous.md) |  | Returns the key of the largest element less than to the given key. |
+|  [keys()](./calcium.redblacktree.keys.md) |  | Returns a new Iterator object that contains the keys for each element in the red black tree in in-order. |
+|  [max()](./calcium.redblacktree.max.md) |  | Returns the key-value pair of the largest element from a red black tree. |
+|  [min()](./calcium.redblacktree.min.md) |  | Returns the key-value pair of the smallest element from a red black tree. |
+|  [next(key)](./calcium.redblacktree.next.md) |  | Returns the key-value pair of the smallest element greater than to the given key. |
+|  [previous(key)](./calcium.redblacktree.previous.md) |  | Returns the key-value pair of the largest element less than to the given key. |
 |  [set(key, value)](./calcium.redblacktree.set.md) |  | Adds or updates an element with a specified key and a value to a red black tree. |
+|  [values()](./calcium.redblacktree.values.md) |  | Returns a new Iterator object that contains the values for each element in the red black tree in in-order. |
 
