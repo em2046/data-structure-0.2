@@ -1,5 +1,4 @@
-import { BinaryHeap } from "./binary-heap";
-import { Comparable } from "./comparable";
+import { BinaryHeap, Comparable } from "../../src";
 
 // Copied from
 // https://github.com/rust-lang/rust/blob/d488de82f30fd1dcb0220d57498638596622394e/library/alloc/tests/binary_heap.rs

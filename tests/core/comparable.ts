@@ -1,11 +1,13 @@
 import {
   Comparable,
+  equality,
+  Equatable,
   greaterThan,
   greaterThanOrEqual,
+  inequality,
   lessThan,
   lessThanOrEqual,
-} from "./comparable";
-import { equality, Equatable, inequality } from "./equatable";
+} from "../../src";
 
 // Copied from
 // https://github.com/rust-lang/rust/blob/673d0db5e393e9c64897005b470bfeb6d5aec61b/library/core/tests/cmp.rs

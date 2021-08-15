@@ -1,4 +1,4 @@
-import { Identifiable } from "./identifiable";
+import { Identifiable } from "../../src";
 
 // Copied from
 // https://github.com/apple/swift/blob/392ba002c88346bc8d5cf8e19cb233d17794e844/test/stdlib/Identifiable.swift
