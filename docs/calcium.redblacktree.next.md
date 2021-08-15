@@ -4,12 +4,12 @@
 
 ## RedBlackTree.next() method
 
-Returns the key of the smallest element greater than to the given key.
+Returns the key-value pair of the smallest element greater than to the given key.
 
 <b>Signature:</b>
 
 ```typescript
-next(key: Key): Key | undefined;
+next(key: Key): [Key, Value] | null;
 ```
 
 ## Parameters
@@ -20,5 +20,5 @@ next(key: Key): Key | undefined;
 
 <b>Returns:</b>
 
-Key \| undefined
+\[Key, Value\] \| null
 

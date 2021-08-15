@@ -11,9 +11,9 @@ This method does not change the existing binary heap.
 <b>Signature:</b>
 
 ```typescript
-[Symbol.iterator](): Iterator<T>;
+[Symbol.iterator](): IterableIterator<T>;
 ```
 <b>Returns:</b>
 
-Iterator&lt;T&gt;
+IterableIterator&lt;T&gt;
 

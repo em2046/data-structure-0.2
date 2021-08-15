@@ -1,6 +1,11 @@
 import { RedBlackTree } from "./red-black-tree";
 
+// Copied from
+// https://github.com/rust-lang/rust/blob/fa2692990c05652c7823c8d2afae501a00a69050/library/alloc/src/collections/btree/map/tests.rs
+
 describe("red black tree", () => {
+  const MIN_INSERTS_HEIGHT_2 = 89;
+
   test("basic", () => {
     const origin = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     const redBlackTree = new RedBlackTree<number, number>();
@@ -25,10 +30,10 @@ describe("red black tree", () => {
 
     expect(ret2).toBe(false);
     expect(redBlackTree.size).toBe(size);
-    expect(redBlackTree.previous(1)).toBe(0);
-    expect(redBlackTree.previous(0)).toBe(undefined);
-    expect(redBlackTree.next(8)).toBe(9);
-    expect(redBlackTree.next(9)).toBe(undefined);
+    expect(redBlackTree.previous(1)?.[0]).toBe(0);
+    expect(redBlackTree.previous(0)).toBe(null);
+    expect(redBlackTree.next(8)?.[0]).toBe(9);
+    expect(redBlackTree.next(9)).toBe(null);
 
     origin.forEach((element) => {
       const ret = redBlackTree.delete(element);
@@ -36,10 +41,10 @@ describe("red black tree", () => {
       expect(ret).toBe(true);
     });
 
-    expect(redBlackTree.min()).toBe(undefined);
-    expect(redBlackTree.max()).toBe(undefined);
-    expect(redBlackTree.previous(1)).toBe(undefined);
-    expect(redBlackTree.next(8)).toBe(undefined);
+    expect(redBlackTree.min()).toBe(null);
+    expect(redBlackTree.max()).toBe(null);
+    expect(redBlackTree.previous(1)).toBe(null);
+    expect(redBlackTree.next(8)).toBe(null);
     expect(redBlackTree.size).toBe(0);
   });
 
@@ -141,7 +146,7 @@ describe("red black tree", () => {
     for (let i = 0; i < size; i++) {
       const min = redBlackTree.min();
 
-      expect(min).toBe(ordered[i]);
+      expect(min?.[0]).toBe(ordered[i]);
 
       const ret = redBlackTree.deleteMin();
 
@@ -173,7 +178,7 @@ describe("red black tree", () => {
     for (let i = 0; i < size; i++) {
       const max = redBlackTree.max();
 
-      expect(max).toBe(ordered[i]);
+      expect(max?.[0]).toBe(ordered[i]);
 
       const ret = redBlackTree.deleteMax();
 
@@ -204,7 +209,7 @@ describe("red black tree", () => {
       const current = ordered[i];
       const previous = ordered[i - 1];
 
-      expect(redBlackTree.previous(current)).toBe(previous);
+      expect(redBlackTree.previous(current)?.[0]).toBe(previous);
     }
   });
 
@@ -224,7 +229,117 @@ describe("red black tree", () => {
       const current = ordered[i];
       const next = ordered[i + 1];
 
-      expect(redBlackTree.next(current)).toBe(next);
+      expect(redBlackTree.next(current)?.[0]).toBe(next);
     }
+  });
+
+  test("basic large", () => {
+    const map = new RedBlackTree<number, number>();
+    let size = MIN_INSERTS_HEIGHT_2;
+
+    size = size + (size % 2);
+
+    expect(map.size).toBe(0);
+
+    for (let i = 0; i < size; i++) {
+      map.set(i, 10 * i);
+      expect(map.size).toBe(i + 1);
+    }
+
+    expect(map.min()).toStrictEqual([0, 0]);
+    expect(map.max()).toStrictEqual([size - 1, 10 * (size - 1)]);
+    expect(map.min()?.[0]).toStrictEqual(0);
+    expect(map.max()?.[0]).toStrictEqual(size - 1);
+
+    for (let i = 0; i < size; i++) {
+      expect(map.get(i)).toBe(i * 10);
+    }
+
+    for (let i = size; i < size * 2; i++) {
+      expect(map.get(i)).toBe(undefined);
+    }
+
+    for (let i = 0; i < size; i++) {
+      map.set(i, 100 * i);
+      expect(map.size).toBe(size);
+    }
+
+    for (let i = 0; i < size; i++) {
+      expect(map.get(i)).toBe(i * 100);
+    }
+
+    for (let i = 0; i < size / 2; i++) {
+      expect(map.delete(i * 2)).toBe(true);
+      expect(map.size).toBe(size - i - 1);
+    }
+
+    for (let i = 0; i < size / 2; i++) {
+      expect(map.get(2 * i)).toBe(undefined);
+      expect(map.get(2 * i + 1)).toBe(i * 200 + 100);
+    }
+
+    for (let i = 0; i < size / 2; i++) {
+      expect(map.delete(2 * i)).toBe(false);
+      expect(map.delete(2 * i + 1)).toBe(true);
+      expect(map.size).toBe(size / 2 - i - 1);
+    }
+  });
+
+  test("basic small", () => {
+    const map = new RedBlackTree<number, number>();
+
+    expect(map.delete(1)).toBe(false);
+    expect(map.size).toBe(0);
+    expect(map.get(1)).toBe(undefined);
+    expect(map.min()).toBe(null);
+    expect(map.max()).toBe(null);
+    expect([...map.keys()].length).toBe(0);
+    expect([...map.values()].length).toBe(0);
+
+    map.set(1, 1);
+
+    expect(map.size).toBe(1);
+    expect(map.get(1)).toBe(1);
+    expect(map.min()).toStrictEqual([1, 1]);
+    expect(map.max()).toStrictEqual([1, 1]);
+    expect([...map.keys()]).toStrictEqual([1]);
+    expect([...map.values()]).toStrictEqual([1]);
+
+    map.set(1, 2);
+
+    expect(map.size).toBe(1);
+    expect(map.get(1)).toBe(2);
+    expect(map.min()).toStrictEqual([1, 2]);
+    expect(map.max()).toStrictEqual([1, 2]);
+    expect([...map.keys()]).toStrictEqual([1]);
+    expect([...map.values()]).toStrictEqual([2]);
+
+    map.set(2, 4);
+
+    expect(map.size).toBe(2);
+    expect(map.get(2)).toBe(4);
+    expect(map.min()).toStrictEqual([1, 2]);
+    expect(map.max()).toStrictEqual([2, 4]);
+    expect([...map.keys()]).toStrictEqual([1, 2]);
+    expect([...map.values()]).toStrictEqual([2, 4]);
+
+    expect(map.delete(1)).toBe(true);
+
+    expect(map.size).toBe(1);
+    expect(map.get(1)).toBe(undefined);
+    expect(map.get(2)).toBe(4);
+    expect(map.min()).toStrictEqual([2, 4]);
+    expect(map.max()).toStrictEqual([2, 4]);
+    expect([...map.keys()]).toStrictEqual([2]);
+    expect([...map.values()]).toStrictEqual([4]);
+
+    expect(map.delete(2)).toBe(true);
+
+    expect(map.size).toBe(0);
+    expect(map.get(1)).toBe(undefined);
+    expect(map.min()).toBe(null);
+    expect(map.max()).toBe(null);
+    expect([...map.keys()].length).toBe(0);
+    expect([...map.values()].length).toBe(0);
   });
 });

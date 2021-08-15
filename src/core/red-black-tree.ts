@@ -111,15 +111,152 @@ function fixUp<Key, Value>(node: Node<Key, Value>): Node<Key, Value> {
  *
  * The red black tree holds key-value pairs.
  */
-export class RedBlackTree<Key, Value> {
+export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
   #root: Node<Key, Value> | null = null;
   #size = 0;
+
+  /**
+   * Creates a new red black tree.
+   */
+  constructor();
+
+  /**
+   * Creates a new, shallow-copied red black tree instance from an iterable
+   * object.
+   *
+   * @param iterable - An `Array` or other iterable object whose elements are
+   * key-value pairs. (For example, arrays with two elements, such as
+   * `[[ 1, 'one' ],[ 2, 'two' ]]`.) Each key-value pair is added to the new
+   * red black tree.
+   */
+  constructor(iterable: Iterable<[Key, Value]>);
+
+  constructor(iterable: Iterable<[Key, Value]> = []) {
+    for (const entry of iterable) {
+      this.set(entry[0], entry[1]);
+    }
+  }
 
   /**
    * Returns the number of elements in a red black tree.
    */
   get size(): number {
     return this.#size;
+  }
+
+  /**
+   * Returns a new Iterator object that contains the `[key, value]` pairs for
+   * each element in the red black tree in in-order.
+   */
+  [Symbol.iterator](): IterableIterator<[Key, Value]> {
+    return this.entries();
+  }
+
+  /**
+   * Returns a new Iterator object that contains the `[key, value]` pairs for
+   * each element in the red black tree in in-order.
+   * In this particular case, this iterator object is also an iterable, so the
+   * for-of loop can be used. When the protocol `[Symbol.iterator]` is used, it
+   * returns a function that, when invoked, returns this iterator itself.
+   */
+  entries(): IterableIterator<[Key, Value]> {
+    let node = this.#root;
+    const stack: Node<Key, Value>[] = [];
+
+    return {
+      [Symbol.iterator](): IterableIterator<[Key, Value]> {
+        return this;
+      },
+      next(): IteratorResult<[Key, Value]> {
+        while (node !== null || stack.length > 0) {
+          if (node !== null) {
+            stack.push(node);
+            node = node.left;
+          } else {
+            const last = stack.pop();
+
+            assert(last !== undefined);
+            node = last;
+
+            const entry: [Key, Value] = [node.key, node.value];
+
+            node = node.right;
+
+            return {
+              done: false,
+              value: entry,
+            };
+          }
+        }
+
+        return {
+          done: true,
+          value: undefined,
+        };
+      },
+    };
+  }
+
+  /**
+   * Returns a new Iterator object that contains the keys for each element in
+   * the red black tree in in-order.
+   */
+  keys(): IterableIterator<Key> {
+    const iterator = this.entries();
+
+    return {
+      [Symbol.iterator](): IterableIterator<Key> {
+        return this;
+      },
+      next(): IteratorResult<Key> {
+        const next = iterator.next();
+
+        if (next.done) {
+          return {
+            done: true,
+            value: undefined,
+          };
+        }
+
+        const entry = next.value;
+
+        return {
+          done: false,
+          value: entry[0],
+        };
+      },
+    };
+  }
+
+  /**
+   * Returns a new Iterator object that contains the values for each element in
+   * the red black tree in in-order.
+   */
+  values(): IterableIterator<Value> {
+    const iterator = this.entries();
+
+    return {
+      [Symbol.iterator](): IterableIterator<Value> {
+        return this;
+      },
+      next(): IteratorResult<Value> {
+        const next = iterator.next();
+
+        if (next.done) {
+          return {
+            done: true,
+            value: undefined,
+          };
+        }
+
+        const entry = next.value;
+
+        return {
+          done: false,
+          value: entry[1],
+        };
+      },
+    };
   }
 
   /**
@@ -146,55 +283,59 @@ export class RedBlackTree<Key, Value> {
   }
 
   /**
-   * Returns the key of the smallest element from a red black tree.
+   * Returns the key-value pair of the smallest element from a red black tree.
    */
-  min(): Key | undefined {
+  min(): [Key, Value] | null {
     if (this.#root === null) {
-      return undefined;
+      return null;
     }
 
-    return this.#min(this.#root).key;
+    const node = this.#min(this.#root);
+
+    return [node.key, node.value];
   }
 
   /**
-   * Returns the key of the largest element from a red black tree.
+   * Returns the key-value pair of the largest element from a red black tree.
    */
-  max(): Key | undefined {
+  max(): [Key, Value] | null {
     if (this.#root === null) {
-      return undefined;
+      return null;
     }
 
-    return this.#max(this.#root).key;
+    const node = this.#max(this.#root);
+
+    return [node.key, node.value];
   }
 
   /**
-   * Returns the key of the largest element less than to the given key.
+   * Returns the key-value pair of the largest element less than to the given key.
    *
    * @param key - The given key.
    */
-  previous(key: Key): Key | undefined {
+  previous(key: Key): [Key, Value] | null {
     const node = this.#previous(this.#root, key);
 
     if (node === null) {
-      return undefined;
+      return null;
     }
 
-    return node.key;
+    return [node.key, node.value];
   }
 
   /**
-   * Returns the key of the smallest element greater than to the given key.
+   * Returns the key-value pair of the smallest element greater than to the given key.
    *
    * @param key - The given key.
    */
-  next(key: Key): Key | undefined {
+  next(key: Key): [Key, Value] | null {
     const node = this.#next(this.#root, key);
 
     if (node === null) {
-      return undefined;
+      return null;
     }
 
-    return node.key;
+    return [node.key, node.value];
   }
 
   /**
@@ -404,16 +545,17 @@ export class RedBlackTree<Key, Value> {
 
   #delete(node: Node<Key, Value>, key: Key): Node<Key, Value> | null {
     if (lessThan(key, node.key)) {
-      assert(node.left !== null);
-
-      if (!isRed(node.left)) {
-        if (!isRed(node.left.left)) {
-          node = moveRedLeft(node);
+      if (node.left !== null) {
+        if (!isRed(node.left)) {
+          if (!isRed(node.left.left)) {
+            node = moveRedLeft(node);
+          }
         }
       }
 
-      assert(node.left !== null);
-      node.left = this.#delete(node.left, key);
+      if (node.left !== null) {
+        node.left = this.#delete(node.left, key);
+      }
     } else {
       if (isRed(node.left)) {
         node = rotateRight(node);
@@ -431,16 +573,14 @@ export class RedBlackTree<Key, Value> {
         }
       }
 
-      if (equality(key, node.key)) {
-        assert(node.right !== null);
+      if (node.right !== null) {
+        if (equality(key, node.key)) {
+          const min = this.#min(node.right);
 
-        const min = this.#min(node.right);
-
-        node.key = min.key;
-        node.value = min.value;
-        node.right = this.#deleteMin(node.right);
-      } else {
-        if (node.right !== null) {
+          node.key = min.key;
+          node.value = min.value;
+          node.right = this.#deleteMin(node.right);
+        } else {
           node.right = this.#delete(node.right, key);
         }
       }

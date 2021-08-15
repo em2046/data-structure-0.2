@@ -4,12 +4,12 @@
 
 ## RedBlackTree.previous() method
 
-Returns the key of the largest element less than to the given key.
+Returns the key-value pair of the largest element less than to the given key.
 
 <b>Signature:</b>
 
 ```typescript
-previous(key: Key): Key | undefined;
+previous(key: Key): [Key, Value] | null;
 ```
 
 ## Parameters
@@ -20,5 +20,5 @@ previous(key: Key): Key | undefined;
 
 <b>Returns:</b>
 
-Key \| undefined
+\[Key, Value\] \| null
 
