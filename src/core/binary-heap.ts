@@ -53,10 +53,13 @@ export class BinaryHeap<T> implements Iterable<T> {
    *
    * This method does not change the existing binary heap.
    */
-  [Symbol.iterator](): Iterator<T> {
+  [Symbol.iterator](): IterableIterator<T> {
     const clone = BinaryHeap.from(this.#elements);
 
     return {
+      [Symbol.iterator](): IterableIterator<T> {
+        return this;
+      },
       next(): IteratorResult<T> {
         if (clone.size < 1) {
           return {

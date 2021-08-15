@@ -284,4 +284,15 @@ describe("red black tree", () => {
       expect(map.size).toBe(size / 2 - i - 1);
     }
   });
+
+  test("basic small", () => {
+    const map = new RedBlackTree<number, number>();
+
+    expect(map.delete(1)).toBe(false);
+    expect(map.size).toBe(0);
+    expect(map.get(1)).toBe(undefined);
+    expect(map.min()).toBe(null);
+    expect(map.max()).toBe(null);
+    expect([...map.keys()].length).toBe(0);
+  });
 });
