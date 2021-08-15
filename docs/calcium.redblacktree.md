@@ -30,18 +30,18 @@ export declare class RedBlackTree<Key, Value> implements Iterable<[Key, Value]>
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [\[Symbol.iterator\]()](./calcium.redblacktree._symbol.iterator_.md) |  | Returns a new Iterator object that contains the <code>[key, value]</code> pairs for each element in the red black tree in in-order. |
+|  [\[Symbol.iterator\]()](./calcium.redblacktree._symbol.iterator_.md) |  | Returns a new iterator object that contains the <code>[key, value]</code> pairs for each element in the red black tree in in-order. In this particular case, this iterator object is also an iterable, so the for-of loop can be used. When the protocol <code>[Symbol.iterator]</code> is used, it returns a function that, when invoked, returns this iterator itself. |
 |  [clear()](./calcium.redblacktree.clear.md) |  | Removes all elements from a red black tree. |
 |  [delete(key)](./calcium.redblacktree.delete.md) |  | Removes the specified element from a red black tree by key. |
 |  [deleteMax()](./calcium.redblacktree.deletemax.md) |  | Removes the largest element from a red black tree. |
 |  [deleteMin()](./calcium.redblacktree.deletemin.md) |  | Removes the smallest element from a red black tree. |
-|  [entries()](./calcium.redblacktree.entries.md) |  | Returns a new Iterator object that contains the <code>[key, value]</code> pairs for each element in the red black tree in in-order. In this particular case, this iterator object is also an iterable, so the for-of loop can be used. When the protocol <code>[Symbol.iterator]</code> is used, it returns a function that, when invoked, returns this iterator itself. |
+|  [entries()](./calcium.redblacktree.entries.md) |  | Returns a new iterator object that contains the <code>[key, value]</code> pairs for each element in the red black tree in in-order. In this particular case, this iterator object is also an iterable, so the for-of loop can be used. When the protocol <code>[Symbol.iterator]</code> is used, it returns a function that, when invoked, returns this iterator itself. |
 |  [get(key)](./calcium.redblacktree.get.md) |  | Returns a specified element from a red black tree. |
-|  [keys()](./calcium.redblacktree.keys.md) |  | Returns a new Iterator object that contains the keys for each element in the red black tree in in-order. |
+|  [keys()](./calcium.redblacktree.keys.md) |  | Returns a new iterator object that contains the keys for each element in the red black tree in in-order. |
 |  [max()](./calcium.redblacktree.max.md) |  | Returns the key-value pair of the largest element from a red black tree. |
 |  [min()](./calcium.redblacktree.min.md) |  | Returns the key-value pair of the smallest element from a red black tree. |
 |  [next(key)](./calcium.redblacktree.next.md) |  | Returns the key-value pair of the smallest element greater than to the given key. |
 |  [previous(key)](./calcium.redblacktree.previous.md) |  | Returns the key-value pair of the largest element less than to the given key. |
 |  [set(key, value)](./calcium.redblacktree.set.md) |  | Adds or updates an element with a specified key and a value to a red black tree. |
-|  [values()](./calcium.redblacktree.values.md) |  | Returns a new Iterator object that contains the values for each element in the red black tree in in-order. |
+|  [values()](./calcium.redblacktree.values.md) |  | Returns a new iterator object that contains the values for each element in the red black tree in in-order. |
 
