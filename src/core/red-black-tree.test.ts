@@ -294,5 +294,52 @@ describe("red black tree", () => {
     expect(map.min()).toBe(null);
     expect(map.max()).toBe(null);
     expect([...map.keys()].length).toBe(0);
+    expect([...map.values()].length).toBe(0);
+
+    map.set(1, 1);
+
+    expect(map.size).toBe(1);
+    expect(map.get(1)).toBe(1);
+    expect(map.min()).toStrictEqual([1, 1]);
+    expect(map.max()).toStrictEqual([1, 1]);
+    expect([...map.keys()]).toStrictEqual([1]);
+    expect([...map.values()]).toStrictEqual([1]);
+
+    map.set(1, 2);
+
+    expect(map.size).toBe(1);
+    expect(map.get(1)).toBe(2);
+    expect(map.min()).toStrictEqual([1, 2]);
+    expect(map.max()).toStrictEqual([1, 2]);
+    expect([...map.keys()]).toStrictEqual([1]);
+    expect([...map.values()]).toStrictEqual([2]);
+
+    map.set(2, 4);
+
+    expect(map.size).toBe(2);
+    expect(map.get(2)).toBe(4);
+    expect(map.min()).toStrictEqual([1, 2]);
+    expect(map.max()).toStrictEqual([2, 4]);
+    expect([...map.keys()]).toStrictEqual([1, 2]);
+    expect([...map.values()]).toStrictEqual([2, 4]);
+
+    expect(map.delete(1)).toBe(true);
+
+    expect(map.size).toBe(1);
+    expect(map.get(1)).toBe(undefined);
+    expect(map.get(2)).toBe(4);
+    expect(map.min()).toStrictEqual([2, 4]);
+    expect(map.max()).toStrictEqual([2, 4]);
+    expect([...map.keys()]).toStrictEqual([2]);
+    expect([...map.values()]).toStrictEqual([4]);
+
+    expect(map.delete(2)).toBe(true);
+
+    expect(map.size).toBe(0);
+    expect(map.get(1)).toBe(undefined);
+    expect(map.min()).toBe(null);
+    expect(map.max()).toBe(null);
+    expect([...map.keys()].length).toBe(0);
+    expect([...map.values()].length).toBe(0);
   });
 });
