@@ -1,4 +1,4 @@
-import { assert } from "./assert";
+import { assert } from "../../src/shared";
 
 describe("assert", () => {
   test("throw", () => {
