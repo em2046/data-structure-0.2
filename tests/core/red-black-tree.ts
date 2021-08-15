@@ -9,7 +9,6 @@ describe("red black tree", () => {
   const NODE_CAPACITY = 2 * B - 1;
   const MIN_INSERTS_HEIGHT_1 = NODE_CAPACITY + 1;
   const MIN_INSERTS_HEIGHT_2 = 89;
-  const ITERATOR_SIZE = 200;
 
   test("basic large", () => {
     const map = new RedBlackTree<number, number>();
@@ -26,8 +25,8 @@ describe("red black tree", () => {
 
     expect(map.min()).toStrictEqual([0, 0]);
     expect(map.max()).toStrictEqual([size - 1, 10 * (size - 1)]);
-    expect(map.min()?.[0]).toStrictEqual(0);
-    expect(map.max()?.[0]).toStrictEqual(size - 1);
+    expect(map.min()?.[0]).toBe(0);
+    expect(map.max()?.[0]).toBe(size - 1);
 
     for (let i = 0; i < size; i++) {
       expect(map.get(i)).toBe(i * 10);
@@ -122,7 +121,7 @@ describe("red black tree", () => {
   });
 
   test("iterator", () => {
-    const size = VITE ? ITERATOR_SIZE : 10000;
+    const size = VITE ? 200 : 10000;
     const data: [number, number][] = new Array(size)
       .fill(0)
       .map((_, i) => [i, i]);
@@ -207,12 +206,15 @@ describe("red black tree", () => {
     expect(map.size).toBe(0);
 
     map.set(1, 1);
+
     expect(map.deleteMin()).toBe(true);
     expect(map.size).toBe(0);
 
     map.set(1, 2);
     map.set(2, 4);
+
     expect(map.deleteMin()).toBe(true);
+
     expect(map.size).toBe(1);
     expect(map.get(2)).toBe(4);
   });
@@ -225,12 +227,15 @@ describe("red black tree", () => {
     expect(map.size).toBe(0);
 
     map.set(1, 1);
+
     expect(map.deleteMax()).toBe(true);
     expect(map.size).toBe(0);
 
     map.set(1, 2);
     map.set(2, 4);
+
     expect(map.deleteMax()).toBe(true);
+
     expect(map.size).toBe(1);
     expect(map.get(1)).toBe(2);
   });

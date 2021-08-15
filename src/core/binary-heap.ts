@@ -68,13 +68,13 @@ export class BinaryHeap<T> implements Iterable<T> {
           };
         }
 
-        const element = clone.pop();
+        const min = clone.pop();
 
-        assert(element !== undefined);
+        assert(min !== undefined);
 
         return {
           done: false,
-          value: element,
+          value: min,
         };
       },
     };

@@ -132,8 +132,8 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
   constructor(iterable: Iterable<[Key, Value]>);
 
   constructor(iterable: Iterable<[Key, Value]> = []) {
-    for (const entry of iterable) {
-      this.set(entry[0], entry[1]);
+    for (const [key, value] of iterable) {
+      this.set(key, value);
     }
   }
 
@@ -145,15 +145,18 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
   }
 
   /**
-   * Returns a new Iterator object that contains the `[key, value]` pairs for
+   * Returns a new iterator object that contains the `[key, value]` pairs for
    * each element in the red black tree in in-order.
+   * In this particular case, this iterator object is also an iterable, so the
+   * for-of loop can be used. When the protocol `[Symbol.iterator]` is used, it
+   * returns a function that, when invoked, returns this iterator itself.
    */
   [Symbol.iterator](): IterableIterator<[Key, Value]> {
     return this.entries();
   }
 
   /**
-   * Returns a new Iterator object that contains the `[key, value]` pairs for
+   * Returns a new iterator object that contains the `[key, value]` pairs for
    * each element in the red black tree in in-order.
    * In this particular case, this iterator object is also an iterable, so the
    * for-of loop can be used. When the protocol `[Symbol.iterator]` is used, it
@@ -178,13 +181,13 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
             assert(last !== undefined);
             node = last;
 
-            const entry: [Key, Value] = [node.key, node.value];
+            const { key, value } = node;
 
             node = node.right;
 
             return {
               done: false,
-              value: entry,
+              value: [key, value],
             };
           }
         }
@@ -198,7 +201,7 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
   }
 
   /**
-   * Returns a new Iterator object that contains the keys for each element in
+   * Returns a new iterator object that contains the keys for each element in
    * the red black tree in in-order.
    */
   keys(): IterableIterator<Key> {
@@ -218,18 +221,18 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
           };
         }
 
-        const entry = next.value;
+        const [key] = next.value;
 
         return {
           done: false,
-          value: entry[0],
+          value: key,
         };
       },
     };
   }
 
   /**
-   * Returns a new Iterator object that contains the values for each element in
+   * Returns a new iterator object that contains the values for each element in
    * the red black tree in in-order.
    */
   values(): IterableIterator<Value> {
@@ -249,11 +252,11 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
           };
         }
 
-        const entry = next.value;
+        const [, value] = next.value;
 
         return {
           done: false,
-          value: entry[1],
+          value: value,
         };
       },
     };
@@ -309,7 +312,8 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
   }
 
   /**
-   * Returns the key-value pair of the largest element less than to the given key.
+   * Returns the key-value pair of the largest element less than to the given
+   * key.
    *
    * @param key - The given key.
    */
@@ -324,7 +328,8 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
   }
 
   /**
-   * Returns the key-value pair of the smallest element greater than to the given key.
+   * Returns the key-value pair of the smallest element greater than to the
+   * given key.
    *
    * @param key - The given key.
    */
