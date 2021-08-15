@@ -4,238 +4,16 @@ import { RedBlackTree } from "../../src";
 // https://github.com/rust-lang/rust/blob/fa2692990c05652c7823c8d2afae501a00a69050/library/alloc/src/collections/btree/map/tests.rs
 
 describe("red black tree", () => {
+  const VITE = true;
+  const B = 6;
+  const NODE_CAPACITY = 2 * B - 1;
+  const MIN_INSERTS_HEIGHT_1 = NODE_CAPACITY + 1;
   const MIN_INSERTS_HEIGHT_2 = 89;
-
-  test("basic", () => {
-    const origin = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-    const redBlackTree = new RedBlackTree<number, number>();
-    const size = origin.length;
-    const ret1 = redBlackTree.delete(20);
-
-    expect(ret1).toBe(false);
-
-    origin.forEach((element) => {
-      redBlackTree.set(element, element);
-
-      expect(redBlackTree.get(element)).toBe(element);
-    });
-
-    expect(redBlackTree.size).toBe(size);
-    expect(redBlackTree.get(20)).toBe(undefined);
-    expect(redBlackTree.get(-1)).toBe(undefined);
-
-    redBlackTree.set(1, 1);
-
-    const ret2 = redBlackTree.delete(20);
-
-    expect(ret2).toBe(false);
-    expect(redBlackTree.size).toBe(size);
-    expect(redBlackTree.previous(1)?.[0]).toBe(0);
-    expect(redBlackTree.previous(0)).toBe(null);
-    expect(redBlackTree.next(8)?.[0]).toBe(9);
-    expect(redBlackTree.next(9)).toBe(null);
-
-    origin.forEach((element) => {
-      const ret = redBlackTree.delete(element);
-
-      expect(ret).toBe(true);
-    });
-
-    expect(redBlackTree.min()).toBe(null);
-    expect(redBlackTree.max()).toBe(null);
-    expect(redBlackTree.previous(1)).toBe(null);
-    expect(redBlackTree.next(8)).toBe(null);
-    expect(redBlackTree.size).toBe(0);
-  });
-
-  test("change", () => {
-    const redBlackTree = new RedBlackTree<number, number>();
-    const size = 1000;
-
-    for (let i = 0; i < size; i++) {
-      redBlackTree.set(i, i);
-    }
-
-    expect(redBlackTree.size).toBe(size);
-
-    for (let i = 0; i < size; i++) {
-      const ret = redBlackTree.delete(i);
-
-      expect(ret).toBe(true);
-    }
-
-    expect(redBlackTree.size).toBe(0);
-  });
-
-  test("clear", () => {
-    const redBlackTree = new RedBlackTree<number, number>();
-    const size = 1000;
-
-    for (let i = 0; i < size; i++) {
-      const element = Math.random();
-
-      redBlackTree.set(element, element);
-    }
-
-    expect(redBlackTree.size).toBe(size);
-
-    redBlackTree.clear();
-
-    expect(redBlackTree.size).toBe(0);
-  });
-
-  test("mess", () => {
-    const origin = [
-      18, 73, 67, 64, 58, 71, 76, 5, 61, 27, 96, 95, 4, 32, 99, 72, 37, 87, 90,
-      48, 70, 56, 57, 28, 74, 3, 41, 39, 59, 38, 94, 13, 35, 89, 7, 85, 81, 10,
-      83, 49, 12, 97, 21, 15, 50, 65, 40, 55, 98, 86, 2, 100, 63, 75, 14, 9, 62,
-      43, 69, 19, 0, 53, 80, 33, 47, 44,
-    ];
-    const redBlackTree = new RedBlackTree<number, number>();
-    const size = origin.length;
-
-    for (let i = 0; i < size; i++) {
-      redBlackTree.set(origin[i], origin[i]);
-    }
-
-    expect(redBlackTree.size).toBe(size);
-
-    for (let i = 0; i < size; i++) {
-      const ret = redBlackTree.delete(origin[i]);
-
-      expect(ret).toBe(true);
-    }
-
-    expect(redBlackTree.size).toBe(0);
-  });
-
-  test("random", () => {
-    const size = 1000;
-    const origin = new Array(size).fill(0).map(() => Math.random());
-    const redBlackTree = new RedBlackTree<number, number>();
-
-    for (let i = 0; i < size; i++) {
-      redBlackTree.set(origin[i], origin[i]);
-    }
-
-    expect(redBlackTree.size).toBe(size);
-
-    for (let i = 0; i < size; i++) {
-      const ret = redBlackTree.delete(origin[i]);
-
-      expect(ret).toBe(true);
-    }
-
-    expect(redBlackTree.size).toBe(0);
-  });
-
-  test("delete min", () => {
-    const size = 1000;
-    const origin = new Array(size).fill(0).map(() => Math.random());
-    const ordered = [...origin].sort((a, b) => {
-      return a - b;
-    });
-    const redBlackTree = new RedBlackTree<number, number>();
-
-    for (let i = 0; i < size; i++) {
-      redBlackTree.set(origin[i], origin[i]);
-    }
-
-    expect(redBlackTree.size).toBe(size);
-
-    for (let i = 0; i < size; i++) {
-      const min = redBlackTree.min();
-
-      expect(min?.[0]).toBe(ordered[i]);
-
-      const ret = redBlackTree.deleteMin();
-
-      expect(ret).toBe(true);
-    }
-
-    expect(redBlackTree.size).toBe(0);
-
-    const ret = redBlackTree.deleteMin();
-
-    expect(ret).toBe(false);
-    expect(redBlackTree.size).toBe(0);
-  });
-
-  test("delete max", () => {
-    const size = 1000;
-    const origin = new Array(size).fill(0).map(() => Math.random());
-    const ordered = [...origin].sort((a, b) => {
-      return b - a;
-    });
-    const redBlackTree = new RedBlackTree<number, number>();
-
-    for (let i = 0; i < size; i++) {
-      redBlackTree.set(origin[i], origin[i]);
-    }
-
-    expect(redBlackTree.size).toBe(size);
-
-    for (let i = 0; i < size; i++) {
-      const max = redBlackTree.max();
-
-      expect(max?.[0]).toBe(ordered[i]);
-
-      const ret = redBlackTree.deleteMax();
-
-      expect(ret).toBe(true);
-    }
-
-    expect(redBlackTree.size).toBe(0);
-
-    const ret = redBlackTree.deleteMax();
-
-    expect(ret).toBe(false);
-    expect(redBlackTree.size).toBe(0);
-  });
-
-  test("previous", () => {
-    const size = 1000;
-    const origin = new Array(size).fill(0).map(() => Math.random());
-    const ordered = [...origin].sort((a, b) => {
-      return a - b;
-    });
-    const redBlackTree = new RedBlackTree<number, number>();
-
-    for (let i = 0; i < size; i++) {
-      redBlackTree.set(origin[i], origin[i]);
-    }
-
-    for (let i = 0; i < size; i++) {
-      const current = ordered[i];
-      const previous = ordered[i - 1];
-
-      expect(redBlackTree.previous(current)?.[0]).toBe(previous);
-    }
-  });
-
-  test("next", () => {
-    const size = 1000;
-    const origin = new Array(size).fill(0).map(() => Math.random());
-    const ordered = [...origin].sort((a, b) => {
-      return a - b;
-    });
-    const redBlackTree = new RedBlackTree<number, number>();
-
-    for (let i = 0; i < size; i++) {
-      redBlackTree.set(origin[i], origin[i]);
-    }
-
-    for (let i = 0; i < size; i++) {
-      const current = ordered[i];
-      const next = ordered[i + 1];
-
-      expect(redBlackTree.next(current)?.[0]).toBe(next);
-    }
-  });
+  const ITERATOR_SIZE = 200;
 
   test("basic large", () => {
     const map = new RedBlackTree<number, number>();
-    let size = MIN_INSERTS_HEIGHT_2;
+    let size = VITE ? MIN_INSERTS_HEIGHT_2 : 10000;
 
     size = size + (size % 2);
 
@@ -341,5 +119,83 @@ describe("red black tree", () => {
     expect(map.max()).toBe(null);
     expect([...map.keys()].length).toBe(0);
     expect([...map.values()].length).toBe(0);
+  });
+
+  test("iterator", () => {
+    const size = VITE ? ITERATOR_SIZE : 10000;
+    const data: [number, number][] = new Array(size)
+      .fill(0)
+      .map((_, i) => [i, i]);
+    const map = new RedBlackTree<number, number>(data);
+    const iterator = map[Symbol.iterator]();
+
+    for (let i = 0; i < size; i++) {
+      expect(iterator.next().value).toStrictEqual([i, i]);
+    }
+
+    expect(iterator.next().done).toBe(true);
+  });
+
+  test("clear", () => {
+    const map = new RedBlackTree<number, number>();
+    const sizes = [
+      MIN_INSERTS_HEIGHT_1,
+      MIN_INSERTS_HEIGHT_2,
+      0,
+      NODE_CAPACITY,
+    ];
+
+    sizes.forEach((size) => {
+      for (let i = 0; i < size; i++) {
+        map.set(i, i);
+      }
+
+      expect(map.size).toBe(size);
+      map.clear();
+      expect(map.size).toBe(0);
+    });
+  });
+
+  test("keys", () => {
+    const data: [number, string][] = [
+      [1, "a"],
+      [2, "b"],
+      [3, "c"],
+    ];
+    const map = new RedBlackTree<number, string>(data);
+    const keys = [...map.keys()];
+
+    expect(keys.length).toBe(3);
+    expect(keys.includes(1)).toBe(true);
+    expect(keys.includes(2)).toBe(true);
+    expect(keys.includes(3)).toBe(true);
+  });
+
+  test("values", () => {
+    const data: [number, string][] = [
+      [1, "a"],
+      [2, "b"],
+      [3, "c"],
+    ];
+    const map = new RedBlackTree<number, string>(data);
+    const values = [...map.values()];
+
+    expect(values.length).toBe(3);
+    expect(values.includes("a")).toBe(true);
+    expect(values.includes("b")).toBe(true);
+    expect(values.includes("c")).toBe(true);
+  });
+
+  test("insert remove intertwined", () => {
+    const size = VITE ? 100 : 1000000;
+    const map = new RedBlackTree<number, number>();
+    let i = 1;
+    const offset = 165;
+
+    for (let j = 0; j < size; j++) {
+      i = (i + offset) & 0xff;
+      map.set(i, i);
+      map.delete(0xff - i);
+    }
   });
 });
