@@ -198,4 +198,40 @@ describe("red black tree", () => {
       map.delete(0xff - i);
     }
   });
+
+  test("delete min small", () => {
+    const map = new RedBlackTree<number, number>();
+
+    expect(map.deleteMin()).toBe(false);
+
+    expect(map.size).toBe(0);
+
+    map.set(1, 1);
+    expect(map.deleteMin()).toBe(true);
+    expect(map.size).toBe(0);
+
+    map.set(1, 2);
+    map.set(2, 4);
+    expect(map.deleteMin()).toBe(true);
+    expect(map.size).toBe(1);
+    expect(map.get(2)).toBe(4);
+  });
+
+  test("delete max small", () => {
+    const map = new RedBlackTree<number, number>();
+
+    expect(map.deleteMax()).toBe(false);
+
+    expect(map.size).toBe(0);
+
+    map.set(1, 1);
+    expect(map.deleteMax()).toBe(true);
+    expect(map.size).toBe(0);
+
+    map.set(1, 2);
+    map.set(2, 4);
+    expect(map.deleteMax()).toBe(true);
+    expect(map.size).toBe(1);
+    expect(map.get(1)).toBe(2);
+  });
 });
