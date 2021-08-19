@@ -179,11 +179,10 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
             const last = stack.pop();
 
             assert(last !== undefined);
-            node = last;
 
-            const { key, value } = node;
+            const { key, value } = last;
 
-            node = node.right;
+            node = last.right;
 
             return {
               done: false,
@@ -551,10 +550,8 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
   #delete(node: Node<Key, Value>, key: Key): Node<Key, Value> | null {
     if (lessThan(key, node.key)) {
       if (node.left !== null) {
-        if (!isRed(node.left)) {
-          if (!isRed(node.left.left)) {
-            node = moveRedLeft(node);
-          }
+        if (!isRed(node.left) && !isRed(node.left.left)) {
+          node = moveRedLeft(node);
         }
       }
 
@@ -572,8 +569,8 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
         return null;
       }
 
-      if (!isRed(node.right)) {
-        if (node.right !== null && !isRed(node.right.left)) {
+      if (node.right !== null) {
+        if (!isRed(node.right) && !isRed(node.right.left)) {
           node = moveRedRight(node);
         }
       }

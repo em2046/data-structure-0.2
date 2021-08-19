@@ -120,7 +120,7 @@ describe("red black tree", () => {
     expect([...map.values()].length).toBe(0);
   });
 
-  test("iterator", () => {
+  test("symbol iterator next", () => {
     const size = VITE ? 200 : 10000;
     const data: [number, number][] = new Array(size)
       .fill(0)
@@ -133,6 +133,18 @@ describe("red black tree", () => {
     }
 
     expect(iterator.next().done).toBe(true);
+  });
+
+  test("symbol iterator collect", () => {
+    const size = VITE ? 200 : 10000;
+    const data: [number, number][] = new Array(size)
+      .fill(0)
+      .map((_, i) => [i, i]);
+    const out = [...data].sort((a, b) => a[0] - b[0]);
+    const map = new RedBlackTree<number, number>(data);
+    const iterator = map[Symbol.iterator]();
+
+    expect([...iterator]).toStrictEqual(out);
   });
 
   test("clear", () => {
@@ -238,5 +250,73 @@ describe("red black tree", () => {
 
     expect(map.size).toBe(1);
     expect(map.get(1)).toBe(2);
+  });
+
+  test("delete min large", () => {
+    const map = new RedBlackTree<number, number>();
+    let size = VITE ? MIN_INSERTS_HEIGHT_2 : 10000;
+
+    size = size + (size % 2);
+
+    for (let i = 0; i < size; i++) {
+      map.set(i, 10 * i);
+    }
+
+    for (let i = 0; i < size; i++) {
+      expect(map.deleteMin()).toBe(true);
+    }
+
+    expect(map.deleteMin()).toBe(false);
+  });
+
+  test("delete max large", () => {
+    const map = new RedBlackTree<number, number>();
+    let size = VITE ? MIN_INSERTS_HEIGHT_2 : 10000;
+
+    size = size + (size % 2);
+
+    for (let i = 0; i < size; i++) {
+      map.set(i, 10 * i);
+    }
+
+    for (let i = 0; i < size; i++) {
+      expect(map.deleteMax()).toBe(true);
+    }
+
+    expect(map.deleteMax()).toBe(false);
+  });
+
+  test("previous", () => {
+    const map = new RedBlackTree<number, number>();
+    let size = VITE ? MIN_INSERTS_HEIGHT_2 : 10000;
+
+    size = size + (size % 2);
+
+    for (let i = 0; i < size; i++) {
+      map.set(i, 10 * i);
+    }
+
+    expect(map.previous(0)).toStrictEqual(null);
+
+    for (let i = 1; i < size; i++) {
+      expect(map.previous(i)).toStrictEqual([i - 1, (i - 1) * 10]);
+    }
+  });
+
+  test("next", () => {
+    const map = new RedBlackTree<number, number>();
+    let size = VITE ? MIN_INSERTS_HEIGHT_2 : 10000;
+
+    size = size + (size % 2);
+
+    for (let i = 0; i < size; i++) {
+      map.set(i, 10 * i);
+    }
+
+    expect(map.next(size - 1)).toStrictEqual(null);
+
+    for (let i = 0; i < size - 1; i++) {
+      expect(map.next(i)).toStrictEqual([i + 1, (i + 1) * 10]);
+    }
   });
 });
