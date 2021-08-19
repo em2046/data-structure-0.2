@@ -34,6 +34,28 @@ describe("binary heap", () => {
     expect(sorted).toStrictEqual(out);
   });
 
+  test("symbol iterator next", () => {
+    const data = [2, 4, 6, 2, 1, 8, 10, 3, 5, 7, 0, 9, 1];
+    const out = [0, 1, 1, 2, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const heap = BinaryHeap.from(data);
+    const iterator = heap[Symbol.iterator]();
+
+    out.forEach((value) => {
+      expect(iterator.next().value).toStrictEqual(value);
+    });
+
+    expect(iterator.next().done).toBe(true);
+  });
+
+  test("symbol iterator collect", () => {
+    const data = [2, 4, 6, 2, 1, 8, 10, 3, 5, 7, 0, 9, 1];
+    const out = [0, 1, 1, 2, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    const heap = BinaryHeap.from(data);
+    const iterator = heap[Symbol.iterator]();
+
+    expect([...iterator]).toStrictEqual(out);
+  });
+
   test("peek and pop", () => {
     const data = [2, 4, 6, 2, 1, 8, 10, 3, 5, 7, 0, 9, 1];
     const sorted = [...data].sort((a, b) => a - b);
