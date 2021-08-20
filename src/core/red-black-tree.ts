@@ -91,10 +91,8 @@ function fixUp<Key, Value>(node: Node<Key, Value>): Node<Key, Value> {
     node = rotateLeft(node);
   }
 
-  if (isRed(node.left)) {
-    assert(node.left !== null);
-
-    if (isRed(node.left.left)) {
+  if (node.left !== null) {
+    if (isRed(node.left) && isRed(node.left.left)) {
       node = rotateRight(node);
     }
   }
@@ -368,11 +366,9 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
 
     this.#root = this.#deleteMin(this.#root);
 
-    if (this.#root === null) {
-      return this.#size < size;
+    if (this.#root !== null) {
+      this.#root.color = Color.Black;
     }
-
-    this.#root.color = Color.Black;
 
     return this.#size < size;
   }
@@ -389,11 +385,9 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
 
     this.#root = this.#deleteMax(this.#root);
 
-    if (this.#root === null) {
-      return this.#size < size;
+    if (this.#root !== null) {
+      this.#root.color = Color.Black;
     }
-
-    this.#root.color = Color.Black;
 
     return this.#size < size;
   }
@@ -412,11 +406,9 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
 
     this.#root = this.#delete(this.#root, key);
 
-    if (this.#root === null) {
-      return this.#size < size;
+    if (this.#root !== null) {
+      this.#root.color = Color.Black;
     }
-
-    this.#root.color = Color.Black;
 
     return this.#size < size;
   }

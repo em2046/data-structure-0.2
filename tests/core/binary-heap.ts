@@ -41,7 +41,7 @@ describe("binary heap", () => {
     const iterator = heap[Symbol.iterator]();
 
     out.forEach((value) => {
-      expect(iterator.next().value).toStrictEqual(value);
+      expect(iterator.next().value).toBe(value);
     });
 
     expect(iterator.next().done).toBe(true);
