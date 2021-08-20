@@ -296,7 +296,7 @@ describe("red black tree", () => {
       map.set(i, 10 * i);
     }
 
-    expect(map.previous(0)).toStrictEqual(null);
+    expect(map.previous(0)).toBe(null);
 
     for (let i = 1; i < size; i++) {
       expect(map.previous(i)).toStrictEqual([i - 1, (i - 1) * 10]);
@@ -313,7 +313,7 @@ describe("red black tree", () => {
       map.set(i, 10 * i);
     }
 
-    expect(map.next(size - 1)).toStrictEqual(null);
+    expect(map.next(size - 1)).toBe(null);
 
     for (let i = 0; i < size - 1; i++) {
       expect(map.next(i)).toStrictEqual([i + 1, (i + 1) * 10]);
