@@ -11,5 +11,5 @@ export interface Identifiable {
   /**
    * The stable identity of the entity associated with this instance.
    */
-  id: unknown;
+  readonly id: unknown;
 }

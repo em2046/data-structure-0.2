@@ -38,7 +38,7 @@ export function greaterThanOrEqual<T>(lhs: T, rhs: T): boolean;
 
 // @public
 export interface Identifiable {
-    id: unknown;
+    readonly id: unknown;
 }
 
 // @public
