@@ -1,4 +1,6 @@
 import { Node } from "./linked-node";
+import { equality } from "./equatable";
+import { assert } from "../shared";
 
 // Copied from
 // https://github.com/rust-lang/rust/blob/2b4196e97736ffe75433235bf586989cdb4221c4/library/alloc/src/collections/linked_list.rs
@@ -80,7 +82,7 @@ export class LinkedList<T> {
     const size = this.#size;
 
     for (let i = 0; i < size; i++) {
-      this.#popBackNode();
+      this.#popBack();
     }
   }
 
@@ -105,13 +107,13 @@ export class LinkedList<T> {
   }
 
   pushFront(element: T): LinkedList<T> {
-    this.#pushFrontNode(new Node<T>(element));
+    this.#pushFront(new Node<T>(element));
 
     return this;
   }
 
   popFront(): T | undefined {
-    const node = this.#popFrontNode();
+    const node = this.#popFront();
 
     if (node === null) {
       return undefined;
@@ -121,13 +123,13 @@ export class LinkedList<T> {
   }
 
   pushBack(element: T): LinkedList<T> {
-    this.#pushBackNode(new Node<T>(element));
+    this.#pushBack(new Node<T>(element));
 
     return this;
   }
 
   popBack(): T | undefined {
-    const node = this.#popBackNode();
+    const node = this.#popBack();
 
     if (node === null) {
       return undefined;
@@ -136,7 +138,40 @@ export class LinkedList<T> {
     }
   }
 
-  #pushFrontNode(node: Node<T>): void {
+  add(element: T): LinkedList<T> {
+    this.pushBack(element);
+
+    return this;
+  }
+
+  delete(element: T): boolean {
+    let node = this.#head;
+    const size = this.#size;
+
+    for (let i = 0; i < size; i++) {
+      if (node === null) {
+        return false;
+      }
+
+      if (equality(element, node.element)) {
+        if (i === 0) {
+          this.#popFront();
+        } else if (i === size - 1) {
+          this.#popBack();
+        } else {
+          this.#deleteInternal(node);
+        }
+
+        return true;
+      }
+
+      node = node.next;
+    }
+
+    return false;
+  }
+
+  #pushFront(node: Node<T>): void {
     node.next = this.#head;
     node.prev = null;
 
@@ -150,7 +185,7 @@ export class LinkedList<T> {
     this.#size += 1;
   }
 
-  #popFrontNode(): Node<T> | null {
+  #popFront(): Node<T> | null {
     const node = this.#head;
 
     if (node === null) {
@@ -170,7 +205,7 @@ export class LinkedList<T> {
     return node;
   }
 
-  #pushBackNode(node: Node<T>): void {
+  #pushBack(node: Node<T>): void {
     node.prev = this.#tail;
     node.next = null;
 
@@ -184,7 +219,7 @@ export class LinkedList<T> {
     this.#size += 1;
   }
 
-  #popBackNode(): Node<T> | null {
+  #popBack(): Node<T> | null {
     const node = this.#tail;
 
     if (node === null) {
@@ -202,5 +237,16 @@ export class LinkedList<T> {
     this.#size -= 1;
 
     return node;
+  }
+
+  #deleteInternal(node: Node<T>): void {
+    const next = node.next;
+    const prev = node.prev;
+
+    assert(next !== null);
+    assert(prev !== null);
+
+    next.prev = prev;
+    prev.next = next;
   }
 }
