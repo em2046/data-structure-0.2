@@ -138,7 +138,23 @@ export class LinkedList<T> {
     }
   }
 
+  get(element: T): T | undefined {
+    let node = this.#head;
+    const size = this.#size;
+
+    for (let i = 0; i < size; i++) {
+      assert(node !== null);
+
+      if (equality(element, node.element)) {
+        return node.element;
+      }
+
+      node = node.next;
+    }
+  }
+
   add(element: T): LinkedList<T> {
+    this.delete(element);
     this.pushBack(element);
 
     return this;
@@ -149,9 +165,7 @@ export class LinkedList<T> {
     const size = this.#size;
 
     for (let i = 0; i < size; i++) {
-      if (node === null) {
-        return false;
-      }
+      assert(node !== null);
 
       if (equality(element, node.element)) {
         if (i === 0) {
@@ -248,5 +262,7 @@ export class LinkedList<T> {
 
     next.prev = prev;
     prev.next = next;
+
+    this.#size -= 1;
   }
 }

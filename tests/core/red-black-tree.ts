@@ -1,15 +1,15 @@
 import { RedBlackTree } from "../../src";
-import { VITE } from "../config";
+import {
+  MIN_INSERTS_HEIGHT_1,
+  MIN_INSERTS_HEIGHT_2,
+  NODE_CAPACITY,
+  VITE,
+} from "../config";
 
 // Copied from
 // https://github.com/rust-lang/rust/blob/fa2692990c05652c7823c8d2afae501a00a69050/library/alloc/src/collections/btree/map/tests.rs
 
 describe("red black tree", () => {
-  const B = 6;
-  const NODE_CAPACITY = 2 * B - 1;
-  const MIN_INSERTS_HEIGHT_1 = NODE_CAPACITY + 1;
-  const MIN_INSERTS_HEIGHT_2 = 89;
-
   test("basic large", () => {
     const map = new RedBlackTree<number, number>();
     let size = VITE ? MIN_INSERTS_HEIGHT_2 : 10000;
@@ -114,6 +114,7 @@ describe("red black tree", () => {
 
     expect(map.size).toBe(0);
     expect(map.get(1)).toBe(undefined);
+    expect(map.get(2)).toBe(undefined);
     expect(map.min()).toBe(null);
     expect(map.max()).toBe(null);
     expect([...map.keys()].length).toBe(0);
