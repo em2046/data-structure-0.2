@@ -1,10 +1,10 @@
 import { RedBlackTree } from "../../src";
+import { VITE } from "../config";
 
 // Copied from
 // https://github.com/rust-lang/rust/blob/fa2692990c05652c7823c8d2afae501a00a69050/library/alloc/src/collections/btree/map/tests.rs
 
 describe("red black tree", () => {
-  const VITE = true;
   const B = 6;
   const NODE_CAPACITY = 2 * B - 1;
   const MIN_INSERTS_HEIGHT_1 = NODE_CAPACITY + 1;
