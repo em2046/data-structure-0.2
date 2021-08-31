@@ -5,13 +5,26 @@ import { assert } from "../shared";
 // Copied from
 // https://github.com/rust-lang/rust/blob/2b4196e97736ffe75433235bf586989cdb4221c4/library/alloc/src/collections/linked_list.rs
 
-export class LinkedList<T> {
+/**
+ * @public
+ *
+ * A doubly-linked list with owned nodes.
+ */
+export class LinkedList<T> implements Iterable<T> {
   #head: Node<T> | null = null;
   #tail: Node<T> | null = null;
   #size = 0;
 
+  /**
+   * Creates a new linked list.
+   */
   constructor();
 
+  /**
+   * Creates a new, shallow-copied linked list instance from an iterable object.
+   *
+   * @param iterable - An iterable object to convert to a linked list.
+   */
   constructor(iterable: Iterable<T>);
 
   constructor(iterable: Iterable<T> = []) {
@@ -20,14 +33,25 @@ export class LinkedList<T> {
     }
   }
 
+  /**
+   * Returns the size of the linked list.
+   */
   get size(): number {
     return this.#size;
   }
 
-  static from<T>(iterable: Iterable<T>): LinkedList<T> {
+  /**
+   * Creates a new, shallow-copied linked list instance from an iterable object.
+   *
+   * @param iterable - An iterable object to convert to a linked list.
+   */
+  static from<T>(iterable: Iterable<T> = []): LinkedList<T> {
     return new LinkedList(iterable);
   }
 
+  /**
+   * An iterator over the elements of a linked list.
+   */
   [Symbol.iterator](): IterableIterator<T> {
     let node = this.#head;
 
@@ -55,6 +79,11 @@ export class LinkedList<T> {
     };
   }
 
+  /**
+   * Moves all elements from `other` to the end of the list.
+   *
+   * @param other - Other linked list to append.
+   */
   append(other: LinkedList<T>): void {
     const otherHead = other.#head;
 
@@ -78,6 +107,9 @@ export class LinkedList<T> {
     other.#size = 0;
   }
 
+  /**
+   * Removes all elements from the linked list.
+   */
   clear(): void {
     const size = this.#size;
 
@@ -86,6 +118,10 @@ export class LinkedList<T> {
     }
   }
 
+  /**
+   * Provides a reference to the front element, or `undefined` if the list is
+   * empty.
+   */
   front(): T | undefined {
     const head = this.#head;
 
@@ -96,6 +132,10 @@ export class LinkedList<T> {
     return head.element;
   }
 
+  /**
+   * Provides a reference to the back element, or `undefined` if the list is
+   * empty.
+   */
   back(): T | undefined {
     const tail = this.#tail;
 
@@ -106,12 +146,21 @@ export class LinkedList<T> {
     return tail.element;
   }
 
+  /**
+   * Adds an element first in the list.
+   *
+   * @param element - The element to push to the linked list.
+   */
   pushFront(element: T): LinkedList<T> {
     this.#pushFront(new Node<T>(element));
 
     return this;
   }
 
+  /**
+   * Removes the first element and returns it, or `undefined` if the list is
+   * empty.
+   */
   popFront(): T | undefined {
     const node = this.#popFront();
 
@@ -122,12 +171,21 @@ export class LinkedList<T> {
     }
   }
 
+  /**
+   * Appends an element to the back of a list.
+   *
+   * @param element - The element to push to the linked list.
+   */
   pushBack(element: T): LinkedList<T> {
     this.#pushBack(new Node<T>(element));
 
     return this;
   }
 
+  /**
+   * Removes the last element from a list and returns it, or `undefined` if
+   * it is empty.
+   */
   popBack(): T | undefined {
     const node = this.#popBack();
 
@@ -138,6 +196,11 @@ export class LinkedList<T> {
     }
   }
 
+  /**
+   * Returns a specified element from a linked list.
+   *
+   * @param element - The element to return from the linked list.
+   */
   get(element: T): T | undefined {
     let node = this.#head;
     const size = this.#size;
@@ -153,6 +216,11 @@ export class LinkedList<T> {
     }
   }
 
+  /**
+   * Appends a new element with a specified value to the end of a linked list.
+   *
+   * @param element - The value of the element to add to the linked list.
+   */
   add(element: T): LinkedList<T> {
     this.delete(element);
     this.pushBack(element);
@@ -160,6 +228,11 @@ export class LinkedList<T> {
     return this;
   }
 
+  /**
+   * Removes a specified value from a linked list, if it is in the linked list.
+   *
+   * @param element - The value to remove from the linked list.
+   */
   delete(element: T): boolean {
     let node = this.#head;
     const size = this.#size;

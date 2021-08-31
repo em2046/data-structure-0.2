@@ -1,9 +1,9 @@
-// Copied from
-// https://github.com/openjdk/jdk/blob/1fb798d320c708dfcbc0bb157511a2937fafb9e6/src/java.base/share/classes/java/util/HashMap.java
-
 import { LinkedList } from "./linked-list";
 import { Entry } from "./entry";
 import { hash } from "./hasher";
+
+// Copied from
+// https://github.com/openjdk/jdk/blob/1fb798d320c708dfcbc0bb157511a2937fafb9e6/src/java.base/share/classes/java/util/HashMap.java
 
 const DEFAULT_INITIAL_CAPACITY = 1 << 4;
 const DEFAULT_LOAD_FACTOR = 0.75;
