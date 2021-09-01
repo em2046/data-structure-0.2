@@ -4,9 +4,9 @@ import { Hashable } from "./hashable";
 // https://github.com/openjdk/jdk/blob/1fb798d320c708dfcbc0bb157511a2937fafb9e6/src/java.base/share/classes/java/lang/StringUTF16.java
 // https://github.com/apple/swift/blob/3616872c286685f60a462bcc3eb993930313ff70/stdlib/public/core/Hasher.swift
 
-function stringHashCode(value: string) {
-  let hashValue = 0;
+function hashString(value: string) {
   const size = value.length;
+  let hashValue = 0;
 
   for (let i = 0; i < size; i++) {
     hashValue = 31 * hashValue + value.charCodeAt(i);
@@ -16,36 +16,51 @@ function stringHashCode(value: string) {
   return hashValue;
 }
 
+/**
+ * @public
+ *
+ * The universal hash function used by `Set` and `Map`.
+ */
 export class Hasher {
-  hash = 0;
+  #hashValue = 0;
 
-  combine(thing: unknown): void {
-    let thingHash;
-    const thingHashable = thing as Hashable;
+  /**
+   * Adds the given value to this hasher, mixing its essential parts into the
+   * hasher state.
+   *
+   * @param value - A value to add to the hasher.
+   */
+  combine(value: unknown): void {
+    let hashValue = this.#hashValue;
 
-    if (typeof thingHashable.hashValue === "number") {
-      thingHash = thingHashable.hashValue;
-    } else if (typeof thingHashable.hash === "function") {
-      thingHash = thingHashable.hash(new Hasher());
-    } else {
-      thingHash = stringHashCode(String(thing));
-    }
-
-    let hashValue = this.hash;
-
-    hashValue = 31 * hashValue + thingHash;
-    this.hash = hashValue | 0;
+    hashValue = 31 * hashValue + hash(value);
+    this.#hashValue = hashValue | 0;
   }
 
+  /**
+   * Finalizes the hasher state and returns the hash value.
+   */
   finalize(): number {
-    return this.hash;
+    return this.#hashValue;
   }
 }
 
-export function hash(thing: unknown): number {
-  const hasher = new Hasher();
+/**
+ * Hashes the essential components of this value by feeding them into the
+ * given hasher.
+ *
+ * @param value - A value to add to the hasher.
+ */
+export function hash(value: unknown): number {
+  const hashable = value as Hashable;
 
-  hasher.combine(thing);
+  if (typeof hashable.hashValue === "number") {
+    return hashable.hashValue;
+  }
 
-  return hasher.finalize();
+  if (typeof hashable.hash === "function") {
+    return hashable.hash(new Hasher());
+  }
+
+  return hashString(String(value));
 }
