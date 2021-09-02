@@ -4,12 +4,35 @@ import { Hashable } from "./hashable";
 // https://github.com/openjdk/jdk/blob/1fb798d320c708dfcbc0bb157511a2937fafb9e6/src/java.base/share/classes/java/lang/StringUTF16.java
 // https://github.com/apple/swift/blob/3616872c286685f60a462bcc3eb993930313ff70/stdlib/public/core/Hasher.swift
 
+function hashPrimitive(value: unknown): number {
+  switch (typeof value) {
+    case "bigint":
+      return hashBigInt(value);
+    case "number":
+      return hashNumber(value);
+    default:
+      return hashString(String(value));
+  }
+}
+
+function hashBigInt(value: bigint): number {
+  return hashNumber(Number(value % 2n ** 32n));
+}
+
+function hashNumber(value: number): number {
+  if (Number.isInteger(value)) {
+    return value | 0;
+  }
+
+  return hashString(String(value));
+}
+
 function hashString(value: string) {
   const size = value.length;
   let hashValue = 0;
 
   for (let i = 0; i < size; i++) {
-    hashValue = 31 * hashValue + value.charCodeAt(i);
+    hashValue = Math.imul(hashValue, value.charCodeAt(i));
     hashValue |= 0;
   }
 
@@ -59,8 +82,12 @@ export function hash(value: unknown): number {
   }
 
   if (typeof hashable.hash === "function") {
-    return hashable.hash(new Hasher());
+    const hasher = new Hasher();
+
+    hashable.hash(hasher);
+
+    return hasher.finalize();
   }
 
-  return hashString(String(value));
+  return hashPrimitive(value);
 }

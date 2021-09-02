@@ -84,11 +84,11 @@ export class LinkedList<T> implements Iterable<T> {
    *
    * @param other - Other linked list to append.
    */
-  append(other: LinkedList<T>): void {
+  append(other: LinkedList<T>): LinkedList<T> {
     const otherHead = other.#head;
 
     if (otherHead === null) {
-      return;
+      return this;
     }
 
     if (this.#tail === null) {
@@ -105,6 +105,8 @@ export class LinkedList<T> implements Iterable<T> {
     other.#head = null;
     other.#tail = null;
     other.#size = 0;
+
+    return this;
   }
 
   /**

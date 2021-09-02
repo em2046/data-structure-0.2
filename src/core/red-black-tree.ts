@@ -7,7 +7,7 @@ import { assert } from "../shared";
 // https://www.cs.princeton.edu/~rs/talks/LLRB/LLRB.pdf
 // https://www.cs.princeton.edu/~rs/talks/LLRB/RedBlack.pdf
 
-function isRed<Key, Value>(node: Node<Key, Value> | null): boolean {
+function isRed<K, V>(node: Node<K, V> | null): boolean {
   if (node === null) {
     return false;
   }
@@ -15,11 +15,11 @@ function isRed<Key, Value>(node: Node<Key, Value> | null): boolean {
   return node.color === Color.Red;
 }
 
-function flipColor<Key, Value>(node: Node<Key, Value>): void {
+function flipColor<K, V>(node: Node<K, V>): void {
   node.color = isRed(node) ? Color.Black : Color.Red;
 }
 
-function flipColors<Key, Value>(node: Node<Key, Value>): void {
+function flipColors<K, V>(node: Node<K, V>): void {
   flipColor(node);
 
   assert(node.left !== null);
@@ -29,7 +29,7 @@ function flipColors<Key, Value>(node: Node<Key, Value>): void {
   flipColor(node.right);
 }
 
-function rotateLeft<Key, Value>(node: Node<Key, Value>): Node<Key, Value> {
+function rotateLeft<K, V>(node: Node<K, V>): Node<K, V> {
   // Make a right-leaning 3-node lean to the left.
   const right = node.right;
 
@@ -42,7 +42,7 @@ function rotateLeft<Key, Value>(node: Node<Key, Value>): Node<Key, Value> {
   return right;
 }
 
-function rotateRight<Key, Value>(node: Node<Key, Value>): Node<Key, Value> {
+function rotateRight<K, V>(node: Node<K, V>): Node<K, V> {
   // Make a left-leaning 3-node lean to the right.
   const left = node.left;
 
@@ -55,7 +55,7 @@ function rotateRight<Key, Value>(node: Node<Key, Value>): Node<Key, Value> {
   return left;
 }
 
-function moveRedLeft<Key, Value>(node: Node<Key, Value>): Node<Key, Value> {
+function moveRedLeft<K, V>(node: Node<K, V>): Node<K, V> {
   // Assuming that node is red and both node.left and node.left.left
   // are black, make node.left or one of its children red.
   flipColors(node);
@@ -71,7 +71,7 @@ function moveRedLeft<Key, Value>(node: Node<Key, Value>): Node<Key, Value> {
   return node;
 }
 
-function moveRedRight<Key, Value>(node: Node<Key, Value>): Node<Key, Value> {
+function moveRedRight<K, V>(node: Node<K, V>): Node<K, V> {
   // Assuming that node is red and both node.right and node.right.left
   // are black, make node.right or one of its children red.
   flipColors(node);
@@ -86,7 +86,7 @@ function moveRedRight<Key, Value>(node: Node<Key, Value>): Node<Key, Value> {
   return node;
 }
 
-function fixUp<Key, Value>(node: Node<Key, Value>): Node<Key, Value> {
+function fixUp<K, V>(node: Node<K, V>): Node<K, V> {
   if (isRed(node.right) && !isRed(node.left)) {
     node = rotateLeft(node);
   }
@@ -109,8 +109,8 @@ function fixUp<Key, Value>(node: Node<Key, Value>): Node<Key, Value> {
  *
  * The red black tree holds key-value pairs.
  */
-export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
-  #root: Node<Key, Value> | null = null;
+export class RedBlackTree<K, V> implements Iterable<[K, V]> {
+  #root: Node<K, V> | null = null;
   #size = 0;
 
   /**
@@ -127,9 +127,9 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
    * `[[ 1, 'one' ],[ 2, 'two' ]]`.) Each key-value pair is added to the new
    * red black tree.
    */
-  constructor(iterable: Iterable<[Key, Value]>);
+  constructor(iterable: Iterable<[K, V]>);
 
-  constructor(iterable: Iterable<[Key, Value]> = []) {
+  constructor(iterable: Iterable<[K, V]> = []) {
     for (const [key, value] of iterable) {
       this.set(key, value);
     }
@@ -149,7 +149,7 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
    * for-of loop can be used. When the protocol `[Symbol.iterator]` is used, it
    * returns a function that, when invoked, returns this iterator itself.
    */
-  [Symbol.iterator](): IterableIterator<[Key, Value]> {
+  [Symbol.iterator](): IterableIterator<[K, V]> {
     return this.entries();
   }
 
@@ -160,15 +160,15 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
    * for-of loop can be used. When the protocol `[Symbol.iterator]` is used, it
    * returns a function that, when invoked, returns this iterator itself.
    */
-  entries(): IterableIterator<[Key, Value]> {
+  entries(): IterableIterator<[K, V]> {
     let node = this.#root;
-    const stack: Node<Key, Value>[] = [];
+    const stack: Node<K, V>[] = [];
 
     return {
-      [Symbol.iterator](): IterableIterator<[Key, Value]> {
+      [Symbol.iterator](): IterableIterator<[K, V]> {
         return this;
       },
-      next(): IteratorResult<[Key, Value]> {
+      next(): IteratorResult<[K, V]> {
         while (node !== null || stack.length > 0) {
           if (node !== null) {
             stack.push(node);
@@ -201,14 +201,14 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
    * Returns a new iterator object that contains the keys for each element in
    * the red black tree in in-order.
    */
-  keys(): IterableIterator<Key> {
+  keys(): IterableIterator<K> {
     const iterator = this.entries();
 
     return {
-      [Symbol.iterator](): IterableIterator<Key> {
+      [Symbol.iterator](): IterableIterator<K> {
         return this;
       },
-      next(): IteratorResult<Key> {
+      next(): IteratorResult<K> {
         const next = iterator.next();
 
         if (next.done) {
@@ -232,14 +232,14 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
    * Returns a new iterator object that contains the values for each element in
    * the red black tree in in-order.
    */
-  values(): IterableIterator<Value> {
+  values(): IterableIterator<V> {
     const iterator = this.entries();
 
     return {
-      [Symbol.iterator](): IterableIterator<Value> {
+      [Symbol.iterator](): IterableIterator<V> {
         return this;
       },
-      next(): IteratorResult<Value> {
+      next(): IteratorResult<V> {
         const next = iterator.next();
 
         if (next.done) {
@@ -272,7 +272,7 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
    *
    * @param key - The key of the element to return from the red black tree.
    */
-  get(key: Key): Value | undefined {
+  get(key: K): V | undefined {
     const node = this.#get(this.#root, key);
 
     if (node === null) {
@@ -285,7 +285,7 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
   /**
    * Returns the key-value pair of the smallest element from a red black tree.
    */
-  min(): [Key, Value] | null {
+  min(): [K, V] | null {
     if (this.#root === null) {
       return null;
     }
@@ -298,7 +298,7 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
   /**
    * Returns the key-value pair of the largest element from a red black tree.
    */
-  max(): [Key, Value] | null {
+  max(): [K, V] | null {
     if (this.#root === null) {
       return null;
     }
@@ -314,7 +314,7 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
    *
    * @param key - The given key.
    */
-  previous(key: Key): [Key, Value] | null {
+  previous(key: K): [K, V] | null {
     const node = this.#previous(this.#root, key);
 
     if (node === null) {
@@ -330,7 +330,7 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
    *
    * @param key - The given key.
    */
-  next(key: Key): [Key, Value] | null {
+  next(key: K): [K, V] | null {
     const node = this.#next(this.#root, key);
 
     if (node === null) {
@@ -347,7 +347,7 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
    * @param key - The key of the element to add to the red black tree.
    * @param value - The value of the element to add to the red black tree.
    */
-  set(key: Key, value: Value): RedBlackTree<Key, Value> {
+  set(key: K, value: V): RedBlackTree<K, V> {
     this.#root = this.#set(this.#root, key, value);
     this.#root.color = Color.Black;
 
@@ -397,7 +397,7 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
    *
    * @param key - The key of the element to remove from the red black tree.
    */
-  delete(key: Key): boolean {
+  delete(key: K): boolean {
     if (this.#root === null) {
       return false;
     }
@@ -413,7 +413,7 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
     return this.#size < size;
   }
 
-  #get(node: Node<Key, Value> | null, key: Key): Node<Key, Value> | null {
+  #get(node: Node<K, V> | null, key: K): Node<K, V> | null {
     if (node === null) {
       return null;
     }
@@ -427,7 +427,7 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
     }
   }
 
-  #min(node: Node<Key, Value>): Node<Key, Value> {
+  #min(node: Node<K, V>): Node<K, V> {
     if (node.left === null) {
       return node;
     }
@@ -435,7 +435,7 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
     return this.#min(node.left);
   }
 
-  #max(node: Node<Key, Value>): Node<Key, Value> {
+  #max(node: Node<K, V>): Node<K, V> {
     if (node.right === null) {
       return node;
     }
@@ -443,7 +443,7 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
     return this.#max(node.right);
   }
 
-  #previous(node: Node<Key, Value> | null, key: Key): Node<Key, Value> | null {
+  #previous(node: Node<K, V> | null, key: K): Node<K, V> | null {
     if (node === null) {
       return null;
     }
@@ -461,7 +461,7 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
     }
   }
 
-  #next(node: Node<Key, Value> | null, key: Key): Node<Key, Value> | null {
+  #next(node: Node<K, V> | null, key: K): Node<K, V> | null {
     if (node === null) {
       return null;
     }
@@ -479,11 +479,7 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
     }
   }
 
-  #set(
-    node: Node<Key, Value> | null,
-    key: Key,
-    value: Value
-  ): Node<Key, Value> {
+  #set(node: Node<K, V> | null, key: K, value: V): Node<K, V> {
     if (node === null) {
       this.#size += 1;
 
@@ -501,7 +497,7 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
     return fixUp(node);
   }
 
-  #deleteMin(node: Node<Key, Value>): Node<Key, Value> | null {
+  #deleteMin(node: Node<K, V>): Node<K, V> | null {
     if (node.left === null) {
       this.#size -= 1;
 
@@ -518,7 +514,7 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
     return fixUp(node);
   }
 
-  #deleteMax(node: Node<Key, Value>): Node<Key, Value> | null {
+  #deleteMax(node: Node<K, V>): Node<K, V> | null {
     if (isRed(node.left)) {
       node = rotateRight(node);
     }
@@ -539,7 +535,7 @@ export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
     return fixUp(node);
   }
 
-  #delete(node: Node<Key, Value>, key: Key): Node<Key, Value> | null {
+  #delete(node: Node<K, V>, key: K): Node<K, V> | null {
     if (lessThan(key, node.key)) {
       if (node.left !== null) {
         if (!isRed(node.left) && !isRed(node.left.left)) {

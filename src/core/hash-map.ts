@@ -192,7 +192,7 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
 
   get(key: K): V | undefined {
     const hashValue = hash(key);
-    const index = hashValue % this.#capacity;
+    const index = (hashValue & 0x7fffffff) % this.#capacity;
     const list = this.#table[index];
 
     if (list === undefined) {
@@ -233,7 +233,7 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
 
   #set(key: K, value: V): number {
     const hashValue = hash(key);
-    const index = hashValue % this.#capacity;
+    const index = (hashValue & 0x7fffffff) % this.#capacity;
     const table = this.#table;
 
     if (table[index] === undefined) {
@@ -250,7 +250,7 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
 
   #delete(key: K): boolean {
     const hashValue = hash(key);
-    const index = hashValue % this.#capacity;
+    const index = (hashValue & 0x7fffffff) % this.#capacity;
     const list = this.#table[index];
 
     if (list === undefined) {

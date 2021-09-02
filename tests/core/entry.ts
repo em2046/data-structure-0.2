@@ -1,4 +1,4 @@
-import { LinkedList } from "../../src/core/linked-list";
+import { LinkedList } from "../../src";
 import { Entry } from "../../src/core/entry";
 import { MIN_INSERTS_HEIGHT_2, VITE } from "../config";
 import { assert } from "../../src/shared";

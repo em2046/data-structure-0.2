@@ -7,14 +7,14 @@ export enum Color {
   Black = "BLACK",
 }
 
-export class Node<Key, Value> {
-  key: Key;
-  value: Value;
-  left: Node<Key, Value> | null = null;
-  right: Node<Key, Value> | null = null;
+export class Node<K, V> {
+  key: K;
+  value: V;
+  left: Node<K, V> | null = null;
+  right: Node<K, V> | null = null;
   color: Color;
 
-  constructor(key: Key, value: Value, color: Color = Color.Red) {
+  constructor(key: K, value: V, color: Color = Color.Red) {
     this.key = key;
     this.value = value;
     this.color = color;

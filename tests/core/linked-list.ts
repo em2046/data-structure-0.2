@@ -1,4 +1,4 @@
-import { LinkedList } from "../../src/core/linked-list";
+import { LinkedList } from "../../src";
 import { VITE } from "../config";
 
 // Copied from

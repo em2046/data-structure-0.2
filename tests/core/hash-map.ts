@@ -4,7 +4,7 @@ import {
   NODE_CAPACITY,
   VITE,
 } from "../config";
-import { HashMap } from "../../src/core/hash-map";
+import { HashMap } from "../../src";
 
 // Copied from
 // https://github.com/rust-lang/rust/blob/fa2692990c05652c7823c8d2afae501a00a69050/library/alloc/src/collections/btree/map/tests.rs
