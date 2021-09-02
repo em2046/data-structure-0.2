@@ -32,7 +32,7 @@ function hashString(value: string) {
   let hashValue = 0;
 
   for (let i = 0; i < size; i++) {
-    hashValue = Math.imul(hashValue, value.charCodeAt(i));
+    hashValue = 31 * hashValue + value.charCodeAt(i);
     hashValue |= 0;
   }
 
