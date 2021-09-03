@@ -5,15 +5,27 @@ import { equality } from "./equatable";
 
 // Copied from
 // https://github.com/openjdk/jdk/blob/1fb798d320c708dfcbc0bb157511a2937fafb9e6/src/java.base/share/classes/java/util/Hashtable.java
+// https://github.com/kevin-wayne/algs4/blob/2a3d7f7a36d76fbf5222c26b3d71fcca85d82fc1/src/main/java/edu/princeton/cs/algs4/SeparateChainingHashST.java
 
 const MAX_ARRAY_SIZE = 2 ** 32 - 1;
 
+/**
+ * The hash map holds key-value pairs.
+ * Any value (both objects and primitive values) may be used as either a key or
+ * a value.
+ */
 export class HashMap<K, V> implements Iterable<[K, V]> {
   readonly #loadFactor: number;
   #threshold: number;
   #size = 0;
   #table: LinkedList<Entry<K, unknown>>[] = [];
 
+  /**
+   * Creates a new hash map.
+   *
+   * @param initialCapacity - The initial capacity of the hashtable.
+   * @param loadFactor - The load factor of the hashtable.
+   */
   constructor(initialCapacity = 11, loadFactor = 0.75) {
     if (initialCapacity < 0) {
       throw new Error(`Illegal Capacity: ${initialCapacity}`);
@@ -34,10 +46,21 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
     );
   }
 
+  /**
+   * Returns the number of key/value pairs in the hash map.
+   */
   get size(): number {
     return this.#size;
   }
 
+  /**
+   * Creates a new, shallow-copied hash map instance from an iterable object.
+   *
+   * @param iterable - An Array or other iterable object whose elements are
+   * key-value pairs. (For example, arrays with two elements, such as
+   * [[ 1, 'one' ],[ 2, 'two' ]].) Each key-value pair is added to the new hash
+   * map.
+   */
   static from<K, V>(iterable: Iterable<[K, V]> = []): HashMap<K, V> {
     const elements = [...iterable];
     const map = new HashMap<K, V>(Math.max(2 * elements.length, 11), 0.75);
@@ -49,10 +72,18 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
     return map;
   }
 
+  /**
+   * Returns a new Iterator object that contains an array of [key, value] for
+   * each element in the hash map in insertion order.
+   */
   [Symbol.iterator](): IterableIterator<[K, V]> {
     return this.entries();
   }
 
+  /**
+   * Returns a new Iterator object that contains an array of [key, value] for
+   * each element in the hash map in insertion order.
+   */
   entries(): IterableIterator<[K, V]> {
     const table = this.#table;
     let index = 0;
@@ -100,6 +131,10 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
     };
   }
 
+  /**
+   * Returns a new Iterator object that contains the keys for each element in
+   * the hash map in insertion order.
+   */
   keys(): IterableIterator<K> {
     const iterator = this.entries();
 
@@ -127,6 +162,10 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
     };
   }
 
+  /**
+   * Returns a new Iterator object that contains the values for each element in
+   * the hash map in insertion order.
+   */
   values(): IterableIterator<V> {
     const iterator = this.entries();
 
@@ -154,6 +193,12 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
     };
   }
 
+  /**
+   * Sets the value for the key in the hash map. Returns the hash map.
+   *
+   * @param key - The key of the element to add to the hash map.
+   * @param value - The value of the element to add to the hash map.
+   */
   set(key: K, value: V): HashMap<K, V> {
     const table = this.#table;
     const hashValue = hash(key);
@@ -170,11 +215,16 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
       }
     }
 
-    this.#addEntry(hashValue, key, value, index);
+    this.#add(hashValue, key, value, index);
 
     return this;
   }
 
+  /**
+   * Returns the value associated to the key, or undefined if there is none.
+   *
+   * @param key - The key of the element to return from the hash map.
+   */
   get(key: K): V | undefined {
     const table = this.#table;
     const hashValue = hash(key);
@@ -192,6 +242,12 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
     return undefined;
   }
 
+  /**
+   * Returns true if an element in the hash map existed and has been removed,
+   * or false if the element does not exist.
+   *
+   * @param key - The key of the element to remove from the hash map.
+   */
   delete(key: K): boolean {
     const table = this.#table;
     const hashValue = hash(key);
@@ -211,6 +267,9 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
     return false;
   }
 
+  /**
+   * Removes all key-value pairs from the hash map.
+   */
   clear(): void {
     const table = this.#table;
     const size = table.length;
@@ -224,7 +283,7 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
     this.#size = 0;
   }
 
-  #addEntry(hashValue: number, key: K, value: V, index: number): void {
+  #add(hashValue: number, key: K, value: V, index: number): void {
     let table = this.#table;
 
     if (this.#size >= this.#threshold) {
