@@ -175,27 +175,6 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
     return this;
   }
 
-  #addEntry(hashValue: number, key: K, value: V, index: number): void {
-    let table = this.#table;
-
-    if (this.#size >= this.#threshold) {
-      this.rehash();
-
-      table = this.#table;
-      hashValue = hash(key);
-      index = index = (hashValue & 0x7fffffff) % table.length;
-    }
-
-    if (table[index] === undefined) {
-      table[index] = new LinkedList<Entry<K, unknown>>();
-    }
-
-    table[index].add(new Entry(key, value));
-    this.#size += 1;
-  }
-
-  rehash() {}
-
   get(key: K): V | undefined {
     const table = this.#table;
     const hashValue = hash(key);
@@ -243,5 +222,61 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
     }
 
     this.#size = 0;
+  }
+
+  #addEntry(hashValue: number, key: K, value: V, index: number): void {
+    let table = this.#table;
+
+    if (this.#size >= this.#threshold) {
+      this.#rehash();
+
+      table = this.#table;
+      hashValue = hash(key);
+      index = index = (hashValue & 0x7fffffff) % table.length;
+    }
+
+    if (table[index] === undefined) {
+      table[index] = new LinkedList<Entry<K, unknown>>();
+    }
+
+    table[index].add(new Entry(key, value));
+    this.#size += 1;
+  }
+
+  #rehash(): void {
+    const oldCapacity = this.#table.length;
+    const oldMap = this.#table;
+    let newCapacity = (oldCapacity << 1) + 1;
+
+    if (newCapacity - MAX_ARRAY_SIZE > 0) {
+      if (oldCapacity === MAX_ARRAY_SIZE) {
+        return;
+      }
+
+      newCapacity = MAX_ARRAY_SIZE;
+    }
+
+    const newMap = new Array<LinkedList<Entry<K, unknown>>>(newCapacity);
+
+    this.#threshold = Math.floor(
+      Math.min(newCapacity * this.#loadFactor, MAX_ARRAY_SIZE + 1)
+    );
+    this.#table = newMap;
+
+    for (let i = 0; i < oldCapacity; i++) {
+      const old = oldMap[i];
+
+      if (old !== undefined) {
+        for (const entry of old) {
+          const index = (hash(entry.key) & 0x7fffffff) % newCapacity;
+
+          if (newMap[index] === undefined) {
+            newMap[index] = new LinkedList<Entry<K, unknown>>();
+          }
+
+          newMap[index].add(entry);
+        }
+      }
+    }
   }
 }
