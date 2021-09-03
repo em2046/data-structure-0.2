@@ -10,7 +10,7 @@ export class BinaryHeap<T> implements Iterable<T> {
     constructor();
     constructor(iterable: Iterable<T>);
     clear(): void;
-    static from<T>(iterable: Iterable<T>): BinaryHeap<T>;
+    static from<T>(iterable?: Iterable<T>): BinaryHeap<T>;
     peek(): T | undefined;
     pop(): T | undefined;
     push(newElement: T): BinaryHeap<T>;
@@ -37,8 +37,35 @@ export function greaterThan<T>(lhs: T, rhs: T): boolean;
 export function greaterThanOrEqual<T>(lhs: T, rhs: T): boolean;
 
 // @public
+export interface Hashable extends Equatable {
+    hash(hasher: Hasher): number;
+    hashValue: number;
+}
+
+// @public
+export class Hasher {
+    combine(value: unknown): void;
+    finalize(): number;
+}
+
+// @public
+export class HashMap<K, V> implements Iterable<[K, V]> {
+    [Symbol.iterator](): IterableIterator<[K, V]>;
+    constructor(initialCapacity?: number, loadFactor?: number);
+    clear(): void;
+    delete(key: K): boolean;
+    entries(): IterableIterator<[K, V]>;
+    static from<K, V>(iterable?: Iterable<[K, V]>): HashMap<K, V>;
+    get(key: K): V | undefined;
+    keys(): IterableIterator<K>;
+    set(key: K, value: V): HashMap<K, V>;
+    get size(): number;
+    values(): IterableIterator<V>;
+}
+
+// @public
 export interface Identifiable {
-    id: unknown;
+    readonly id: unknown;
 }
 
 // @public
@@ -51,24 +78,44 @@ export function lessThan<T>(lhs: T, rhs: T): boolean;
 export function lessThanOrEqual<T>(lhs: T, rhs: T): boolean;
 
 // @public
-export class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> {
-    [Symbol.iterator](): IterableIterator<[Key, Value]>;
+export class LinkedList<T> implements Iterable<T> {
+    [Symbol.iterator](): IterableIterator<T>;
     constructor();
-    constructor(iterable: Iterable<[Key, Value]>);
+    constructor(iterable: Iterable<T>);
+    add(element: T): LinkedList<T>;
+    append(other: LinkedList<T>): LinkedList<T>;
+    back(): T | undefined;
     clear(): void;
-    delete(key: Key): boolean;
+    delete(element: T): boolean;
+    static from<T>(iterable?: Iterable<T>): LinkedList<T>;
+    front(): T | undefined;
+    get(element: T): T | undefined;
+    popBack(): T | undefined;
+    popFront(): T | undefined;
+    pushBack(element: T): LinkedList<T>;
+    pushFront(element: T): LinkedList<T>;
+    get size(): number;
+}
+
+// @public
+export class RedBlackTree<K, V> implements Iterable<[K, V]> {
+    [Symbol.iterator](): IterableIterator<[K, V]>;
+    constructor();
+    constructor(iterable: Iterable<[K, V]>);
+    clear(): void;
+    delete(key: K): boolean;
     deleteMax(): boolean;
     deleteMin(): boolean;
-    entries(): IterableIterator<[Key, Value]>;
-    get(key: Key): Value | undefined;
-    keys(): IterableIterator<Key>;
-    max(): [Key, Value] | null;
-    min(): [Key, Value] | null;
-    next(key: Key): [Key, Value] | null;
-    previous(key: Key): [Key, Value] | null;
-    set(key: Key, value: Value): RedBlackTree<Key, Value>;
+    entries(): IterableIterator<[K, V]>;
+    get(key: K): V | undefined;
+    keys(): IterableIterator<K>;
+    max(): [K, V] | null;
+    min(): [K, V] | null;
+    next(key: K): [K, V] | null;
+    previous(key: K): [K, V] | null;
+    set(key: K, value: V): RedBlackTree<K, V>;
     get size(): number;
-    values(): IterableIterator<Value>;
+    values(): IterableIterator<V>;
 }
 
 ```

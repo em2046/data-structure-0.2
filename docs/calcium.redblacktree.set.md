@@ -9,17 +9,17 @@ Adds or updates an element with a specified key and a value to a red black tree.
 <b>Signature:</b>
 
 ```typescript
-set(key: Key, value: Value): RedBlackTree<Key, Value>;
+set(key: K, value: V): RedBlackTree<K, V>;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  key | Key | The key of the element to add to the red black tree. |
-|  value | Value | The value of the element to add to the red black tree. |
+|  key | K | The key of the element to add to the red black tree. |
+|  value | V | The value of the element to add to the red black tree. |
 
 <b>Returns:</b>
 
-[RedBlackTree](./calcium.redblacktree.md)<!-- -->&lt;Key, Value&gt;
+[RedBlackTree](./calcium.redblacktree.md)<!-- -->&lt;K, V&gt;
 

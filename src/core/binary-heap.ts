@@ -44,7 +44,7 @@ export class BinaryHeap<T> implements Iterable<T> {
    *
    * @param iterable - An iterable object to convert to a binary heap.
    */
-  static from<T>(iterable: Iterable<T>): BinaryHeap<T> {
+  static from<T>(iterable: Iterable<T> = []): BinaryHeap<T> {
     return new BinaryHeap<T>(iterable);
   }
 

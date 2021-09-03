@@ -9,12 +9,12 @@ Creates a new, shallow-copied red black tree instance from an iterable object.
 <b>Signature:</b>
 
 ```typescript
-constructor(iterable: Iterable<[Key, Value]>);
+constructor(iterable: Iterable<[K, V]>);
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  iterable | Iterable&lt;\[Key, Value\]&gt; | An <code>Array</code> or other iterable object whose elements are key-value pairs. (For example, arrays with two elements, such as <code>[[ 1, 'one' ],[ 2, 'two' ]]</code>.) Each key-value pair is added to the new red black tree. |
+|  iterable | Iterable&lt;\[K, V\]&gt; | An <code>Array</code> or other iterable object whose elements are key-value pairs. (For example, arrays with two elements, such as <code>[[ 1, 'one' ],[ 2, 'two' ]]</code>.) Each key-value pair is added to the new red black tree. |
 

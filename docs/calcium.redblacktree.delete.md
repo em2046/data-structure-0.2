@@ -9,14 +9,14 @@ Removes the specified element from a red black tree by key.
 <b>Signature:</b>
 
 ```typescript
-delete(key: Key): boolean;
+delete(key: K): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  key | Key | The key of the element to remove from the red black tree. |
+|  key | K | The key of the element to remove from the red black tree. |
 
 <b>Returns:</b>
 

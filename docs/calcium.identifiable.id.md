@@ -9,5 +9,5 @@ The stable identity of the entity associated with this instance.
 <b>Signature:</b>
 
 ```typescript
-id: unknown;
+readonly id: unknown;
 ```
