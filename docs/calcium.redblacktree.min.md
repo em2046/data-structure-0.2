@@ -9,9 +9,9 @@ Returns the key-value pair of the smallest element from a red black tree.
 <b>Signature:</b>
 
 ```typescript
-min(): [Key, Value] | null;
+min(): [K, V] | null;
 ```
 <b>Returns:</b>
 
-\[Key, Value\] \| null
+\[K, V\] \| null
 

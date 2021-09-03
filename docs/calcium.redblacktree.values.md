@@ -9,9 +9,9 @@ Returns a new iterator object that contains the values for each element in the r
 <b>Signature:</b>
 
 ```typescript
-values(): IterableIterator<Value>;
+values(): IterableIterator<V>;
 ```
 <b>Returns:</b>
 
-IterableIterator&lt;Value&gt;
+IterableIterator&lt;V&gt;
 

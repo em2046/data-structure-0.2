@@ -11,6 +11,9 @@ Data Structures in TypeScript.
 |  Class | Description |
 |  --- | --- |
 |  [BinaryHeap](./calcium.binaryheap.md) | A priority queue implemented with a binary heap.<!-- -->This will be a min-heap. |
+|  [Hasher](./calcium.hasher.md) | The universal hash function used by <code>Set</code> and <code>Map</code>. |
+|  [HashMap](./calcium.hashmap.md) | The hash map holds key-value pairs. Any value (both objects and primitive values) may be used as either a key or a value. |
+|  [LinkedList](./calcium.linkedlist.md) | A doubly-linked list with owned nodes. |
 |  [RedBlackTree](./calcium.redblacktree.md) | The red black tree holds key-value pairs. |
 
 ## Functions
@@ -30,5 +33,6 @@ Data Structures in TypeScript.
 |  --- | --- |
 |  [Comparable](./calcium.comparable.md) | A type that can be compared using the relational operators <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;=</code>, and <code>&gt;</code>. |
 |  [Equatable](./calcium.equatable.md) | A type that can be compared for value equality. |
+|  [Hashable](./calcium.hashable.md) | A type that can be hashed into a <code>Hasher</code> to produce an integer hash value. |
 |  [Identifiable](./calcium.identifiable.md) | A class of types whose instances hold the value of an entity with stable identity. |
 

@@ -9,16 +9,16 @@ Returns the key-value pair of the largest element less than to the given key.
 <b>Signature:</b>
 
 ```typescript
-previous(key: Key): [Key, Value] | null;
+previous(key: K): [K, V] | null;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  key | Key | The given key. |
+|  key | K | The given key. |
 
 <b>Returns:</b>
 
-\[Key, Value\] \| null
+\[K, V\] \| null
 

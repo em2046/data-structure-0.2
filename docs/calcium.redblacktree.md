@@ -9,9 +9,9 @@ The red black tree holds key-value pairs.
 <b>Signature:</b>
 
 ```typescript
-export declare class RedBlackTree<Key, Value> implements Iterable<[Key, Value]> 
+export declare class RedBlackTree<K, V> implements Iterable<[K, V]> 
 ```
-<b>Implements:</b> Iterable&lt;\[Key, Value\]&gt;
+<b>Implements:</b> Iterable&lt;\[K, V\]&gt;
 
 ## Constructors
 

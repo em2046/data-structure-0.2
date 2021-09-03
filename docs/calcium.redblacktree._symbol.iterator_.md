@@ -9,9 +9,9 @@ Returns a new iterator object that contains the `[key, value]` pairs for each el
 <b>Signature:</b>
 
 ```typescript
-[Symbol.iterator](): IterableIterator<[Key, Value]>;
+[Symbol.iterator](): IterableIterator<[K, V]>;
 ```
 <b>Returns:</b>
 
-IterableIterator&lt;\[Key, Value\]&gt;
+IterableIterator&lt;\[K, V\]&gt;
 

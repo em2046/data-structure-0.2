@@ -9,16 +9,16 @@ Returns a specified element from a red black tree.
 <b>Signature:</b>
 
 ```typescript
-get(key: Key): Value | undefined;
+get(key: K): V | undefined;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  key | Key | The key of the element to return from the red black tree. |
+|  key | K | The key of the element to return from the red black tree. |
 
 <b>Returns:</b>
 
-Value \| undefined
+V \| undefined
 

@@ -10,6 +10,8 @@ import { equality } from "./equatable";
 const MAX_ARRAY_SIZE = 2 ** 32 - 1;
 
 /**
+ * @public
+ *
  * The hash map holds key-value pairs.
  * Any value (both objects and primitive values) may be used as either a key or
  * a value.

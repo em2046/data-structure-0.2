@@ -9,16 +9,16 @@ Returns the key-value pair of the smallest element greater than to the given key
 <b>Signature:</b>
 
 ```typescript
-next(key: Key): [Key, Value] | null;
+next(key: K): [K, V] | null;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  key | Key | The given key. |
+|  key | K | The given key. |
 
 <b>Returns:</b>
 
-\[Key, Value\] \| null
+\[K, V\] \| null
 

@@ -9,9 +9,9 @@ Returns the key-value pair of the largest element from a red black tree.
 <b>Signature:</b>
 
 ```typescript
-max(): [Key, Value] | null;
+max(): [K, V] | null;
 ```
 <b>Returns:</b>
 
-\[Key, Value\] \| null
+\[K, V\] \| null
 
