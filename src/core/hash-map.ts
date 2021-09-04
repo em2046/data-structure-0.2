@@ -262,6 +262,12 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
     return undefined;
   }
 
+  /**
+   * Returns a boolean asserting whether a value has been associated to the key
+   * in the hash map or not.
+   *
+   * @param key - The key of the element to test for presence in the hash map.
+   */
   has(key: K): boolean {
     return this.get(key) !== undefined;
   }

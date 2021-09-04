@@ -2,17 +2,40 @@ import { HashMap } from "./hash-map";
 
 const PRESENT = {};
 
+/**
+ * @public
+ *
+ * The hash set lets you store unique values of any type, whether primitive
+ * values or object references.
+ */
 export class HashSet<E> implements Iterable<E> {
   #map: HashMap<E, unknown>;
 
+  /**
+   * Creates a new hash set.
+   *
+   * @param initialCapacity - The initial capacity of the hash set.
+   * @param loadFactor - The load factor of the hash set.
+   */
   constructor(initialCapacity = 11, loadFactor = 0.75) {
     this.#map = new HashMap(initialCapacity, loadFactor);
   }
 
+  /**
+   * Returns the number of values in the hash set.
+   */
   get size(): number {
     return this.#map.size;
   }
 
+  /**
+   * Creates a new, shallow-copied hash set instance from an iterable object.
+   *
+   * @param iterable - If an iterable object is passed, all of its elements
+   * will be added to the hash set.
+   * If you don't specify this parameter, or its value is `null`, the hash set
+   * is empty.
+   */
   static from<E>(iterable: Iterable<E> = []): HashSet<E> {
     let size: number;
     const arrayLike = iterable as unknown as ArrayLike<E>;
@@ -34,28 +57,56 @@ export class HashSet<E> implements Iterable<E> {
     return set;
   }
 
+  /**
+   * Returns a new iterator object that yields the values for each element in
+   * the hash set.
+   */
   [Symbol.iterator](): IterableIterator<E> {
     return this.keys();
   }
 
+  /**
+   * Returns a new iterator object that yields the values for each element in
+   * the hash set.
+   */
   keys(): IterableIterator<E> {
     return this.#map.keys();
   }
 
+  /**
+   * Appends value to the hash set. Returns the hash set with added value.
+   *
+   * @param element - The value of the element to add to the hash set.
+   */
   add(element: E): HashSet<E> {
     this.#map.set(element, PRESENT);
 
     return this;
   }
 
+  /**
+   * Returns a boolean asserting whether an element is present with the given
+   * value in the hash set or not.
+   *
+   * @param element - The value to test for presence in the hash set.
+   */
   has(element: E): boolean {
     return this.#map.has(element);
   }
 
+  /**
+   * Removes the element associated to the value and returns a boolean
+   * asserting whether an element was successfully removed or not.
+   *
+   * @param element - The value to remove from the hash set.
+   */
   delete(element: E): boolean {
     return this.#map.delete(element);
   }
 
+  /**
+   * Removes all elements from the hash set.
+   */
   clear(): void {
     this.#map.clear();
   }
