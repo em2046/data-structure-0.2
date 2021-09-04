@@ -13,7 +13,7 @@ export interface Hashable extends Equatable {
   /**
    * The hash value.
    */
-  hashValue: number;
+  hashValue?: number;
 
   /**
    * Hashes the essential components of this value by feeding them into the
@@ -22,5 +22,5 @@ export interface Hashable extends Equatable {
    * @param hasher - The hasher to use when combining the components of this
    * instance.
    */
-  hash(hasher: Hasher): number;
+  hash(hasher: Hasher): void;
 }

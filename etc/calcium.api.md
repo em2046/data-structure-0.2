@@ -10,7 +10,7 @@ export class BinaryHeap<T> implements Iterable<T> {
     constructor();
     constructor(iterable: Iterable<T>);
     clear(): void;
-    static from<T>(iterable?: Iterable<T>): BinaryHeap<T>;
+    static from<T>(iterable: Iterable<T>): BinaryHeap<T>;
     peek(): T | undefined;
     pop(): T | undefined;
     push(newElement: T): BinaryHeap<T>;
@@ -41,8 +41,8 @@ export function hash(value: unknown): number;
 
 // @public
 export interface Hashable extends Equatable {
-    hash(hasher: Hasher): number;
-    hashValue: number;
+    hash(hasher: Hasher): void;
+    hashValue?: number;
 }
 
 // @public
@@ -60,10 +60,24 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
     entries(): IterableIterator<[K, V]>;
     static from<K, V>(iterable?: Iterable<[K, V]>): HashMap<K, V>;
     get(key: K): V | undefined;
+    has(key: K): boolean;
     keys(): IterableIterator<K>;
     set(key: K, value: V): HashMap<K, V>;
     get size(): number;
     values(): IterableIterator<V>;
+}
+
+// @public
+export class HashSet<E> implements Iterable<E> {
+    [Symbol.iterator](): IterableIterator<E>;
+    constructor(initialCapacity?: number, loadFactor?: number);
+    add(element: E): HashSet<E>;
+    clear(): void;
+    delete(element: E): boolean;
+    static from<E>(iterable?: Iterable<E>): HashSet<E>;
+    has(element: E): boolean;
+    keys(): IterableIterator<E>;
+    get size(): number;
 }
 
 // @public
@@ -90,7 +104,7 @@ export class LinkedList<T> implements Iterable<T> {
     back(): T | undefined;
     clear(): void;
     delete(element: T): boolean;
-    static from<T>(iterable?: Iterable<T>): LinkedList<T>;
+    static from<T>(iterable: Iterable<T>): LinkedList<T>;
     front(): T | undefined;
     get(element: T): T | undefined;
     popBack(): T | undefined;

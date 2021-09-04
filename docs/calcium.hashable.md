@@ -17,7 +17,7 @@ export interface Hashable extends Equatable
 
 |  Property | Type | Description |
 |  --- | --- | --- |
-|  [hashValue](./calcium.hashable.hashvalue.md) | number | The hash value. |
+|  [hashValue?](./calcium.hashable.hashvalue.md) | number | <i>(Optional)</i> The hash value. |
 
 ## Methods
 

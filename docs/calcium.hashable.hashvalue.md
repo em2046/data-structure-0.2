@@ -9,5 +9,5 @@ The hash value.
 <b>Signature:</b>
 
 ```typescript
-hashValue: number;
+hashValue?: number;
 ```

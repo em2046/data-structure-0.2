@@ -146,7 +146,7 @@ describe("hash map", () => {
       NODE_CAPACITY,
     ];
 
-    sizes.forEach((size) => {
+    for (const size of sizes) {
       for (let i = 0; i < size; i++) {
         map.set(i, i);
       }
@@ -154,7 +154,7 @@ describe("hash map", () => {
       expect(map.size).toBe(size);
       map.clear();
       expect(map.size).toBe(0);
-    });
+    }
   });
 
   test("keys", () => {
@@ -198,5 +198,24 @@ describe("hash map", () => {
       map.set(i, i);
       map.delete(0xff - i);
     }
+  });
+
+  test("init", () => {
+    expect(() => {
+      new HashMap(-1);
+    }).toThrowError();
+
+    expect(() => {
+      new HashMap(undefined, 0);
+    }).toThrowError();
+
+    new HashMap(0);
+
+    const size = VITE ? 200 : 10000;
+    const data: [number, number][] = new Array(size)
+      .fill(0)
+      .map((_, i) => [i, i]);
+
+    HashMap.from(data[Symbol.iterator]());
   });
 });

@@ -9,7 +9,7 @@ Creates a new, shallow-copied linked list instance from an iterable object.
 <b>Signature:</b>
 
 ```typescript
-static from<T>(iterable?: Iterable<T>): LinkedList<T>;
+static from<T>(iterable: Iterable<T>): LinkedList<T>;
 ```
 
 ## Parameters

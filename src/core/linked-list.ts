@@ -45,7 +45,7 @@ export class LinkedList<T> implements Iterable<T> {
    *
    * @param iterable - An iterable object to convert to a linked list.
    */
-  static from<T>(iterable: Iterable<T> = []): LinkedList<T> {
+  static from<T>(iterable: Iterable<T>): LinkedList<T> {
     return new LinkedList(iterable);
   }
 

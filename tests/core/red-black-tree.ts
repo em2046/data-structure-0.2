@@ -157,7 +157,7 @@ describe("red black tree", () => {
       NODE_CAPACITY,
     ];
 
-    sizes.forEach((size) => {
+    for (const size of sizes) {
       for (let i = 0; i < size; i++) {
         map.set(i, i);
       }
@@ -165,7 +165,7 @@ describe("red black tree", () => {
       expect(map.size).toBe(size);
       map.clear();
       expect(map.size).toBe(0);
-    });
+    }
   });
 
   test("keys", () => {

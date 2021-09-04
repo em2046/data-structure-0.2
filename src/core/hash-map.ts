@@ -8,6 +8,7 @@ import { equality } from "./equatable";
 // https://github.com/kevin-wayne/algs4/blob/2a3d7f7a36d76fbf5222c26b3d71fcca85d82fc1/src/main/java/edu/princeton/cs/algs4/SeparateChainingHashST.java
 
 const MAX_ARRAY_SIZE = 2 ** 32 - 1;
+const PRESENT = {};
 
 /**
  * @public
@@ -39,6 +40,10 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
 
     if (initialCapacity === 0) {
       initialCapacity = 1;
+    }
+
+    if (initialCapacity - MAX_ARRAY_SIZE > 0) {
+      initialCapacity = MAX_ARRAY_SIZE;
     }
 
     this.#loadFactor = loadFactor;
@@ -98,7 +103,7 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
    */
   entries(): IterableIterator<[K, V]> {
     const table = this.#table;
-    let index = 0;
+    let index = -1;
     let listIterator: IterableIterator<Entry<K, unknown>> | undefined;
 
     return {
@@ -110,6 +115,8 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
 
         while (index < table.length) {
           if (listIterator === undefined) {
+            index += 1;
+
             const list = table[index];
 
             if (list === undefined) {
@@ -117,8 +124,6 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
             } else {
               listIterator = list[Symbol.iterator]();
             }
-
-            index += 1;
 
             continue;
           }
@@ -262,6 +267,16 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
   }
 
   /**
+   * Returns a boolean asserting whether a value has been associated to the key
+   * in the hash map or not.
+   *
+   * @param key - The key of the element to test for presence in the hash map.
+   */
+  has(key: K): boolean {
+    return this.get(key) !== undefined;
+  }
+
+  /**
    * Returns `true` if an element in the hash map existed and has been removed,
    * or `false` if the element does not exist.
    *
@@ -274,7 +289,7 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
     const list = table[index];
 
     if (list !== undefined) {
-      const success = list.delete(new Entry<K, unknown>(key, {}));
+      const success = list.delete(new Entry<K, unknown>(key, PRESENT));
 
       if (success) {
         this.#size -= 1;

@@ -13,6 +13,7 @@ Data Structures in TypeScript.
 |  [BinaryHeap](./calcium.binaryheap.md) | A priority queue implemented with a binary heap.<!-- -->This will be a min-heap. |
 |  [Hasher](./calcium.hasher.md) | The universal hash function used by <code>Set</code> and <code>Map</code>. |
 |  [HashMap](./calcium.hashmap.md) | The hash map holds key-value pairs. Any value (both objects and primitive values) may be used as either a key or a value. |
+|  [HashSet](./calcium.hashset.md) | The hash set lets you store unique values of any type, whether primitive values or object references. |
 |  [LinkedList](./calcium.linkedlist.md) | A doubly-linked list with owned nodes. |
 |  [RedBlackTree](./calcium.redblacktree.md) | The red black tree holds key-value pairs. |
 
