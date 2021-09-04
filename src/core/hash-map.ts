@@ -20,13 +20,13 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
   readonly #loadFactor: number;
   #threshold: number;
   #size = 0;
-  #table: LinkedList<Entry<K, unknown>>[] = [];
+  #table: (LinkedList<Entry<K, unknown>> | undefined)[];
 
   /**
    * Creates a new hash map.
    *
-   * @param initialCapacity - The initial capacity of the hashtable.
-   * @param loadFactor - The load factor of the hashtable.
+   * @param initialCapacity - The initial capacity of the hash map.
+   * @param loadFactor - The load factor of the hash map.
    */
   constructor(initialCapacity = 11, loadFactor = 0.75) {
     if (initialCapacity < 0) {
@@ -34,7 +34,7 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
     }
 
     if (loadFactor <= 0 || Number.isNaN(loadFactor)) {
-      throw new Error(`Illegal Load: ${initialCapacity}`);
+      throw new Error(`Illegal Load: ${loadFactor}`);
     }
 
     if (initialCapacity === 0) {
@@ -42,7 +42,7 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
     }
 
     this.#loadFactor = loadFactor;
-    this.#table = new Array(initialCapacity);
+    this.#table = new Array(initialCapacity).fill(undefined);
     this.#threshold = Math.floor(
       Math.min(initialCapacity * loadFactor, MAX_ARRAY_SIZE + 1)
     );
@@ -58,16 +58,26 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
   /**
    * Creates a new, shallow-copied hash map instance from an iterable object.
    *
-   * @param iterable - An Array or other iterable object whose elements are
+   * @param iterable - An `Array` or other iterable object whose elements are
    * key-value pairs. (For example, arrays with two elements, such as
-   * [[ 1, 'one' ],[ 2, 'two' ]].) Each key-value pair is added to the new hash
-   * map.
+   * `[[ 1, 'one' ],[ 2, 'two' ]]`.) Each key-value pair is added to the new
+   * hash map.
    */
   static from<K, V>(iterable: Iterable<[K, V]> = []): HashMap<K, V> {
-    const elements = [...iterable];
-    const map = new HashMap<K, V>(Math.max(2 * elements.length, 11), 0.75);
+    let size: number;
+    const arrayLike = iterable as unknown as ArrayLike<[K, V]>;
 
-    for (const [key, value] of elements) {
+    if (typeof arrayLike.length === "number") {
+      size = arrayLike.length;
+    } else {
+      const elements = [...iterable];
+
+      size = elements.length;
+    }
+
+    const map = new HashMap<K, V>(Math.max(2 * size, 11), 0.75);
+
+    for (const [key, value] of iterable) {
       map.set(key, value);
     }
 
@@ -75,22 +85,21 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
   }
 
   /**
-   * Returns a new Iterator object that contains an array of [key, value] for
-   * each element in the hash map in insertion order.
+   * Returns a new Iterator object that contains an array of `[key, value]` for
+   * each element in the hash map.
    */
   [Symbol.iterator](): IterableIterator<[K, V]> {
     return this.entries();
   }
 
   /**
-   * Returns a new Iterator object that contains an array of [key, value] for
-   * each element in the hash map in insertion order.
+   * Returns a new Iterator object that contains an array of `[key, value]` for
+   * each element in the hash map.
    */
   entries(): IterableIterator<[K, V]> {
     const table = this.#table;
     let index = 0;
-    let listIterator: IterableIterator<Entry<K, unknown>> | undefined =
-      table[0]?.[Symbol.iterator]();
+    let listIterator: IterableIterator<Entry<K, unknown>> | undefined;
 
     return {
       [Symbol.iterator](): IterableIterator<[K, V]> {
@@ -101,14 +110,22 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
 
         while (index < table.length) {
           if (listIterator === undefined) {
+            const list = table[index];
+
+            if (list === undefined) {
+              listIterator = undefined;
+            } else {
+              listIterator = list[Symbol.iterator]();
+            }
+
             index += 1;
-            listIterator = table[index]?.[Symbol.iterator]();
+
             continue;
           }
 
           const next = listIterator.next();
 
-          if (next?.done) {
+          if (next.done) {
             listIterator = undefined;
           } else {
             const { key, value } = next.value;
@@ -135,7 +152,7 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
 
   /**
    * Returns a new Iterator object that contains the keys for each element in
-   * the hash map in insertion order.
+   * the hash map.
    */
   keys(): IterableIterator<K> {
     const iterator = this.entries();
@@ -166,7 +183,7 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
 
   /**
    * Returns a new Iterator object that contains the values for each element in
-   * the hash map in insertion order.
+   * the hash map.
    */
   values(): IterableIterator<V> {
     const iterator = this.entries();
@@ -223,7 +240,7 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
   }
 
   /**
-   * Returns the value associated to the key, or undefined if there is none.
+   * Returns the value associated to the key, or `undefined` if there is none.
    *
    * @param key - The key of the element to return from the hash map.
    */
@@ -245,8 +262,8 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
   }
 
   /**
-   * Returns true if an element in the hash map existed and has been removed,
-   * or false if the element does not exist.
+   * Returns `true` if an element in the hash map existed and has been removed,
+   * or `false` if the element does not exist.
    *
    * @param key - The key of the element to remove from the hash map.
    */
@@ -257,9 +274,9 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
     const list = table[index];
 
     if (list !== undefined) {
-      const succeed = list.delete(new Entry<K, unknown>(key, {}));
+      const success = list.delete(new Entry<K, unknown>(key, {}));
 
-      if (succeed) {
+      if (success) {
         this.#size -= 1;
 
         return true;
@@ -277,8 +294,11 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
     const size = table.length;
 
     for (let i = 0; i < size; i++) {
-      if (table[i] !== undefined) {
-        table[i].clear();
+      const list = table[i];
+
+      if (list !== undefined) {
+        list.clear();
+        table[i] = undefined;
       }
     }
 
@@ -293,14 +313,17 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
 
       table = this.#table;
       hashValue = hash(key);
-      index = index = (hashValue & 0x7fffffff) % table.length;
+      index = (hashValue & 0x7fffffff) % table.length;
     }
 
-    if (table[index] === undefined) {
-      table[index] = new LinkedList<Entry<K, unknown>>();
+    let list = table[index];
+
+    if (list === undefined) {
+      list = new LinkedList<Entry<K, unknown>>();
+      table[index] = list;
     }
 
-    table[index].add(new Entry(key, value));
+    list.pushBack(new Entry(key, value));
     this.#size += 1;
   }
 
@@ -317,7 +340,9 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
       newCapacity = MAX_ARRAY_SIZE;
     }
 
-    const newMap = new Array<LinkedList<Entry<K, unknown>>>(newCapacity);
+    const newMap = new Array<LinkedList<Entry<K, unknown>> | undefined>(
+      newCapacity
+    ).fill(undefined);
 
     this.#threshold = Math.floor(
       Math.min(newCapacity * this.#loadFactor, MAX_ARRAY_SIZE + 1)
@@ -325,17 +350,19 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
     this.#table = newMap;
 
     for (let i = 0; i < oldCapacity; i++) {
-      const old = oldMap[i];
+      const oldList = oldMap[i];
 
-      if (old !== undefined) {
-        for (const entry of old) {
+      if (oldList !== undefined) {
+        for (const entry of oldList) {
           const index = (hash(entry.key) & 0x7fffffff) % newCapacity;
+          let list = newMap[index];
 
-          if (newMap[index] === undefined) {
-            newMap[index] = new LinkedList<Entry<K, unknown>>();
+          if (list === undefined) {
+            list = new LinkedList<Entry<K, unknown>>();
+            newMap[index] = list;
           }
 
-          newMap[index].add(entry);
+          list.pushBack(entry);
         }
       }
     }

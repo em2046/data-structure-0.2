@@ -16,6 +16,6 @@ constructor(initialCapacity?: number, loadFactor?: number);
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  initialCapacity | number | The initial capacity of the hashtable. |
-|  loadFactor | number | The load factor of the hashtable. |
+|  initialCapacity | number | The initial capacity of the hash map. |
+|  loadFactor | number | The load factor of the hash map. |
 

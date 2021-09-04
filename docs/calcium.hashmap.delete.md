@@ -4,7 +4,7 @@
 
 ## HashMap.delete() method
 
-Returns true if an element in the hash map existed and has been removed, or false if the element does not exist.
+Returns `true` if an element in the hash map existed and has been removed, or `false` if the element does not exist.
 
 <b>Signature:</b>
 

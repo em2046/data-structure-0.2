@@ -69,10 +69,12 @@ export class Hasher {
 }
 
 /**
+ * @public
+ *
  * Hashes the essential components of this value by feeding them into the
  * given hasher.
  *
- * @param value - A value to add to the hasher.
+ * @param value - A value to convert to the hash value.
  */
 export function hash(value: unknown): number {
   const hashable = value as Hashable;

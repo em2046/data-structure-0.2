@@ -29,13 +29,13 @@ export declare class HashMap<K, V> implements Iterable<[K, V]>
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [\[Symbol.iterator\]()](./calcium.hashmap._symbol.iterator_.md) |  | Returns a new Iterator object that contains an array of \[key, value\] for each element in the hash map in insertion order. |
+|  [\[Symbol.iterator\]()](./calcium.hashmap._symbol.iterator_.md) |  | Returns a new Iterator object that contains an array of <code>[key, value]</code> for each element in the hash map. |
 |  [clear()](./calcium.hashmap.clear.md) |  | Removes all key-value pairs from the hash map. |
-|  [delete(key)](./calcium.hashmap.delete.md) |  | Returns true if an element in the hash map existed and has been removed, or false if the element does not exist. |
-|  [entries()](./calcium.hashmap.entries.md) |  | Returns a new Iterator object that contains an array of \[key, value\] for each element in the hash map in insertion order. |
+|  [delete(key)](./calcium.hashmap.delete.md) |  | Returns <code>true</code> if an element in the hash map existed and has been removed, or <code>false</code> if the element does not exist. |
+|  [entries()](./calcium.hashmap.entries.md) |  | Returns a new Iterator object that contains an array of <code>[key, value]</code> for each element in the hash map. |
 |  [from(iterable)](./calcium.hashmap.from.md) | <code>static</code> | Creates a new, shallow-copied hash map instance from an iterable object. |
-|  [get(key)](./calcium.hashmap.get.md) |  | Returns the value associated to the key, or undefined if there is none. |
-|  [keys()](./calcium.hashmap.keys.md) |  | Returns a new Iterator object that contains the keys for each element in the hash map in insertion order. |
+|  [get(key)](./calcium.hashmap.get.md) |  | Returns the value associated to the key, or <code>undefined</code> if there is none. |
+|  [keys()](./calcium.hashmap.keys.md) |  | Returns a new Iterator object that contains the keys for each element in the hash map. |
 |  [set(key, value)](./calcium.hashmap.set.md) |  | Sets the value for the key in the hash map. Returns the hash map. |
-|  [values()](./calcium.hashmap.values.md) |  | Returns a new Iterator object that contains the values for each element in the hash map in insertion order. |
+|  [values()](./calcium.hashmap.values.md) |  | Returns a new Iterator object that contains the values for each element in the hash map. |
 
