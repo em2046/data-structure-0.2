@@ -35,6 +35,7 @@ export declare class HashMap<K, V> implements Iterable<[K, V]>
 |  [entries()](./calcium.hashmap.entries.md) |  | Returns a new Iterator object that contains an array of <code>[key, value]</code> for each element in the hash map. |
 |  [from(iterable)](./calcium.hashmap.from.md) | <code>static</code> | Creates a new, shallow-copied hash map instance from an iterable object. |
 |  [get(key)](./calcium.hashmap.get.md) |  | Returns the value associated to the key, or <code>undefined</code> if there is none. |
+|  [has(key)](./calcium.hashmap.has.md) |  | Returns a boolean asserting whether a value has been associated to the key in the hash map or not. |
 |  [keys()](./calcium.hashmap.keys.md) |  | Returns a new Iterator object that contains the keys for each element in the hash map. |
 |  [set(key, value)](./calcium.hashmap.set.md) |  | Sets the value for the key in the hash map. Returns the hash map. |
 |  [values()](./calcium.hashmap.values.md) |  | Returns a new Iterator object that contains the values for each element in the hash map. |

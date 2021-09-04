@@ -9,7 +9,7 @@ Hashes the essential components of this value by feeding them into the given has
 <b>Signature:</b>
 
 ```typescript
-hash(hasher: Hasher): number;
+hash(hasher: Hasher): void;
 ```
 
 ## Parameters
@@ -20,5 +20,5 @@ hash(hasher: Hasher): number;
 
 <b>Returns:</b>
 
-number
+void
 
