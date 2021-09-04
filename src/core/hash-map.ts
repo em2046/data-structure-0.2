@@ -103,7 +103,7 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
    */
   entries(): IterableIterator<[K, V]> {
     const table = this.#table;
-    let index = 0;
+    let index = -1;
     let listIterator: IterableIterator<Entry<K, unknown>> | undefined;
 
     return {
@@ -115,6 +115,8 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
 
         while (index < table.length) {
           if (listIterator === undefined) {
+            index += 1;
+
             const list = table[index];
 
             if (list === undefined) {
@@ -122,8 +124,6 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
             } else {
               listIterator = list[Symbol.iterator]();
             }
-
-            index += 1;
 
             continue;
           }
