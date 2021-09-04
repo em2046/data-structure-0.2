@@ -40,9 +40,9 @@ describe("binary heap", () => {
     const heap = BinaryHeap.from(data);
     const iterator = heap[Symbol.iterator]();
 
-    out.forEach((value) => {
+    for (const value of out) {
       expect(iterator.next().value).toBe(value);
-    });
+    }
 
     expect(iterator.next().done).toBe(true);
   });

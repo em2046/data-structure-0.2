@@ -42,6 +42,10 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
       initialCapacity = 1;
     }
 
+    if (initialCapacity - MAX_ARRAY_SIZE > 0) {
+      initialCapacity = MAX_ARRAY_SIZE;
+    }
+
     this.#loadFactor = loadFactor;
     this.#table = new Array(initialCapacity).fill(undefined);
     this.#threshold = Math.floor(
