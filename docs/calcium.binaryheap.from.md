@@ -9,7 +9,7 @@ Creates a new, shallow-copied binary heap instance from an iterable object.
 <b>Signature:</b>
 
 ```typescript
-static from<T>(iterable?: Iterable<T>): BinaryHeap<T>;
+static from<T>(iterable: Iterable<T>): BinaryHeap<T>;
 ```
 
 ## Parameters
