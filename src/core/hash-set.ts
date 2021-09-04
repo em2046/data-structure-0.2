@@ -1,5 +1,8 @@
 import { HashMap } from "./hash-map";
 
+// Copied from
+// https://github.com/openjdk/jdk/blob/1fb798d320c708dfcbc0bb157511a2937fafb9e6/src/java.base/share/classes/java/util/HashSet.java
+
 const PRESENT = {};
 
 /**
