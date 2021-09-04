@@ -8,6 +8,7 @@ import { equality } from "./equatable";
 // https://github.com/kevin-wayne/algs4/blob/2a3d7f7a36d76fbf5222c26b3d71fcca85d82fc1/src/main/java/edu/princeton/cs/algs4/SeparateChainingHashST.java
 
 const MAX_ARRAY_SIZE = 2 ** 32 - 1;
+const PRESENT = {};
 
 /**
  * @public
@@ -261,6 +262,10 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
     return undefined;
   }
 
+  has(key: K): boolean {
+    return this.get(key) !== undefined;
+  }
+
   /**
    * Returns `true` if an element in the hash map existed and has been removed,
    * or `false` if the element does not exist.
@@ -274,7 +279,7 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
     const list = table[index];
 
     if (list !== undefined) {
-      const success = list.delete(new Entry<K, unknown>(key, {}));
+      const success = list.delete(new Entry<K, unknown>(key, PRESENT));
 
       if (success) {
         this.#size -= 1;
