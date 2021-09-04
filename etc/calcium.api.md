@@ -37,6 +37,9 @@ export function greaterThan<T>(lhs: T, rhs: T): boolean;
 export function greaterThanOrEqual<T>(lhs: T, rhs: T): boolean;
 
 // @public
+export function hash(value: unknown): number;
+
+// @public
 export interface Hashable extends Equatable {
     hash(hasher: Hasher): number;
     hashValue: number;

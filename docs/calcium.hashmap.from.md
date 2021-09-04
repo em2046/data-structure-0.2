@@ -16,7 +16,7 @@ static from<K, V>(iterable?: Iterable<[K, V]>): HashMap<K, V>;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  iterable | Iterable&lt;\[K, V\]&gt; | An Array or other iterable object whose elements are key-value pairs. (For example, arrays with two elements, such as \[\[ 1, 'one' \],\[ 2, 'two' \]\].) Each key-value pair is added to the new hash map. |
+|  iterable | Iterable&lt;\[K, V\]&gt; | An <code>Array</code> or other iterable object whose elements are key-value pairs. (For example, arrays with two elements, such as <code>[[ 1, 'one' ],[ 2, 'two' ]]</code>.) Each key-value pair is added to the new hash map. |
 
 <b>Returns:</b>
 

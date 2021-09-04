@@ -25,8 +25,8 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
   /**
    * Creates a new hash map.
    *
-   * @param initialCapacity - The initial capacity of the hashtable.
-   * @param loadFactor - The load factor of the hashtable.
+   * @param initialCapacity - The initial capacity of the hash map.
+   * @param loadFactor - The load factor of the hash map.
    */
   constructor(initialCapacity = 11, loadFactor = 0.75) {
     if (initialCapacity < 0) {
@@ -58,10 +58,10 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
   /**
    * Creates a new, shallow-copied hash map instance from an iterable object.
    *
-   * @param iterable - An Array or other iterable object whose elements are
+   * @param iterable - An `Array` or other iterable object whose elements are
    * key-value pairs. (For example, arrays with two elements, such as
-   * [[ 1, 'one' ],[ 2, 'two' ]].) Each key-value pair is added to the new hash
-   * map.
+   * `[[ 1, 'one' ],[ 2, 'two' ]]`.) Each key-value pair is added to the new
+   * hash map.
    */
   static from<K, V>(iterable: Iterable<[K, V]> = []): HashMap<K, V> {
     let size: number;
@@ -85,16 +85,16 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
   }
 
   /**
-   * Returns a new Iterator object that contains an array of [key, value] for
-   * each element in the hash map in insertion order.
+   * Returns a new Iterator object that contains an array of `[key, value]` for
+   * each element in the hash map.
    */
   [Symbol.iterator](): IterableIterator<[K, V]> {
     return this.entries();
   }
 
   /**
-   * Returns a new Iterator object that contains an array of [key, value] for
-   * each element in the hash map in insertion order.
+   * Returns a new Iterator object that contains an array of `[key, value]` for
+   * each element in the hash map.
    */
   entries(): IterableIterator<[K, V]> {
     const table = this.#table;
@@ -152,7 +152,7 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
 
   /**
    * Returns a new Iterator object that contains the keys for each element in
-   * the hash map in insertion order.
+   * the hash map.
    */
   keys(): IterableIterator<K> {
     const iterator = this.entries();
@@ -183,7 +183,7 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
 
   /**
    * Returns a new Iterator object that contains the values for each element in
-   * the hash map in insertion order.
+   * the hash map.
    */
   values(): IterableIterator<V> {
     const iterator = this.entries();
@@ -240,7 +240,7 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
   }
 
   /**
-   * Returns the value associated to the key, or undefined if there is none.
+   * Returns the value associated to the key, or `undefined` if there is none.
    *
    * @param key - The key of the element to return from the hash map.
    */
@@ -262,8 +262,8 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
   }
 
   /**
-   * Returns true if an element in the hash map existed and has been removed,
-   * or false if the element does not exist.
+   * Returns `true` if an element in the hash map existed and has been removed,
+   * or `false` if the element does not exist.
    *
    * @param key - The key of the element to remove from the hash map.
    */
