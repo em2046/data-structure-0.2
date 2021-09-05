@@ -289,9 +289,9 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
     const list = table[index];
 
     if (list !== undefined) {
-      const success = list.delete(new Entry<K, unknown>(key, PRESENT));
+      const existed = list.delete(new Entry<K, unknown>(key, PRESENT));
 
-      if (success) {
+      if (existed) {
         this.#size -= 1;
 
         return true;
@@ -327,7 +327,6 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
       this.#rehash();
 
       table = this.#table;
-      hashValue = hash(key);
       index = (hashValue & 0x7fffffff) % table.length;
     }
 
@@ -343,9 +342,9 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
   }
 
   #rehash(): void {
-    const oldCapacity = this.#table.length;
-    const oldMap = this.#table;
-    let newCapacity = (oldCapacity << 1) + 1;
+    const oldTable = this.#table;
+    const oldCapacity = oldTable.length;
+    let newCapacity = oldCapacity * 2 + 1;
 
     if (newCapacity - MAX_ARRAY_SIZE > 0) {
       if (oldCapacity === MAX_ARRAY_SIZE) {
@@ -355,26 +354,26 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
       newCapacity = MAX_ARRAY_SIZE;
     }
 
-    const newMap = new Array<LinkedList<Entry<K, unknown>> | undefined>(
+    const newTable = new Array<LinkedList<Entry<K, unknown>> | undefined>(
       newCapacity
     ).fill(undefined);
 
     this.#threshold = Math.floor(
       Math.min(newCapacity * this.#loadFactor, MAX_ARRAY_SIZE + 1)
     );
-    this.#table = newMap;
+    this.#table = newTable;
 
     for (let i = 0; i < oldCapacity; i++) {
-      const oldList = oldMap[i];
+      const oldList = oldTable[i];
 
       if (oldList !== undefined) {
         for (const entry of oldList) {
           const index = (hash(entry.key) & 0x7fffffff) % newCapacity;
-          let list = newMap[index];
+          let list = newTable[index];
 
           if (list === undefined) {
             list = new LinkedList<Entry<K, unknown>>();
-            newMap[index] = list;
+            newTable[index] = list;
           }
 
           list.pushBack(entry);

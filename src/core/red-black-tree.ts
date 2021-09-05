@@ -87,7 +87,7 @@ function moveRedRight<K, V>(node: Node<K, V>): Node<K, V> {
   return node;
 }
 
-function fixUp<K, V>(node: Node<K, V>): Node<K, V> {
+function balance<K, V>(node: Node<K, V>): Node<K, V> {
   if (isRed(node.right) && !isRed(node.left)) {
     node = rotateLeft(node);
   }
@@ -365,6 +365,10 @@ export class RedBlackTree<K, V> implements Iterable<[K, V]> {
 
     const size = this.#size;
 
+    if (!isRed(this.#root.left) && !isRed(this.#root.right)) {
+      this.#root.color = Color.Red;
+    }
+
     this.#root = this.#deleteMin(this.#root);
 
     if (this.#root !== null) {
@@ -383,6 +387,10 @@ export class RedBlackTree<K, V> implements Iterable<[K, V]> {
     }
 
     const size = this.#size;
+
+    if (!isRed(this.#root.left) && !isRed(this.#root.right)) {
+      this.#root.color = Color.Red;
+    }
 
     this.#root = this.#deleteMax(this.#root);
 
@@ -404,6 +412,10 @@ export class RedBlackTree<K, V> implements Iterable<[K, V]> {
     }
 
     const size = this.#size;
+
+    if (!isRed(this.#root.left) && !isRed(this.#root.right)) {
+      this.#root.color = Color.Red;
+    }
 
     this.#root = this.#delete(this.#root, key);
 
@@ -495,7 +507,7 @@ export class RedBlackTree<K, V> implements Iterable<[K, V]> {
       node.right = this.#set(node.right, key, value);
     }
 
-    return fixUp(node);
+    return balance(node);
   }
 
   #deleteMin(node: Node<K, V>): Node<K, V> | null {
@@ -512,7 +524,7 @@ export class RedBlackTree<K, V> implements Iterable<[K, V]> {
     assert(node.left !== null);
     node.left = this.#deleteMin(node.left);
 
-    return fixUp(node);
+    return balance(node);
   }
 
   #deleteMax(node: Node<K, V>): Node<K, V> | null {
@@ -533,7 +545,7 @@ export class RedBlackTree<K, V> implements Iterable<[K, V]> {
     assert(node.right !== null);
     node.right = this.#deleteMax(node.right);
 
-    return fixUp(node);
+    return balance(node);
   }
 
   #delete(node: Node<K, V>, key: K): Node<K, V> | null {
@@ -577,6 +589,6 @@ export class RedBlackTree<K, V> implements Iterable<[K, V]> {
       }
     }
 
-    return fixUp(node);
+    return balance(node);
   }
 }
