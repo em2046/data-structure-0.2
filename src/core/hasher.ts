@@ -4,6 +4,8 @@ import { Hashable } from "./hashable";
 // https://github.com/openjdk/jdk/blob/1fb798d320c708dfcbc0bb157511a2937fafb9e6/src/java.base/share/classes/java/lang/StringUTF16.java
 // https://github.com/apple/swift/blob/3616872c286685f60a462bcc3eb993930313ff70/stdlib/public/core/Hasher.swift
 
+const LIMIT = 2n ** 32n;
+
 function hashPrimitive(value: unknown): number {
   switch (typeof value) {
     case "bigint":
@@ -16,7 +18,7 @@ function hashPrimitive(value: unknown): number {
 }
 
 function hashBigInt(value: bigint): number {
-  return hashNumber(Number(value % 2n ** 32n));
+  return hashNumber(Number(((value % LIMIT) + LIMIT) % LIMIT));
 }
 
 function hashNumber(value: number): number {

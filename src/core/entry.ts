@@ -1,15 +1,15 @@
 import { equality, Equatable } from "./equatable";
 
-export class Entry<Key, Value> implements Equatable {
-  readonly key: Key;
-  value: Value;
+export class Entry<K, V> implements Equatable {
+  readonly key: K;
+  value: V;
 
-  constructor(key: Key, value: Value) {
+  constructor(key: K, value: V) {
     this.key = key;
     this.value = value;
   }
 
-  equality(rhs: Entry<Key, Value>): boolean {
+  equality(rhs: Entry<K, V>): boolean {
     return equality(this.key, rhs.key);
   }
 }
