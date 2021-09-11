@@ -2,8 +2,8 @@ import { hash } from "../../src";
 
 describe("hasher", () => {
   function testInt32(value: number): void {
-    expect(value >= -0x80000000).toBe(true);
-    expect(value <= 0x7fffffff).toBe(true);
+    expect(value >= -0x8000_0000).toBe(true);
+    expect(value <= 0x7fff_ffff).toBe(true);
     expect(Number.isSafeInteger(value)).toBe(true);
   }
 

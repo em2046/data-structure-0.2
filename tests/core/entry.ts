@@ -11,7 +11,7 @@ const PRESENT = {};
 describe("entry", () => {
   test("basic large", () => {
     const map = new LinkedList<Entry<number, unknown>>();
-    let size = VITE ? MIN_INSERTS_HEIGHT_2 : 10000;
+    let size = VITE ? MIN_INSERTS_HEIGHT_2 : 10_000;
 
     size = size + (size % 2);
 
