@@ -23,14 +23,14 @@ export interface AbstractMap<K, V> extends Iterable<[K, V]>
 
 |  Method | Description |
 |  --- | --- |
-|  [\[Symbol.iterator\]()](./calcium.abstractmap._symbol.iterator_.md) | Returns a new Iterator object that contains an array of <code>[key, value]</code> for each element in the map. |
+|  [\[Symbol.iterator\]()](./calcium.abstractmap._symbol.iterator_.md) | Returns a new iterator object that contains \*\*an array of <code>[key, value]</code>\*\* for each element in the map. |
 |  [clear()](./calcium.abstractmap.clear.md) | Removes all key-value pairs from the map. |
 |  [delete(key)](./calcium.abstractmap.delete.md) | Returns <code>true</code> if an element in the map existed and has been removed, or <code>false</code> if the element does not exist. |
-|  [entries()](./calcium.abstractmap.entries.md) | Returns a new Iterator object that contains an array of <code>[key, value]</code> for each element in the map. |
-|  [forEach(callbackFn, thisArg)](./calcium.abstractmap.foreach.md) | Calls <code>callbackFn</code> once for each key-value pair present in the map. If a <code>thisArg</code> parameter is provided to <code>forEach</code>, it will be used as the <code>this</code> value for each callback. |
-|  [get(key)](./calcium.abstractmap.get.md) | Returns the value associated to the key, or <code>undefined</code> if there is none. |
-|  [has(key)](./calcium.abstractmap.has.md) | Returns a boolean asserting whether a value has been associated to the key in the map or not. |
-|  [keys()](./calcium.abstractmap.keys.md) | Returns a new Iterator object that contains the keys for each element in the map. |
-|  [set(key, value)](./calcium.abstractmap.set.md) | Sets the value for the key in the map. Returns the map. |
-|  [values()](./calcium.abstractmap.values.md) | Returns a new Iterator object that contains the values for each element in the map. |
+|  [entries()](./calcium.abstractmap.entries.md) | Returns a new iterator object that contains \*\*an array of <code>[key, value]</code>\*\* for each element in the map. |
+|  [forEach(callback, thisArg)](./calcium.abstractmap.foreach.md) | Calls <code>callback</code> once for each key-value pair present in the map. If a <code>thisArg</code> parameter is provided to <code>forEach</code>, it will be used as the <code>this</code> value for each callback. |
+|  [get(key)](./calcium.abstractmap.get.md) | Returns the value associated to the <code>key</code>, or <code>undefined</code> if there is none. |
+|  [has(key)](./calcium.abstractmap.has.md) | Returns a boolean asserting whether a value has been associated to the <code>key</code> in the map or not. |
+|  [keys()](./calcium.abstractmap.keys.md) | Returns a new iterator object that contains the \*\*keys\*\* for each element in the map. |
+|  [set(key, value)](./calcium.abstractmap.set.md) | Sets the <code>value</code> for the <code>key</code> in the map. Returns the map. |
+|  [values()](./calcium.abstractmap.values.md) | Returns a new iterator object that contains the \*\*values\*\* for each element in the map. |
 

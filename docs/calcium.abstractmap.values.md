@@ -4,7 +4,7 @@
 
 ## AbstractMap.values() method
 
-Returns a new Iterator object that contains the values for each element in the map.
+Returns a new iterator object that contains the \*\*values\*\* for each element in the map.
 
 <b>Signature:</b>
 

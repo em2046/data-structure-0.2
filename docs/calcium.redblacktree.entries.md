@@ -4,7 +4,7 @@
 
 ## RedBlackTree.entries() method
 
-Returns a new iterator object that contains the `[key, value]` pairs for each element in the red black tree in in-order. In this particular case, this iterator object is also an iterable, so the for-of loop can be used. When the protocol `[Symbol.iterator]` is used, it returns a function that, when invoked, returns this iterator itself.
+Returns a new iterator object that contains an \*\*array of `[key, value]`<!-- -->\*\* for each element in the red black tree in in-order.
 
 <b>Signature:</b>
 

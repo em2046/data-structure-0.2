@@ -4,7 +4,7 @@
 
 ## AbstractSet.elements() method
 
-Returns a new iterator object that yields the values for each element in the set.
+Returns a new iterator object that yields the `values` for each element in the set.
 
 <b>Signature:</b>
 

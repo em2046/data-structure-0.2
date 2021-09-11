@@ -4,7 +4,7 @@
 
 ## HashSet.delete() method
 
-Removes the element associated to the value and returns a boolean asserting whether an element was successfully removed or not.
+Removes the element associated to the `value` and returns a boolean asserting whether an element was successfully removed or not.
 
 <b>Signature:</b>
 

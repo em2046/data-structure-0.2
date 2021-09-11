@@ -4,7 +4,7 @@
 
 ## AbstractMap.has() method
 
-Returns a boolean asserting whether a value has been associated to the key in the map or not.
+Returns a boolean asserting whether a value has been associated to the `key` in the map or not.
 
 <b>Signature:</b>
 

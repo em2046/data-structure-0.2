@@ -4,7 +4,7 @@
 
 ## RedBlackTree.values() method
 
-Returns a new iterator object that contains the values for each element in the red black tree in in-order.
+Returns a new iterator object that contains the \*\*values\*\* for each element in the red black tree in in-order.
 
 <b>Signature:</b>
 

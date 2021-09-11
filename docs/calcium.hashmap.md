@@ -29,15 +29,15 @@ export declare class HashMap<K, V> implements AbstractMap<K, V>
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [\[Symbol.iterator\]()](./calcium.hashmap._symbol.iterator_.md) |  | Returns a new Iterator object that contains an array of <code>[key, value]</code> for each element in the hash map. |
+|  [\[Symbol.iterator\]()](./calcium.hashmap._symbol.iterator_.md) |  | Returns a new iterator object that contains \*\*an array of <code>[key, value]</code>\*\* for each element in the hash map. |
 |  [clear()](./calcium.hashmap.clear.md) |  | Removes all key-value pairs from the hash map. |
 |  [delete(key)](./calcium.hashmap.delete.md) |  | Returns <code>true</code> if an element in the hash map existed and has been removed, or <code>false</code> if the element does not exist. |
-|  [entries()](./calcium.hashmap.entries.md) |  | Returns a new Iterator object that contains an array of <code>[key, value]</code> for each element in the hash map. |
-|  [forEach(callbackFn, thisArg)](./calcium.hashmap.foreach.md) |  | Calls <code>callbackFn</code> once for each key-value pair present in the hash map. If a <code>thisArg</code> parameter is provided to <code>forEach</code>, it will be used as the <code>this</code> value for each callback. |
+|  [entries()](./calcium.hashmap.entries.md) |  | Returns a new iterator object that contains \*\*an array of <code>[key, value]</code>\*\* for each element in the hash map. |
+|  [forEach(callback, thisArg)](./calcium.hashmap.foreach.md) |  | Calls <code>callback</code> once for each key-value pair present in the hash map. If a <code>thisArg</code> parameter is provided to <code>forEach</code>, it will be used as the <code>this</code> value for each callback. |
 |  [from(iterable)](./calcium.hashmap.from.md) | <code>static</code> | Creates a new, shallow-copied hash map instance from an iterable object. |
-|  [get(key)](./calcium.hashmap.get.md) |  | Returns the value associated to the key, or <code>undefined</code> if there is none. |
-|  [has(key)](./calcium.hashmap.has.md) |  | Returns a boolean asserting whether a value has been associated to the key in the hash map or not. |
-|  [keys()](./calcium.hashmap.keys.md) |  | Returns a new Iterator object that contains the keys for each element in the hash map. |
-|  [set(key, value)](./calcium.hashmap.set.md) |  | Sets the value for the key in the hash map. Returns the hash map. |
-|  [values()](./calcium.hashmap.values.md) |  | Returns a new Iterator object that contains the values for each element in the hash map. |
+|  [get(key)](./calcium.hashmap.get.md) |  | Returns the value associated to the <code>key</code>, or <code>undefined</code> if there is none. |
+|  [has(key)](./calcium.hashmap.has.md) |  | Returns a boolean asserting whether a value has been associated to the <code>key</code> in the map or not. |
+|  [keys()](./calcium.hashmap.keys.md) |  | Returns a new iterator object that contains the \*\*keys\*\* for each element in the hash map. |
+|  [set(key, value)](./calcium.hashmap.set.md) |  | Sets the <code>value</code> for the <code>key</code> in the hash map. Returns the hash map. |
+|  [values()](./calcium.hashmap.values.md) |  | Returns a new iterator object that contains the \*\*values\*\* for each element in the hash map. |
 
