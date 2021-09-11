@@ -4,6 +4,8 @@
 
 ## HashMap.forEach() method
 
+Calls `callbackFn` once for each key-value pair present in the hash map. If a `thisArg` parameter is provided to `forEach`<!-- -->, it will be used as the `this` value for each callback.
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,8 +16,8 @@ forEach(callbackFn: (value: V, key: K, map: HashMap<K, V>) => void, thisArg?: an
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  callbackFn | (value: V, key: K, map: [HashMap](./calcium.hashmap.md)<!-- -->&lt;K, V&gt;) =&gt; void |  |
-|  thisArg | any |  |
+|  callbackFn | (value: V, key: K, map: [HashMap](./calcium.hashmap.md)<!-- -->&lt;K, V&gt;) =&gt; void | Function to execute for each entry in the map. |
+|  thisArg | any | Value to use as this when executing callback. |
 
 <b>Returns:</b>
 

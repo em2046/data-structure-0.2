@@ -33,6 +33,8 @@ Data Structures in TypeScript.
 
 |  Interface | Description |
 |  --- | --- |
+|  [AbstractMap](./calcium.abstractmap.md) | The map holds key-value pairs. Any value (both objects and primitive values) may be used as either a key or a value. |
+|  [AbstractSet](./calcium.abstractset.md) | The set lets you store unique values of any type, whether primitive values or object references. |
 |  [Comparable](./calcium.comparable.md) | A type that can be compared using the relational operators <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;=</code>, and <code>&gt;</code>. |
 |  [Equatable](./calcium.equatable.md) | A type that can be compared for value equality. |
 |  [Hashable](./calcium.hashable.md) | A type that can be hashed into a <code>Hasher</code> to produce an integer hash value. |

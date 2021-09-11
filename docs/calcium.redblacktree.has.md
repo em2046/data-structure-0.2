@@ -4,6 +4,8 @@
 
 ## RedBlackTree.has() method
 
+Returns a boolean asserting whether a value has been associated to the key in the red black tree or not.
+
 <b>Signature:</b>
 
 ```typescript
@@ -14,7 +16,7 @@ has(key: K): boolean;
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  key | K |  |
+|  key | K | The key of the element to test for presence in the red black tree. |
 
 <b>Returns:</b>
 

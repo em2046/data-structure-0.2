@@ -5,6 +5,33 @@
 ```ts
 
 // @public
+export interface AbstractMap<K, V> extends Iterable<[K, V]> {
+    [Symbol.iterator](): IterableIterator<[K, V]>;
+    clear(): void;
+    delete(key: K): boolean;
+    entries(): IterableIterator<[K, V]>;
+    forEach(callbackFn: (value: V, key: K, map: AbstractMap<K, V>) => void, thisArg?: any): void;
+    get(key: K): V | undefined;
+    has(key: K): boolean;
+    keys(): IterableIterator<K>;
+    set(key: K, value: V): this;
+    readonly size: number;
+    values(): IterableIterator<V>;
+}
+
+// @public
+export interface AbstractSet<E> extends Iterable<E> {
+    [Symbol.iterator](): IterableIterator<E>;
+    add(element: E): this;
+    clear(): void;
+    delete(element: E): boolean;
+    elements(): IterableIterator<E>;
+    forEach(callbackFn: (element: E, set: AbstractSet<E>) => void, thisArg?: any): void;
+    has(element: E): boolean;
+    readonly size: number;
+}
+
+// @public
 export class BinaryHeap<T> implements Iterable<T> {
     [Symbol.iterator](): IterableIterator<T>;
     constructor();
@@ -51,8 +78,6 @@ export class Hasher {
     finalize(): number;
 }
 
-// Warning: (ae-forgotten-export) The symbol "AbstractMap" needs to be exported by the entry point index.d.ts
-//
 // @public
 export class HashMap<K, V> implements AbstractMap<K, V> {
     [Symbol.iterator](): IterableIterator<[K, V]>;
@@ -60,7 +85,6 @@ export class HashMap<K, V> implements AbstractMap<K, V> {
     clear(): void;
     delete(key: K): boolean;
     entries(): IterableIterator<[K, V]>;
-    // (undocumented)
     forEach(callbackFn: (value: V, key: K, map: HashMap<K, V>) => void, thisArg?: any): void;
     static from<K, V>(iterable?: Iterable<[K, V]>): HashMap<K, V>;
     get(key: K): V | undefined;
@@ -71,8 +95,6 @@ export class HashMap<K, V> implements AbstractMap<K, V> {
     values(): IterableIterator<V>;
 }
 
-// Warning: (ae-forgotten-export) The symbol "AbstractSet" needs to be exported by the entry point index.d.ts
-//
 // @public
 export class HashSet<E> implements AbstractSet<E> {
     [Symbol.iterator](): IterableIterator<E>;
@@ -81,8 +103,7 @@ export class HashSet<E> implements AbstractSet<E> {
     clear(): void;
     delete(element: E): boolean;
     elements(): IterableIterator<E>;
-    // (undocumented)
-    forEach(callbackFn: (element: E, set: AbstractSet<E>) => void, thisArg?: any): void;
+    forEach(callbackFn: (element: E, set: HashSet<E>) => void, thisArg?: any): void;
     static from<E>(iterable?: Iterable<E>): HashSet<E>;
     has(element: E): boolean;
     get size(): number;
@@ -132,10 +153,8 @@ export class RedBlackTree<K, V> implements AbstractMap<K, V> {
     deleteMax(): boolean;
     deleteMin(): boolean;
     entries(): IterableIterator<[K, V]>;
-    // (undocumented)
     forEach(callbackFn: (value: V, key: K, map: RedBlackTree<K, V>) => void, thisArg?: any): void;
     get(key: K): V | undefined;
-    // (undocumented)
     has(key: K): boolean;
     keys(): IterableIterator<K>;
     max(): [K, V] | null;

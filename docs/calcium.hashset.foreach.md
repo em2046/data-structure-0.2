@@ -4,18 +4,20 @@
 
 ## HashSet.forEach() method
 
+Calls `callbackFn` once for each value present in the hash set. If a `thisArg` parameter is provided, it will be used as the `this` value for each invocation of `callbackFn`<!-- -->.
+
 <b>Signature:</b>
 
 ```typescript
-forEach(callbackFn: (element: E, set: AbstractSet<E>) => void, thisArg?: any): void;
+forEach(callbackFn: (element: E, set: HashSet<E>) => void, thisArg?: any): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  callbackFn | (element: E, set: AbstractSet&lt;E&gt;) =&gt; void |  |
-|  thisArg | any |  |
+|  callbackFn | (element: E, set: [HashSet](./calcium.hashset.md)<!-- -->&lt;E&gt;) =&gt; void | Function to execute for each element. |
+|  thisArg | any | Value to use as this when executing callbackFn. |
 
 <b>Returns:</b>
 
