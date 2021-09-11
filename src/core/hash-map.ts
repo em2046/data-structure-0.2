@@ -91,16 +91,16 @@ export class HashMap<K, V> implements AbstractMap<K, V> {
   }
 
   /**
-   * Returns a new Iterator object that contains an array of `[key, value]` for
-   * each element in the hash map.
+   * Returns a new iterator object that contains **an array of `[key, value]`**
+   * for each element in the hash map.
    */
   [Symbol.iterator](): IterableIterator<[K, V]> {
     return this.entries();
   }
 
   /**
-   * Returns a new Iterator object that contains an array of `[key, value]` for
-   * each element in the hash map.
+   * Returns a new iterator object that contains **an array of `[key, value]`**
+   * for each element in the hash map.
    */
   entries(): IterableIterator<[K, V]> {
     const table = this.#table;
@@ -157,8 +157,8 @@ export class HashMap<K, V> implements AbstractMap<K, V> {
   }
 
   /**
-   * Returns a new Iterator object that contains the keys for each element in
-   * the hash map.
+   * Returns a new iterator object that contains the **keys** for each element
+   * in the hash map.
    */
   keys(): IterableIterator<K> {
     const iterator = this.entries();
@@ -188,8 +188,8 @@ export class HashMap<K, V> implements AbstractMap<K, V> {
   }
 
   /**
-   * Returns a new Iterator object that contains the values for each element in
-   * the hash map.
+   * Returns a new iterator object that contains the **values** for each
+   * element in the hash map.
    */
   values(): IterableIterator<V> {
     const iterator = this.entries();
@@ -219,24 +219,25 @@ export class HashMap<K, V> implements AbstractMap<K, V> {
   }
 
   /**
-   * Calls `callbackFn` once for each key-value pair present in the hash map.
+   * Calls `callback` once for each key-value pair present in the hash map.
    * If a `thisArg` parameter is provided to `forEach`, it will be used as the
    * `this` value for each callback.
    *
-   * @param callbackFn - Function to execute for each entry in the map.
-   * @param thisArg - Value to use as this when executing callback.
+   * @param callback - Function to execute for each entry in the map.
+   * @param thisArg - Value to use as `this` when executing `callback`.
    */
   forEach(
-    callbackFn: (value: V, key: K, map: HashMap<K, V>) => void,
+    callback: (value: V, key: K, map: HashMap<K, V>) => void,
     thisArg?: any
   ): void {
     for (const [key, value] of this.entries()) {
-      callbackFn.call(thisArg, value, key, this);
+      callback.call(thisArg, value, key, this);
     }
   }
 
   /**
-   * Returns the value associated to the key, or `undefined` if there is none.
+   * Returns the value associated to the `key`, or `undefined` if there is
+   * none.
    *
    * @param key - The key of the element to return from the hash map.
    */
@@ -258,8 +259,8 @@ export class HashMap<K, V> implements AbstractMap<K, V> {
   }
 
   /**
-   * Returns a boolean asserting whether a value has been associated to the key
-   * in the hash map or not.
+   * Returns a boolean asserting whether a value has been associated to the
+   * `key` in the map or not.
    *
    * @param key - The key of the element to test for presence in the hash map.
    */
@@ -268,7 +269,7 @@ export class HashMap<K, V> implements AbstractMap<K, V> {
   }
 
   /**
-   * Sets the value for the key in the hash map. Returns the hash map.
+   * Sets the `value` for the `key` in the hash map. Returns the hash map.
    *
    * @param key - The key of the element to add to the hash map.
    * @param value - The value of the element to add to the hash map.

@@ -145,22 +145,16 @@ export class RedBlackTree<K, V> implements AbstractMap<K, V> {
   }
 
   /**
-   * Returns a new iterator object that contains the `[key, value]` pairs for
-   * each element in the red black tree in in-order.
-   * In this particular case, this iterator object is also an iterable, so the
-   * for-of loop can be used. When the protocol `[Symbol.iterator]` is used, it
-   * returns a function that, when invoked, returns this iterator itself.
+   * Returns a new iterator object that contains an **array of `[key, value]`**
+   * for each element in the red black tree in in-order.
    */
   [Symbol.iterator](): IterableIterator<[K, V]> {
     return this.entries();
   }
 
   /**
-   * Returns a new iterator object that contains the `[key, value]` pairs for
-   * each element in the red black tree in in-order.
-   * In this particular case, this iterator object is also an iterable, so the
-   * for-of loop can be used. When the protocol `[Symbol.iterator]` is used, it
-   * returns a function that, when invoked, returns this iterator itself.
+   * Returns a new iterator object that contains an **array of `[key, value]`**
+   * for each element in the red black tree in in-order.
    */
   entries(): IterableIterator<[K, V]> {
     let node = this.#root;
@@ -200,8 +194,8 @@ export class RedBlackTree<K, V> implements AbstractMap<K, V> {
   }
 
   /**
-   * Returns a new iterator object that contains the keys for each element in
-   * the red black tree in in-order.
+   * Returns a new iterator object that contains the **keys** for each element
+   * in the red black tree in in-order.
    */
   keys(): IterableIterator<K> {
     const iterator = this.entries();
@@ -231,8 +225,8 @@ export class RedBlackTree<K, V> implements AbstractMap<K, V> {
   }
 
   /**
-   * Returns a new iterator object that contains the values for each element in
-   * the red black tree in in-order.
+   * Returns a new iterator object that contains the **values** for each
+   * element in the red black tree in in-order.
    */
   values(): IterableIterator<V> {
     const iterator = this.entries();
@@ -262,20 +256,20 @@ export class RedBlackTree<K, V> implements AbstractMap<K, V> {
   }
 
   /**
-   * Calls `callbackFn` once for each key-value pair present in the red black
+   * Calls `callback` once for each key-value pair present in the red black
    * tree.
    * If a `thisArg` parameter is provided to `forEach`, it will be used as the
    * `this` value for each callback.
    *
-   * @param callbackFn - Function to execute for each entry in the map.
-   * @param thisArg - Value to use as this when executing callback.
+   * @param callback - Function to execute for each entry in the map.
+   * @param thisArg - Value to use as `this` when executing `callback`.
    */
   forEach(
-    callbackFn: (value: V, key: K, map: RedBlackTree<K, V>) => void,
+    callback: (value: V, key: K, map: RedBlackTree<K, V>) => void,
     thisArg?: any
   ): void {
     for (const [key, value] of this.entries()) {
-      callbackFn.call(thisArg, value, key, this);
+      callback.call(thisArg, value, key, this);
     }
   }
 
