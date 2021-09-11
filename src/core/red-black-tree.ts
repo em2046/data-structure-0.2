@@ -2,6 +2,7 @@ import { Color, Node } from "./red-black-node";
 import { greaterThanOrEqual, lessThan, lessThanOrEqual } from "./comparable";
 import { equality } from "./equatable";
 import { assert } from "../shared";
+import { Dictionary } from "./dictionary";
 
 // Copied from
 // https://www.cs.princeton.edu/~rs/talks/LLRB/LLRB.pdf
@@ -110,7 +111,7 @@ function balance<K, V>(node: Node<K, V>): Node<K, V> {
  *
  * The red black tree holds key-value pairs.
  */
-export class RedBlackTree<K, V> implements Iterable<[K, V]> {
+export class RedBlackTree<K, V> implements Dictionary<K, V> {
   #root: Node<K, V> | null = null;
   #size = 0;
 
@@ -348,7 +349,7 @@ export class RedBlackTree<K, V> implements Iterable<[K, V]> {
    * @param key - The key of the element to add to the red black tree.
    * @param value - The value of the element to add to the red black tree.
    */
-  set(key: K, value: V): RedBlackTree<K, V> {
+  set(key: K, value: V): this {
     this.#root = this.#set(this.#root, key, value);
     this.#root.color = Color.Black;
 
@@ -424,6 +425,19 @@ export class RedBlackTree<K, V> implements Iterable<[K, V]> {
     }
 
     return this.#size < size;
+  }
+
+  forEach(
+    callbackFn: (value: V, key: K, map: Dictionary<K, V>) => void,
+    thisArg?: any
+  ): void {
+    for (const [key, value] of this.entries()) {
+      callbackFn.call(thisArg, value, key, this);
+    }
+  }
+
+  has(key: K): boolean {
+    return this.get(key) !== undefined;
   }
 
   #get(node: Node<K, V> | null, key: K): Node<K, V> | null {

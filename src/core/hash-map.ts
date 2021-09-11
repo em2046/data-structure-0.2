@@ -2,6 +2,7 @@ import { LinkedList } from "./linked-list";
 import { Entry } from "./entry";
 import { hash } from "./hasher";
 import { equality } from "./equatable";
+import { Dictionary } from "./dictionary";
 
 // Copied from
 // https://github.com/openjdk/jdk/blob/1fb798d320c708dfcbc0bb157511a2937fafb9e6/src/java.base/share/classes/java/util/Hashtable.java
@@ -17,7 +18,7 @@ const PRESENT = {};
  * Any value (both objects and primitive values) may be used as either a key or
  * a value.
  */
-export class HashMap<K, V> implements Iterable<[K, V]> {
+export class HashMap<K, V> implements Dictionary<K, V> {
   readonly #loadFactor: number;
   #threshold: number;
   #size = 0;
@@ -223,7 +224,7 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
    * @param key - The key of the element to add to the hash map.
    * @param value - The value of the element to add to the hash map.
    */
-  set(key: K, value: V): HashMap<K, V> {
+  set(key: K, value: V): this {
     const table = this.#table;
     const hashValue = hash(key);
     const index = (hashValue & 0x7fff_ffff) % table.length;
@@ -318,6 +319,15 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
     }
 
     this.#size = 0;
+  }
+
+  forEach(
+    callbackFn: (value: V, key: K, map: Dictionary<K, V>) => void,
+    thisArg?: any
+  ): void {
+    for (const [key, value] of this.entries()) {
+      callbackFn.call(thisArg, value, key, this);
+    }
   }
 
   #add(hashValue: number, key: K, value: V, index: number): void {
