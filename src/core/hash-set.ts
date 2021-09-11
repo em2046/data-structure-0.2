@@ -1,4 +1,5 @@
 import { HashMap } from "./hash-map";
+import { AbstractSet } from "./abstract-set";
 
 // Copied from
 // https://github.com/openjdk/jdk/blob/1fb798d320c708dfcbc0bb157511a2937fafb9e6/src/java.base/share/classes/java/util/HashSet.java
@@ -11,7 +12,7 @@ const PRESENT = {};
  * The hash set lets you store unique values of any type, whether primitive
  * values or object references.
  */
-export class HashSet<E> implements Iterable<E> {
+export class HashSet<E> implements AbstractSet<E> {
   #map: HashMap<E, unknown>;
 
   /**
@@ -65,26 +66,24 @@ export class HashSet<E> implements Iterable<E> {
    * the hash set.
    */
   [Symbol.iterator](): IterableIterator<E> {
-    return this.keys();
+    return this.elements();
   }
 
   /**
    * Returns a new iterator object that yields the values for each element in
    * the hash set.
    */
-  keys(): IterableIterator<E> {
+  elements(): IterableIterator<E> {
     return this.#map.keys();
   }
 
-  /**
-   * Appends value to the hash set. Returns the hash set with added value.
-   *
-   * @param element - The value of the element to add to the hash set.
-   */
-  add(element: E): HashSet<E> {
-    this.#map.set(element, PRESENT);
-
-    return this;
+  forEach(
+    callbackFn: (element: E, set: AbstractSet<E>) => void,
+    thisArg?: any
+  ): void {
+    for (const element of this.elements()) {
+      callbackFn.call(thisArg, element, this);
+    }
   }
 
   /**
@@ -95,6 +94,17 @@ export class HashSet<E> implements Iterable<E> {
    */
   has(element: E): boolean {
     return this.#map.has(element);
+  }
+
+  /**
+   * Appends value to the hash set. Returns the hash set with added value.
+   *
+   * @param element - The value of the element to add to the hash set.
+   */
+  add(element: E): this {
+    this.#map.set(element, PRESENT);
+
+    return this;
   }
 
   /**

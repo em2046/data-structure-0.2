@@ -2,7 +2,7 @@ import { Color, Node } from "./red-black-node";
 import { greaterThanOrEqual, lessThan, lessThanOrEqual } from "./comparable";
 import { equality } from "./equatable";
 import { assert } from "../shared";
-import { Dictionary } from "./dictionary";
+import { AbstractMap } from "./abstract-map";
 
 // Copied from
 // https://www.cs.princeton.edu/~rs/talks/LLRB/LLRB.pdf
@@ -111,7 +111,7 @@ function balance<K, V>(node: Node<K, V>): Node<K, V> {
  *
  * The red black tree holds key-value pairs.
  */
-export class RedBlackTree<K, V> implements Dictionary<K, V> {
+export class RedBlackTree<K, V> implements AbstractMap<K, V> {
   #root: Node<K, V> | null = null;
   #size = 0;
 
@@ -262,7 +262,7 @@ export class RedBlackTree<K, V> implements Dictionary<K, V> {
   }
 
   forEach(
-    callbackFn: (value: V, key: K, map: Dictionary<K, V>) => void,
+    callbackFn: (value: V, key: K, map: RedBlackTree<K, V>) => void,
     thisArg?: any
   ): void {
     for (const [key, value] of this.entries()) {

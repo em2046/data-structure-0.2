@@ -1,4 +1,4 @@
-export interface Dictionary<K, V> extends Iterable<[K, V]> {
+export interface AbstractMap<K, V> extends Iterable<[K, V]> {
   readonly size: number;
 
   [Symbol.iterator](): IterableIterator<[K, V]>;
@@ -10,7 +10,7 @@ export interface Dictionary<K, V> extends Iterable<[K, V]> {
   values(): IterableIterator<V>;
 
   forEach(
-    callbackFn: (value: V, key: K, map: Dictionary<K, V>) => void,
+    callbackFn: (value: V, key: K, map: AbstractMap<K, V>) => void,
     thisArg?: any
   ): void;
 

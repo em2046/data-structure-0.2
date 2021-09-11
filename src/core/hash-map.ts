@@ -2,7 +2,7 @@ import { LinkedList } from "./linked-list";
 import { Entry } from "./entry";
 import { hash } from "./hasher";
 import { equality } from "./equatable";
-import { Dictionary } from "./dictionary";
+import { AbstractMap } from "./abstract-map";
 
 // Copied from
 // https://github.com/openjdk/jdk/blob/1fb798d320c708dfcbc0bb157511a2937fafb9e6/src/java.base/share/classes/java/util/Hashtable.java
@@ -18,7 +18,7 @@ const PRESENT = {};
  * Any value (both objects and primitive values) may be used as either a key or
  * a value.
  */
-export class HashMap<K, V> implements Dictionary<K, V> {
+export class HashMap<K, V> implements AbstractMap<K, V> {
   readonly #loadFactor: number;
   #threshold: number;
   #size = 0;
@@ -219,7 +219,7 @@ export class HashMap<K, V> implements Dictionary<K, V> {
   }
 
   forEach(
-    callbackFn: (value: V, key: K, map: Dictionary<K, V>) => void,
+    callbackFn: (value: V, key: K, map: HashMap<K, V>) => void,
     thisArg?: any
   ): void {
     for (const [key, value] of this.entries()) {
