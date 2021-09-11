@@ -9,9 +9,9 @@ The hash map holds key-value pairs. Any value (both objects and primitive values
 <b>Signature:</b>
 
 ```typescript
-export declare class HashMap<K, V> implements Iterable<[K, V]> 
+export declare class HashMap<K, V> implements AbstractMap<K, V> 
 ```
-<b>Implements:</b> Iterable&lt;\[K, V\]&gt;
+<b>Implements:</b> AbstractMap&lt;K, V&gt;
 
 ## Constructors
 
@@ -33,6 +33,7 @@ export declare class HashMap<K, V> implements Iterable<[K, V]>
 |  [clear()](./calcium.hashmap.clear.md) |  | Removes all key-value pairs from the hash map. |
 |  [delete(key)](./calcium.hashmap.delete.md) |  | Returns <code>true</code> if an element in the hash map existed and has been removed, or <code>false</code> if the element does not exist. |
 |  [entries()](./calcium.hashmap.entries.md) |  | Returns a new Iterator object that contains an array of <code>[key, value]</code> for each element in the hash map. |
+|  [forEach(callbackFn, thisArg)](./calcium.hashmap.foreach.md) |  |  |
 |  [from(iterable)](./calcium.hashmap.from.md) | <code>static</code> | Creates a new, shallow-copied hash map instance from an iterable object. |
 |  [get(key)](./calcium.hashmap.get.md) |  | Returns the value associated to the key, or <code>undefined</code> if there is none. |
 |  [has(key)](./calcium.hashmap.has.md) |  | Returns a boolean asserting whether a value has been associated to the key in the hash map or not. |

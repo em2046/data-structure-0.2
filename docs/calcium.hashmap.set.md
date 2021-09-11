@@ -9,7 +9,7 @@ Sets the value for the key in the hash map. Returns the hash map.
 <b>Signature:</b>
 
 ```typescript
-set(key: K, value: V): HashMap<K, V>;
+set(key: K, value: V): this;
 ```
 
 ## Parameters
@@ -21,5 +21,5 @@ set(key: K, value: V): HashMap<K, V>;
 
 <b>Returns:</b>
 
-[HashMap](./calcium.hashmap.md)<!-- -->&lt;K, V&gt;
+this
 

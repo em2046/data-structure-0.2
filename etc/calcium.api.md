@@ -51,32 +51,40 @@ export class Hasher {
     finalize(): number;
 }
 
+// Warning: (ae-forgotten-export) The symbol "AbstractMap" needs to be exported by the entry point index.d.ts
+//
 // @public
-export class HashMap<K, V> implements Iterable<[K, V]> {
+export class HashMap<K, V> implements AbstractMap<K, V> {
     [Symbol.iterator](): IterableIterator<[K, V]>;
     constructor(initialCapacity?: number, loadFactor?: number);
     clear(): void;
     delete(key: K): boolean;
     entries(): IterableIterator<[K, V]>;
+    // (undocumented)
+    forEach(callbackFn: (value: V, key: K, map: HashMap<K, V>) => void, thisArg?: any): void;
     static from<K, V>(iterable?: Iterable<[K, V]>): HashMap<K, V>;
     get(key: K): V | undefined;
     has(key: K): boolean;
     keys(): IterableIterator<K>;
-    set(key: K, value: V): HashMap<K, V>;
+    set(key: K, value: V): this;
     get size(): number;
     values(): IterableIterator<V>;
 }
 
+// Warning: (ae-forgotten-export) The symbol "AbstractSet" needs to be exported by the entry point index.d.ts
+//
 // @public
-export class HashSet<E> implements Iterable<E> {
+export class HashSet<E> implements AbstractSet<E> {
     [Symbol.iterator](): IterableIterator<E>;
     constructor(initialCapacity?: number, loadFactor?: number);
-    add(element: E): HashSet<E>;
+    add(element: E): this;
     clear(): void;
     delete(element: E): boolean;
+    elements(): IterableIterator<E>;
+    // (undocumented)
+    forEach(callbackFn: (element: E, set: AbstractSet<E>) => void, thisArg?: any): void;
     static from<E>(iterable?: Iterable<E>): HashSet<E>;
     has(element: E): boolean;
-    keys(): IterableIterator<E>;
     get size(): number;
 }
 
@@ -115,7 +123,7 @@ export class LinkedList<T> implements Iterable<T> {
 }
 
 // @public
-export class RedBlackTree<K, V> implements Iterable<[K, V]> {
+export class RedBlackTree<K, V> implements AbstractMap<K, V> {
     [Symbol.iterator](): IterableIterator<[K, V]>;
     constructor();
     constructor(iterable: Iterable<[K, V]>);
@@ -124,13 +132,17 @@ export class RedBlackTree<K, V> implements Iterable<[K, V]> {
     deleteMax(): boolean;
     deleteMin(): boolean;
     entries(): IterableIterator<[K, V]>;
+    // (undocumented)
+    forEach(callbackFn: (value: V, key: K, map: RedBlackTree<K, V>) => void, thisArg?: any): void;
     get(key: K): V | undefined;
+    // (undocumented)
+    has(key: K): boolean;
     keys(): IterableIterator<K>;
     max(): [K, V] | null;
     min(): [K, V] | null;
     next(key: K): [K, V] | null;
     previous(key: K): [K, V] | null;
-    set(key: K, value: V): RedBlackTree<K, V>;
+    set(key: K, value: V): this;
     get size(): number;
     values(): IterableIterator<V>;
 }

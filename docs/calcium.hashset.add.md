@@ -9,7 +9,7 @@ Appends value to the hash set. Returns the hash set with added value.
 <b>Signature:</b>
 
 ```typescript
-add(element: E): HashSet<E>;
+add(element: E): this;
 ```
 
 ## Parameters
@@ -20,5 +20,5 @@ add(element: E): HashSet<E>;
 
 <b>Returns:</b>
 
-[HashSet](./calcium.hashset.md)<!-- -->&lt;E&gt;
+this
 

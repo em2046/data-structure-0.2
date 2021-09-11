@@ -9,9 +9,9 @@ The hash set lets you store unique values of any type, whether primitive values 
 <b>Signature:</b>
 
 ```typescript
-export declare class HashSet<E> implements Iterable<E> 
+export declare class HashSet<E> implements AbstractSet<E> 
 ```
-<b>Implements:</b> Iterable&lt;E&gt;
+<b>Implements:</b> AbstractSet&lt;E&gt;
 
 ## Constructors
 
@@ -33,7 +33,8 @@ export declare class HashSet<E> implements Iterable<E>
 |  [add(element)](./calcium.hashset.add.md) |  | Appends value to the hash set. Returns the hash set with added value. |
 |  [clear()](./calcium.hashset.clear.md) |  | Removes all elements from the hash set. |
 |  [delete(element)](./calcium.hashset.delete.md) |  | Removes the element associated to the value and returns a boolean asserting whether an element was successfully removed or not. |
+|  [elements()](./calcium.hashset.elements.md) |  | Returns a new iterator object that yields the values for each element in the hash set. |
+|  [forEach(callbackFn, thisArg)](./calcium.hashset.foreach.md) |  |  |
 |  [from(iterable)](./calcium.hashset.from.md) | <code>static</code> | Creates a new, shallow-copied hash set instance from an iterable object. |
 |  [has(element)](./calcium.hashset.has.md) |  | Returns a boolean asserting whether an element is present with the given value in the hash set or not. |
-|  [keys()](./calcium.hashset.keys.md) |  | Returns a new iterator object that yields the values for each element in the hash set. |
 
