@@ -3,11 +3,11 @@ export interface Dictionary<K, V> extends Iterable<[K, V]> {
 
   [Symbol.iterator](): IterableIterator<[K, V]>;
 
-  clear(): void;
-
-  delete(key: K): boolean;
-
   entries(): IterableIterator<[K, V]>;
+
+  keys(): IterableIterator<K>;
+
+  values(): IterableIterator<V>;
 
   forEach(
     callbackFn: (value: V, key: K, map: Dictionary<K, V>) => void,
@@ -18,9 +18,9 @@ export interface Dictionary<K, V> extends Iterable<[K, V]> {
 
   has(key: K): boolean;
 
-  keys(): IterableIterator<K>;
-
   set(key: K, value: V): this;
 
-  values(): IterableIterator<V>;
+  delete(key: K): boolean;
+
+  clear(): void;
 }

@@ -261,12 +261,13 @@ export class RedBlackTree<K, V> implements Dictionary<K, V> {
     };
   }
 
-  /**
-   * Removes all elements from a red black tree.
-   */
-  clear(): void {
-    this.#root = null;
-    this.#size = 0;
+  forEach(
+    callbackFn: (value: V, key: K, map: Dictionary<K, V>) => void,
+    thisArg?: any
+  ): void {
+    for (const [key, value] of this.entries()) {
+      callbackFn.call(thisArg, value, key, this);
+    }
   }
 
   /**
@@ -284,62 +285,8 @@ export class RedBlackTree<K, V> implements Dictionary<K, V> {
     return node.value;
   }
 
-  /**
-   * Returns the key-value pair of the smallest element from a red black tree.
-   */
-  min(): [K, V] | null {
-    if (this.#root === null) {
-      return null;
-    }
-
-    const node = this.#min(this.#root);
-
-    return [node.key, node.value];
-  }
-
-  /**
-   * Returns the key-value pair of the largest element from a red black tree.
-   */
-  max(): [K, V] | null {
-    if (this.#root === null) {
-      return null;
-    }
-
-    const node = this.#max(this.#root);
-
-    return [node.key, node.value];
-  }
-
-  /**
-   * Returns the key-value pair of the largest element less than to the given
-   * key.
-   *
-   * @param key - The given key.
-   */
-  previous(key: K): [K, V] | null {
-    const node = this.#previous(this.#root, key);
-
-    if (node === null) {
-      return null;
-    }
-
-    return [node.key, node.value];
-  }
-
-  /**
-   * Returns the key-value pair of the smallest element greater than to the
-   * given key.
-   *
-   * @param key - The given key.
-   */
-  next(key: K): [K, V] | null {
-    const node = this.#next(this.#root, key);
-
-    if (node === null) {
-      return null;
-    }
-
-    return [node.key, node.value];
+  has(key: K): boolean {
+    return this.get(key) !== undefined;
   }
 
   /**
@@ -427,17 +374,70 @@ export class RedBlackTree<K, V> implements Dictionary<K, V> {
     return this.#size < size;
   }
 
-  forEach(
-    callbackFn: (value: V, key: K, map: Dictionary<K, V>) => void,
-    thisArg?: any
-  ): void {
-    for (const [key, value] of this.entries()) {
-      callbackFn.call(thisArg, value, key, this);
-    }
+  /**
+   * Removes all elements from a red black tree.
+   */
+  clear(): void {
+    this.#root = null;
+    this.#size = 0;
   }
 
-  has(key: K): boolean {
-    return this.get(key) !== undefined;
+  /**
+   * Returns the key-value pair of the smallest element from a red black tree.
+   */
+  min(): [K, V] | null {
+    if (this.#root === null) {
+      return null;
+    }
+
+    const node = this.#min(this.#root);
+
+    return [node.key, node.value];
+  }
+
+  /**
+   * Returns the key-value pair of the largest element from a red black tree.
+   */
+  max(): [K, V] | null {
+    if (this.#root === null) {
+      return null;
+    }
+
+    const node = this.#max(this.#root);
+
+    return [node.key, node.value];
+  }
+
+  /**
+   * Returns the key-value pair of the largest element less than to the given
+   * key.
+   *
+   * @param key - The given key.
+   */
+  previous(key: K): [K, V] | null {
+    const node = this.#previous(this.#root, key);
+
+    if (node === null) {
+      return null;
+    }
+
+    return [node.key, node.value];
+  }
+
+  /**
+   * Returns the key-value pair of the smallest element greater than to the
+   * given key.
+   *
+   * @param key - The given key.
+   */
+  next(key: K): [K, V] | null {
+    const node = this.#next(this.#root, key);
+
+    if (node === null) {
+      return null;
+    }
+
+    return [node.key, node.value];
   }
 
   #get(node: Node<K, V> | null, key: K): Node<K, V> | null {
@@ -451,58 +451,6 @@ export class RedBlackTree<K, V> implements Dictionary<K, V> {
       return this.#get(node.left, key);
     } else {
       return this.#get(node.right, key);
-    }
-  }
-
-  #min(node: Node<K, V>): Node<K, V> {
-    if (node.left === null) {
-      return node;
-    }
-
-    return this.#min(node.left);
-  }
-
-  #max(node: Node<K, V>): Node<K, V> {
-    if (node.right === null) {
-      return node;
-    }
-
-    return this.#max(node.right);
-  }
-
-  #previous(node: Node<K, V> | null, key: K): Node<K, V> | null {
-    if (node === null) {
-      return null;
-    }
-
-    if (lessThanOrEqual(key, node.key)) {
-      return this.#previous(node.left, key);
-    } else {
-      const previous = this.#previous(node.right, key);
-
-      if (previous !== null) {
-        return previous;
-      } else {
-        return node;
-      }
-    }
-  }
-
-  #next(node: Node<K, V> | null, key: K): Node<K, V> | null {
-    if (node === null) {
-      return null;
-    }
-
-    if (greaterThanOrEqual(key, node.key)) {
-      return this.#next(node.right, key);
-    } else {
-      const next = this.#next(node.left, key);
-
-      if (next !== null) {
-        return next;
-      } else {
-        return node;
-      }
     }
   }
 
@@ -604,5 +552,57 @@ export class RedBlackTree<K, V> implements Dictionary<K, V> {
     }
 
     return balance(node);
+  }
+
+  #min(node: Node<K, V>): Node<K, V> {
+    if (node.left === null) {
+      return node;
+    }
+
+    return this.#min(node.left);
+  }
+
+  #max(node: Node<K, V>): Node<K, V> {
+    if (node.right === null) {
+      return node;
+    }
+
+    return this.#max(node.right);
+  }
+
+  #previous(node: Node<K, V> | null, key: K): Node<K, V> | null {
+    if (node === null) {
+      return null;
+    }
+
+    if (lessThanOrEqual(key, node.key)) {
+      return this.#previous(node.left, key);
+    } else {
+      const previous = this.#previous(node.right, key);
+
+      if (previous !== null) {
+        return previous;
+      } else {
+        return node;
+      }
+    }
+  }
+
+  #next(node: Node<K, V> | null, key: K): Node<K, V> | null {
+    if (node === null) {
+      return null;
+    }
+
+    if (greaterThanOrEqual(key, node.key)) {
+      return this.#next(node.right, key);
+    } else {
+      const next = this.#next(node.left, key);
+
+      if (next !== null) {
+        return next;
+      } else {
+        return node;
+      }
+    }
   }
 }

@@ -218,31 +218,13 @@ export class HashMap<K, V> implements Dictionary<K, V> {
     };
   }
 
-  /**
-   * Sets the value for the key in the hash map. Returns the hash map.
-   *
-   * @param key - The key of the element to add to the hash map.
-   * @param value - The value of the element to add to the hash map.
-   */
-  set(key: K, value: V): this {
-    const table = this.#table;
-    const hashValue = hash(key);
-    const index = (hashValue & 0x7fff_ffff) % table.length;
-    const list = table[index];
-
-    if (list !== undefined) {
-      for (const entry of list) {
-        if (equality(entry.key, key)) {
-          entry.value = value;
-
-          return this;
-        }
-      }
+  forEach(
+    callbackFn: (value: V, key: K, map: Dictionary<K, V>) => void,
+    thisArg?: any
+  ): void {
+    for (const [key, value] of this.entries()) {
+      callbackFn.call(thisArg, value, key, this);
     }
-
-    this.#add(hashValue, key, value, index);
-
-    return this;
   }
 
   /**
@@ -275,6 +257,33 @@ export class HashMap<K, V> implements Dictionary<K, V> {
    */
   has(key: K): boolean {
     return this.get(key) !== undefined;
+  }
+
+  /**
+   * Sets the value for the key in the hash map. Returns the hash map.
+   *
+   * @param key - The key of the element to add to the hash map.
+   * @param value - The value of the element to add to the hash map.
+   */
+  set(key: K, value: V): this {
+    const table = this.#table;
+    const hashValue = hash(key);
+    const index = (hashValue & 0x7fff_ffff) % table.length;
+    const list = table[index];
+
+    if (list !== undefined) {
+      for (const entry of list) {
+        if (equality(entry.key, key)) {
+          entry.value = value;
+
+          return this;
+        }
+      }
+    }
+
+    this.#add(hashValue, key, value, index);
+
+    return this;
   }
 
   /**
@@ -319,15 +328,6 @@ export class HashMap<K, V> implements Dictionary<K, V> {
     }
 
     this.#size = 0;
-  }
-
-  forEach(
-    callbackFn: (value: V, key: K, map: Dictionary<K, V>) => void,
-    thisArg?: any
-  ): void {
-    for (const [key, value] of this.entries()) {
-      callbackFn.call(thisArg, value, key, this);
-    }
   }
 
   #add(hashValue: number, key: K, value: V, index: number): void {
