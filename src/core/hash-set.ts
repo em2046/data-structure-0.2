@@ -77,8 +77,16 @@ export class HashSet<E> implements AbstractSet<E> {
     return this.#map.keys();
   }
 
+  /**
+   * Calls `callbackFn` once for each value present in the hash set.
+   * If a `thisArg` parameter is provided, it will be used as the `this` value
+   * for each invocation of `callbackFn`.
+   *
+   * @param callbackFn - Function to execute for each element.
+   * @param thisArg - Value to use as this when executing callbackFn.
+   */
   forEach(
-    callbackFn: (element: E, set: AbstractSet<E>) => void,
+    callbackFn: (element: E, set: HashSet<E>) => void,
     thisArg?: any
   ): void {
     for (const element of this.elements()) {

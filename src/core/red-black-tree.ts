@@ -261,6 +261,15 @@ export class RedBlackTree<K, V> implements AbstractMap<K, V> {
     };
   }
 
+  /**
+   * Calls `callbackFn` once for each key-value pair present in the red black
+   * tree.
+   * If a `thisArg` parameter is provided to `forEach`, it will be used as the
+   * `this` value for each callback.
+   *
+   * @param callbackFn - Function to execute for each entry in the map.
+   * @param thisArg - Value to use as this when executing callback.
+   */
   forEach(
     callbackFn: (value: V, key: K, map: RedBlackTree<K, V>) => void,
     thisArg?: any
@@ -285,6 +294,13 @@ export class RedBlackTree<K, V> implements AbstractMap<K, V> {
     return node.value;
   }
 
+  /**
+   * Returns a boolean asserting whether a value has been associated to the key
+   * in the red black tree or not.
+   *
+   * @param key - The key of the element to test for presence in the red black
+   * tree.
+   */
   has(key: K): boolean {
     return this.get(key) !== undefined;
   }

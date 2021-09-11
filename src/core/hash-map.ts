@@ -218,6 +218,14 @@ export class HashMap<K, V> implements AbstractMap<K, V> {
     };
   }
 
+  /**
+   * Calls `callbackFn` once for each key-value pair present in the hash map.
+   * If a `thisArg` parameter is provided to `forEach`, it will be used as the
+   * `this` value for each callback.
+   *
+   * @param callbackFn - Function to execute for each entry in the map.
+   * @param thisArg - Value to use as this when executing callback.
+   */
   forEach(
     callbackFn: (value: V, key: K, map: HashMap<K, V>) => void,
     thisArg?: any
