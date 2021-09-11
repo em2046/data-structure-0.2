@@ -4,7 +4,7 @@
 
 ## HashSet.add() method
 
-Appends value to the hash set. Returns the hash set with added value.
+Appends `value` to the hash set. Returns the hash set with added value.
 
 <b>Signature:</b>
 

@@ -4,7 +4,7 @@
 
 ## HashMap.entries() method
 
-Returns a new Iterator object that contains an array of `[key, value]` for each element in the hash map.
+Returns a new iterator object that contains \*\*an array of `[key, value]`<!-- -->\*\* for each element in the hash map.
 
 <b>Signature:</b>
 

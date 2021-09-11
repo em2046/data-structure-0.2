@@ -23,11 +23,11 @@ export interface AbstractSet<E> extends Iterable<E>
 
 |  Method | Description |
 |  --- | --- |
-|  [\[Symbol.iterator\]()](./calcium.abstractset._symbol.iterator_.md) | Returns a new iterator object that yields the values for each element in the set. |
-|  [add(element)](./calcium.abstractset.add.md) | Appends value to the set. Returns the set with added value. |
+|  [\[Symbol.iterator\]()](./calcium.abstractset._symbol.iterator_.md) | Returns a new iterator object that yields the <code>values</code> for each element in the set. |
+|  [add(element)](./calcium.abstractset.add.md) | Appends <code>value</code> to the set. Returns the set with added value. |
 |  [clear()](./calcium.abstractset.clear.md) | Removes all elements from the set. |
-|  [delete(element)](./calcium.abstractset.delete.md) | Removes the element associated to the value and returns a boolean asserting whether an element was successfully removed or not. |
-|  [elements()](./calcium.abstractset.elements.md) | Returns a new iterator object that yields the values for each element in the set. |
-|  [forEach(callbackFn, thisArg)](./calcium.abstractset.foreach.md) | Calls <code>callbackFn</code> once for each value present in the set. If a <code>thisArg</code> parameter is provided, it will be used as the <code>this</code> value for each invocation of <code>callbackFn</code>. |
+|  [delete(element)](./calcium.abstractset.delete.md) | Removes the element associated to the <code>value</code> and returns a boolean asserting whether an element was successfully removed or not. |
+|  [elements()](./calcium.abstractset.elements.md) | Returns a new iterator object that yields the <code>values</code> for each element in the set. |
+|  [forEach(callback, thisArg)](./calcium.abstractset.foreach.md) | Calls <code>callback</code> once for each value present in the set. If a <code>thisArg</code> parameter is provided, it will be used as the <code>this</code> value for each invocation of <code>callback</code>. |
 |  [has(element)](./calcium.abstractset.has.md) | Returns a boolean asserting whether an element is present with the given value in the set or not. |
 

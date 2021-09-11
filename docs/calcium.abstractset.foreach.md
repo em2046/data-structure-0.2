@@ -4,20 +4,20 @@
 
 ## AbstractSet.forEach() method
 
-Calls `callbackFn` once for each value present in the set. If a `thisArg` parameter is provided, it will be used as the `this` value for each invocation of `callbackFn`<!-- -->.
+Calls `callback` once for each value present in the set. If a `thisArg` parameter is provided, it will be used as the `this` value for each invocation of `callback`<!-- -->.
 
 <b>Signature:</b>
 
 ```typescript
-forEach(callbackFn: (element: E, set: AbstractSet<E>) => void, thisArg?: any): void;
+forEach(callback: (element: E, set: AbstractSet<E>) => void, thisArg?: any): void;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  callbackFn | (element: E, set: [AbstractSet](./calcium.abstractset.md)<!-- -->&lt;E&gt;) =&gt; void | Function to execute for each element. |
-|  thisArg | any | Value to use as this when executing callbackFn. |
+|  callback | (element: E, set: [AbstractSet](./calcium.abstractset.md)<!-- -->&lt;E&gt;) =&gt; void | Function to execute for each element. |
+|  thisArg | any | Value to use as <code>this</code> when executing <code>callback</code>. |
 
 <b>Returns:</b>
 

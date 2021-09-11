@@ -29,12 +29,12 @@ export declare class HashSet<E> implements AbstractSet<E>
 
 |  Method | Modifiers | Description |
 |  --- | --- | --- |
-|  [\[Symbol.iterator\]()](./calcium.hashset._symbol.iterator_.md) |  | Returns a new iterator object that yields the values for each element in the hash set. |
-|  [add(element)](./calcium.hashset.add.md) |  | Appends value to the hash set. Returns the hash set with added value. |
+|  [\[Symbol.iterator\]()](./calcium.hashset._symbol.iterator_.md) |  | Returns a new iterator object that yields the <code>values</code> for each element in the hash set. |
+|  [add(element)](./calcium.hashset.add.md) |  | Appends <code>value</code> to the hash set. Returns the hash set with added value. |
 |  [clear()](./calcium.hashset.clear.md) |  | Removes all elements from the hash set. |
-|  [delete(element)](./calcium.hashset.delete.md) |  | Removes the element associated to the value and returns a boolean asserting whether an element was successfully removed or not. |
-|  [elements()](./calcium.hashset.elements.md) |  | Returns a new iterator object that yields the values for each element in the hash set. |
-|  [forEach(callbackFn, thisArg)](./calcium.hashset.foreach.md) |  | Calls <code>callbackFn</code> once for each value present in the hash set. If a <code>thisArg</code> parameter is provided, it will be used as the <code>this</code> value for each invocation of <code>callbackFn</code>. |
+|  [delete(element)](./calcium.hashset.delete.md) |  | Removes the element associated to the <code>value</code> and returns a boolean asserting whether an element was successfully removed or not. |
+|  [elements()](./calcium.hashset.elements.md) |  | Returns a new iterator object that yields the <code>values</code> for each element in the hash set. |
+|  [forEach(callback, thisArg)](./calcium.hashset.foreach.md) |  | Calls <code>callback</code> once for each value present in the hash set. If a <code>thisArg</code> parameter is provided, it will be used as the <code>this</code> value for each invocation of <code>callback</code>. |
 |  [from(iterable)](./calcium.hashset.from.md) | <code>static</code> | Creates a new, shallow-copied hash set instance from an iterable object. |
 |  [has(element)](./calcium.hashset.has.md) |  | Returns a boolean asserting whether an element is present with the given value in the hash set or not. |
 

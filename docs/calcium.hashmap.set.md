@@ -4,7 +4,7 @@
 
 ## HashMap.set() method
 
-Sets the value for the key in the hash map. Returns the hash map.
+Sets the `value` for the `key` in the hash map. Returns the hash map.
 
 <b>Signature:</b>
 

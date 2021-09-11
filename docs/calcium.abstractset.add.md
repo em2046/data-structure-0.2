@@ -4,7 +4,7 @@
 
 ## AbstractSet.add() method
 
-Appends value to the set. Returns the set with added value.
+Appends `value` to the set. Returns the set with added value.
 
 <b>Signature:</b>
 

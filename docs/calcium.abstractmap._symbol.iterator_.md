@@ -4,7 +4,7 @@
 
 ## AbstractMap.\[Symbol.iterator\]() method
 
-Returns a new Iterator object that contains an array of `[key, value]` for each element in the map.
+Returns a new iterator object that contains \*\*an array of `[key, value]`<!-- -->\*\* for each element in the map.
 
 <b>Signature:</b>
 

@@ -4,7 +4,7 @@
 
 ## AbstractMap.set() method
 
-Sets the value for the key in the map. Returns the map.
+Sets the `value` for the `key` in the map. Returns the map.
 
 <b>Signature:</b>
 

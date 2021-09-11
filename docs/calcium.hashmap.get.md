@@ -4,7 +4,7 @@
 
 ## HashMap.get() method
 
-Returns the value associated to the key, or `undefined` if there is none.
+Returns the value associated to the `key`<!-- -->, or `undefined` if there is none.
 
 <b>Signature:</b>
 

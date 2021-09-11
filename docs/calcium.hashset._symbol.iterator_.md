@@ -4,7 +4,7 @@
 
 ## HashSet.\[Symbol.iterator\]() method
 
-Returns a new iterator object that yields the values for each element in the hash set.
+Returns a new iterator object that yields the `values` for each element in the hash set.
 
 <b>Signature:</b>
 

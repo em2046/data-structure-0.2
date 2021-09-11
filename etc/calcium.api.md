@@ -10,7 +10,7 @@ export interface AbstractMap<K, V> extends Iterable<[K, V]> {
     clear(): void;
     delete(key: K): boolean;
     entries(): IterableIterator<[K, V]>;
-    forEach(callbackFn: (value: V, key: K, map: AbstractMap<K, V>) => void, thisArg?: any): void;
+    forEach(callback: (value: V, key: K, map: AbstractMap<K, V>) => void, thisArg?: any): void;
     get(key: K): V | undefined;
     has(key: K): boolean;
     keys(): IterableIterator<K>;
@@ -26,7 +26,7 @@ export interface AbstractSet<E> extends Iterable<E> {
     clear(): void;
     delete(element: E): boolean;
     elements(): IterableIterator<E>;
-    forEach(callbackFn: (element: E, set: AbstractSet<E>) => void, thisArg?: any): void;
+    forEach(callback: (element: E, set: AbstractSet<E>) => void, thisArg?: any): void;
     has(element: E): boolean;
     readonly size: number;
 }
@@ -85,7 +85,7 @@ export class HashMap<K, V> implements AbstractMap<K, V> {
     clear(): void;
     delete(key: K): boolean;
     entries(): IterableIterator<[K, V]>;
-    forEach(callbackFn: (value: V, key: K, map: HashMap<K, V>) => void, thisArg?: any): void;
+    forEach(callback: (value: V, key: K, map: HashMap<K, V>) => void, thisArg?: any): void;
     static from<K, V>(iterable?: Iterable<[K, V]>): HashMap<K, V>;
     get(key: K): V | undefined;
     has(key: K): boolean;
@@ -103,7 +103,7 @@ export class HashSet<E> implements AbstractSet<E> {
     clear(): void;
     delete(element: E): boolean;
     elements(): IterableIterator<E>;
-    forEach(callbackFn: (element: E, set: HashSet<E>) => void, thisArg?: any): void;
+    forEach(callback: (element: E, set: HashSet<E>) => void, thisArg?: any): void;
     static from<E>(iterable?: Iterable<E>): HashSet<E>;
     has(element: E): boolean;
     get size(): number;
@@ -153,7 +153,7 @@ export class RedBlackTree<K, V> implements AbstractMap<K, V> {
     deleteMax(): boolean;
     deleteMin(): boolean;
     entries(): IterableIterator<[K, V]>;
-    forEach(callbackFn: (value: V, key: K, map: RedBlackTree<K, V>) => void, thisArg?: any): void;
+    forEach(callback: (value: V, key: K, map: RedBlackTree<K, V>) => void, thisArg?: any): void;
     get(key: K): V | undefined;
     has(key: K): boolean;
     keys(): IterableIterator<K>;

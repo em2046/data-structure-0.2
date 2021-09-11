@@ -62,7 +62,7 @@ export class HashSet<E> implements AbstractSet<E> {
   }
 
   /**
-   * Returns a new iterator object that yields the values for each element in
+   * Returns a new iterator object that yields the `values` for each element in
    * the hash set.
    */
   [Symbol.iterator](): IterableIterator<E> {
@@ -70,7 +70,7 @@ export class HashSet<E> implements AbstractSet<E> {
   }
 
   /**
-   * Returns a new iterator object that yields the values for each element in
+   * Returns a new iterator object that yields the `values` for each element in
    * the hash set.
    */
   elements(): IterableIterator<E> {
@@ -78,19 +78,19 @@ export class HashSet<E> implements AbstractSet<E> {
   }
 
   /**
-   * Calls `callbackFn` once for each value present in the hash set.
+   * Calls `callback` once for each value present in the hash set.
    * If a `thisArg` parameter is provided, it will be used as the `this` value
-   * for each invocation of `callbackFn`.
+   * for each invocation of `callback`.
    *
-   * @param callbackFn - Function to execute for each element.
-   * @param thisArg - Value to use as this when executing callbackFn.
+   * @param callback - Function to execute for each element.
+   * @param thisArg - Value to use as `this` when executing `callback`.
    */
   forEach(
-    callbackFn: (element: E, set: HashSet<E>) => void,
+    callback: (element: E, set: HashSet<E>) => void,
     thisArg?: any
   ): void {
     for (const element of this.elements()) {
-      callbackFn.call(thisArg, element, this);
+      callback.call(thisArg, element, this);
     }
   }
 
@@ -105,7 +105,7 @@ export class HashSet<E> implements AbstractSet<E> {
   }
 
   /**
-   * Appends value to the hash set. Returns the hash set with added value.
+   * Appends `value` to the hash set. Returns the hash set with added value.
    *
    * @param element - The value of the element to add to the hash set.
    */
@@ -116,7 +116,7 @@ export class HashSet<E> implements AbstractSet<E> {
   }
 
   /**
-   * Removes the element associated to the value and returns a boolean
+   * Removes the element associated to the `value` and returns a boolean
    * asserting whether an element was successfully removed or not.
    *
    * @param element - The value to remove from the hash set.
