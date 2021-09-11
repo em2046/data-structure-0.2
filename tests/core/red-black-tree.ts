@@ -12,7 +12,7 @@ import {
 describe("red black tree", () => {
   test("basic large", () => {
     const map = new RedBlackTree<number, number>();
-    let size = VITE ? MIN_INSERTS_HEIGHT_2 : 10000;
+    let size = VITE ? MIN_INSERTS_HEIGHT_2 : 10_000;
 
     size = size + (size % 2);
 
@@ -122,7 +122,7 @@ describe("red black tree", () => {
   });
 
   test("symbol iterator next", () => {
-    const size = VITE ? 200 : 10000;
+    const size = VITE ? 200 : 10_000;
     const data: [number, number][] = new Array(size)
       .fill(0)
       .map((_, i) => [i, i]);
@@ -137,7 +137,7 @@ describe("red black tree", () => {
   });
 
   test("symbol iterator collect", () => {
-    const size = VITE ? 200 : 10000;
+    const size = VITE ? 200 : 10_000;
     const data: [number, number][] = new Array(size)
       .fill(0)
       .map((_, i) => [i, i]);
@@ -199,7 +199,7 @@ describe("red black tree", () => {
   });
 
   test("insert remove intertwined", () => {
-    const size = VITE ? 100 : 1000000;
+    const size = VITE ? 100 : 1_000_000;
     const map = new RedBlackTree<number, number>();
     let i = 1;
     const offset = 165;
@@ -255,7 +255,7 @@ describe("red black tree", () => {
 
   test("delete min large", () => {
     const map = new RedBlackTree<number, number>();
-    let size = VITE ? MIN_INSERTS_HEIGHT_2 : 10000;
+    let size = VITE ? MIN_INSERTS_HEIGHT_2 : 10_000;
 
     size = size + (size % 2);
 
@@ -272,7 +272,7 @@ describe("red black tree", () => {
 
   test("delete max large", () => {
     const map = new RedBlackTree<number, number>();
-    let size = VITE ? MIN_INSERTS_HEIGHT_2 : 10000;
+    let size = VITE ? MIN_INSERTS_HEIGHT_2 : 10_000;
 
     size = size + (size % 2);
 
@@ -289,7 +289,7 @@ describe("red black tree", () => {
 
   test("previous", () => {
     const map = new RedBlackTree<number, number>();
-    let size = VITE ? MIN_INSERTS_HEIGHT_2 : 10000;
+    let size = VITE ? MIN_INSERTS_HEIGHT_2 : 10_000;
 
     size = size + (size % 2);
 
@@ -306,7 +306,7 @@ describe("red black tree", () => {
 
   test("next", () => {
     const map = new RedBlackTree<number, number>();
-    let size = VITE ? MIN_INSERTS_HEIGHT_2 : 10000;
+    let size = VITE ? MIN_INSERTS_HEIGHT_2 : 10_000;
 
     size = size + (size % 2);
 

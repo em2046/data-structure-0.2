@@ -9,7 +9,7 @@ Adds or updates an element with a specified key and a value to a red black tree.
 <b>Signature:</b>
 
 ```typescript
-set(key: K, value: V): RedBlackTree<K, V>;
+set(key: K, value: V): this;
 ```
 
 ## Parameters
@@ -21,5 +21,5 @@ set(key: K, value: V): RedBlackTree<K, V>;
 
 <b>Returns:</b>
 
-[RedBlackTree](./calcium.redblacktree.md)<!-- -->&lt;K, V&gt;
+this
 

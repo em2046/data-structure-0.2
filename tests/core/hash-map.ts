@@ -12,7 +12,7 @@ import { HashMap } from "../../src";
 describe("hash map", () => {
   test("basic large", () => {
     const map = new HashMap<number, number>();
-    let size = VITE ? MIN_INSERTS_HEIGHT_2 : 10000;
+    let size = VITE ? MIN_INSERTS_HEIGHT_2 : 10_000;
 
     size = size + (size % 2);
 
@@ -105,7 +105,7 @@ describe("hash map", () => {
   });
 
   test("symbol iterator next", () => {
-    const size = VITE ? 200 : 10000;
+    const size = VITE ? 200 : 10_000;
     const data: [number, number][] = new Array(size)
       .fill(0)
       .map((_, i) => [i, i]);
@@ -123,7 +123,7 @@ describe("hash map", () => {
   });
 
   test("symbol iterator collect", () => {
-    const size = VITE ? 200 : 10000;
+    const size = VITE ? 200 : 10_000;
     const data: [number, number][] = new Array(size)
       .fill(0)
       .map((_, i) => [i, i]);
@@ -188,7 +188,7 @@ describe("hash map", () => {
   });
 
   test("insert remove intertwined", () => {
-    const size = VITE ? 100 : 1000000;
+    const size = VITE ? 100 : 1_000_000;
     const map = new HashMap<number, number>();
     let i = 1;
     const offset = 165;
@@ -211,7 +211,7 @@ describe("hash map", () => {
 
     new HashMap(0);
 
-    const size = VITE ? 200 : 10000;
+    const size = VITE ? 200 : 10_000;
     const data: [number, number][] = new Array(size)
       .fill(0)
       .map((_, i) => [i, i]);

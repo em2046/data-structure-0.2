@@ -9,9 +9,9 @@ The red black tree holds key-value pairs.
 <b>Signature:</b>
 
 ```typescript
-export declare class RedBlackTree<K, V> implements Iterable<[K, V]> 
+export declare class RedBlackTree<K, V> implements AbstractMap<K, V> 
 ```
-<b>Implements:</b> Iterable&lt;\[K, V\]&gt;
+<b>Implements:</b> [AbstractMap](./calcium.abstractmap.md)<!-- -->&lt;K, V&gt;
 
 ## Constructors
 
@@ -36,7 +36,9 @@ export declare class RedBlackTree<K, V> implements Iterable<[K, V]>
 |  [deleteMax()](./calcium.redblacktree.deletemax.md) |  | Removes the largest element from a red black tree. |
 |  [deleteMin()](./calcium.redblacktree.deletemin.md) |  | Removes the smallest element from a red black tree. |
 |  [entries()](./calcium.redblacktree.entries.md) |  | Returns a new iterator object that contains the <code>[key, value]</code> pairs for each element in the red black tree in in-order. In this particular case, this iterator object is also an iterable, so the for-of loop can be used. When the protocol <code>[Symbol.iterator]</code> is used, it returns a function that, when invoked, returns this iterator itself. |
+|  [forEach(callbackFn, thisArg)](./calcium.redblacktree.foreach.md) |  | Calls <code>callbackFn</code> once for each key-value pair present in the red black tree. If a <code>thisArg</code> parameter is provided to <code>forEach</code>, it will be used as the <code>this</code> value for each callback. |
 |  [get(key)](./calcium.redblacktree.get.md) |  | Returns a specified element from a red black tree. |
+|  [has(key)](./calcium.redblacktree.has.md) |  | Returns a boolean asserting whether a value has been associated to the key in the red black tree or not. |
 |  [keys()](./calcium.redblacktree.keys.md) |  | Returns a new iterator object that contains the keys for each element in the red black tree in in-order. |
 |  [max()](./calcium.redblacktree.max.md) |  | Returns the key-value pair of the largest element from a red black tree. |
 |  [min()](./calcium.redblacktree.min.md) |  | Returns the key-value pair of the smallest element from a red black tree. |

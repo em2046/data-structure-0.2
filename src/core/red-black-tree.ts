@@ -2,6 +2,7 @@ import { Color, Node } from "./red-black-node";
 import { greaterThanOrEqual, lessThan, lessThanOrEqual } from "./comparable";
 import { equality } from "./equatable";
 import { assert } from "../shared";
+import { AbstractMap } from "./abstract-map";
 
 // Copied from
 // https://www.cs.princeton.edu/~rs/talks/LLRB/LLRB.pdf
@@ -110,7 +111,7 @@ function balance<K, V>(node: Node<K, V>): Node<K, V> {
  *
  * The red black tree holds key-value pairs.
  */
-export class RedBlackTree<K, V> implements Iterable<[K, V]> {
+export class RedBlackTree<K, V> implements AbstractMap<K, V> {
   #root: Node<K, V> | null = null;
   #size = 0;
 
@@ -261,11 +262,21 @@ export class RedBlackTree<K, V> implements Iterable<[K, V]> {
   }
 
   /**
-   * Removes all elements from a red black tree.
+   * Calls `callbackFn` once for each key-value pair present in the red black
+   * tree.
+   * If a `thisArg` parameter is provided to `forEach`, it will be used as the
+   * `this` value for each callback.
+   *
+   * @param callbackFn - Function to execute for each entry in the map.
+   * @param thisArg - Value to use as this when executing callback.
    */
-  clear(): void {
-    this.#root = null;
-    this.#size = 0;
+  forEach(
+    callbackFn: (value: V, key: K, map: RedBlackTree<K, V>) => void,
+    thisArg?: any
+  ): void {
+    for (const [key, value] of this.entries()) {
+      callbackFn.call(thisArg, value, key, this);
+    }
   }
 
   /**
@@ -284,61 +295,14 @@ export class RedBlackTree<K, V> implements Iterable<[K, V]> {
   }
 
   /**
-   * Returns the key-value pair of the smallest element from a red black tree.
-   */
-  min(): [K, V] | null {
-    if (this.#root === null) {
-      return null;
-    }
-
-    const node = this.#min(this.#root);
-
-    return [node.key, node.value];
-  }
-
-  /**
-   * Returns the key-value pair of the largest element from a red black tree.
-   */
-  max(): [K, V] | null {
-    if (this.#root === null) {
-      return null;
-    }
-
-    const node = this.#max(this.#root);
-
-    return [node.key, node.value];
-  }
-
-  /**
-   * Returns the key-value pair of the largest element less than to the given
-   * key.
+   * Returns a boolean asserting whether a value has been associated to the key
+   * in the red black tree or not.
    *
-   * @param key - The given key.
+   * @param key - The key of the element to test for presence in the red black
+   * tree.
    */
-  previous(key: K): [K, V] | null {
-    const node = this.#previous(this.#root, key);
-
-    if (node === null) {
-      return null;
-    }
-
-    return [node.key, node.value];
-  }
-
-  /**
-   * Returns the key-value pair of the smallest element greater than to the
-   * given key.
-   *
-   * @param key - The given key.
-   */
-  next(key: K): [K, V] | null {
-    const node = this.#next(this.#root, key);
-
-    if (node === null) {
-      return null;
-    }
-
-    return [node.key, node.value];
+  has(key: K): boolean {
+    return this.get(key) !== undefined;
   }
 
   /**
@@ -348,7 +312,7 @@ export class RedBlackTree<K, V> implements Iterable<[K, V]> {
    * @param key - The key of the element to add to the red black tree.
    * @param value - The value of the element to add to the red black tree.
    */
-  set(key: K, value: V): RedBlackTree<K, V> {
+  set(key: K, value: V): this {
     this.#root = this.#set(this.#root, key, value);
     this.#root.color = Color.Black;
 
@@ -426,6 +390,72 @@ export class RedBlackTree<K, V> implements Iterable<[K, V]> {
     return this.#size < size;
   }
 
+  /**
+   * Removes all elements from a red black tree.
+   */
+  clear(): void {
+    this.#root = null;
+    this.#size = 0;
+  }
+
+  /**
+   * Returns the key-value pair of the smallest element from a red black tree.
+   */
+  min(): [K, V] | null {
+    if (this.#root === null) {
+      return null;
+    }
+
+    const node = this.#min(this.#root);
+
+    return [node.key, node.value];
+  }
+
+  /**
+   * Returns the key-value pair of the largest element from a red black tree.
+   */
+  max(): [K, V] | null {
+    if (this.#root === null) {
+      return null;
+    }
+
+    const node = this.#max(this.#root);
+
+    return [node.key, node.value];
+  }
+
+  /**
+   * Returns the key-value pair of the largest element less than to the given
+   * key.
+   *
+   * @param key - The given key.
+   */
+  previous(key: K): [K, V] | null {
+    const node = this.#previous(this.#root, key);
+
+    if (node === null) {
+      return null;
+    }
+
+    return [node.key, node.value];
+  }
+
+  /**
+   * Returns the key-value pair of the smallest element greater than to the
+   * given key.
+   *
+   * @param key - The given key.
+   */
+  next(key: K): [K, V] | null {
+    const node = this.#next(this.#root, key);
+
+    if (node === null) {
+      return null;
+    }
+
+    return [node.key, node.value];
+  }
+
   #get(node: Node<K, V> | null, key: K): Node<K, V> | null {
     if (node === null) {
       return null;
@@ -437,58 +467,6 @@ export class RedBlackTree<K, V> implements Iterable<[K, V]> {
       return this.#get(node.left, key);
     } else {
       return this.#get(node.right, key);
-    }
-  }
-
-  #min(node: Node<K, V>): Node<K, V> {
-    if (node.left === null) {
-      return node;
-    }
-
-    return this.#min(node.left);
-  }
-
-  #max(node: Node<K, V>): Node<K, V> {
-    if (node.right === null) {
-      return node;
-    }
-
-    return this.#max(node.right);
-  }
-
-  #previous(node: Node<K, V> | null, key: K): Node<K, V> | null {
-    if (node === null) {
-      return null;
-    }
-
-    if (lessThanOrEqual(key, node.key)) {
-      return this.#previous(node.left, key);
-    } else {
-      const previous = this.#previous(node.right, key);
-
-      if (previous !== null) {
-        return previous;
-      } else {
-        return node;
-      }
-    }
-  }
-
-  #next(node: Node<K, V> | null, key: K): Node<K, V> | null {
-    if (node === null) {
-      return null;
-    }
-
-    if (greaterThanOrEqual(key, node.key)) {
-      return this.#next(node.right, key);
-    } else {
-      const next = this.#next(node.left, key);
-
-      if (next !== null) {
-        return next;
-      } else {
-        return node;
-      }
     }
   }
 
@@ -590,5 +568,57 @@ export class RedBlackTree<K, V> implements Iterable<[K, V]> {
     }
 
     return balance(node);
+  }
+
+  #min(node: Node<K, V>): Node<K, V> {
+    if (node.left === null) {
+      return node;
+    }
+
+    return this.#min(node.left);
+  }
+
+  #max(node: Node<K, V>): Node<K, V> {
+    if (node.right === null) {
+      return node;
+    }
+
+    return this.#max(node.right);
+  }
+
+  #previous(node: Node<K, V> | null, key: K): Node<K, V> | null {
+    if (node === null) {
+      return null;
+    }
+
+    if (lessThanOrEqual(key, node.key)) {
+      return this.#previous(node.left, key);
+    } else {
+      const previous = this.#previous(node.right, key);
+
+      if (previous !== null) {
+        return previous;
+      } else {
+        return node;
+      }
+    }
+  }
+
+  #next(node: Node<K, V> | null, key: K): Node<K, V> | null {
+    if (node === null) {
+      return null;
+    }
+
+    if (greaterThanOrEqual(key, node.key)) {
+      return this.#next(node.right, key);
+    } else {
+      const next = this.#next(node.left, key);
+
+      if (next !== null) {
+        return next;
+      } else {
+        return node;
+      }
+    }
   }
 }

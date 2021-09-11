@@ -2,6 +2,7 @@ import { LinkedList } from "./linked-list";
 import { Entry } from "./entry";
 import { hash } from "./hasher";
 import { equality } from "./equatable";
+import { AbstractMap } from "./abstract-map";
 
 // Copied from
 // https://github.com/openjdk/jdk/blob/1fb798d320c708dfcbc0bb157511a2937fafb9e6/src/java.base/share/classes/java/util/Hashtable.java
@@ -17,7 +18,7 @@ const PRESENT = {};
  * Any value (both objects and primitive values) may be used as either a key or
  * a value.
  */
-export class HashMap<K, V> implements Iterable<[K, V]> {
+export class HashMap<K, V> implements AbstractMap<K, V> {
   readonly #loadFactor: number;
   #threshold: number;
   #size = 0;
@@ -218,30 +219,20 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
   }
 
   /**
-   * Sets the value for the key in the hash map. Returns the hash map.
+   * Calls `callbackFn` once for each key-value pair present in the hash map.
+   * If a `thisArg` parameter is provided to `forEach`, it will be used as the
+   * `this` value for each callback.
    *
-   * @param key - The key of the element to add to the hash map.
-   * @param value - The value of the element to add to the hash map.
+   * @param callbackFn - Function to execute for each entry in the map.
+   * @param thisArg - Value to use as this when executing callback.
    */
-  set(key: K, value: V): HashMap<K, V> {
-    const table = this.#table;
-    const hashValue = hash(key);
-    const index = (hashValue & 0x7fffffff) % table.length;
-    const list = table[index];
-
-    if (list !== undefined) {
-      for (const entry of list) {
-        if (equality(entry.key, key)) {
-          entry.value = value;
-
-          return this;
-        }
-      }
+  forEach(
+    callbackFn: (value: V, key: K, map: HashMap<K, V>) => void,
+    thisArg?: any
+  ): void {
+    for (const [key, value] of this.entries()) {
+      callbackFn.call(thisArg, value, key, this);
     }
-
-    this.#add(hashValue, key, value, index);
-
-    return this;
   }
 
   /**
@@ -252,7 +243,7 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
   get(key: K): V | undefined {
     const table = this.#table;
     const hashValue = hash(key);
-    const index = (hashValue & 0x7fffffff) % table.length;
+    const index = (hashValue & 0x7fff_ffff) % table.length;
     const list = table[index];
 
     if (list !== undefined) {
@@ -277,6 +268,33 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
   }
 
   /**
+   * Sets the value for the key in the hash map. Returns the hash map.
+   *
+   * @param key - The key of the element to add to the hash map.
+   * @param value - The value of the element to add to the hash map.
+   */
+  set(key: K, value: V): this {
+    const table = this.#table;
+    const hashValue = hash(key);
+    const index = (hashValue & 0x7fff_ffff) % table.length;
+    const list = table[index];
+
+    if (list !== undefined) {
+      for (const entry of list) {
+        if (equality(entry.key, key)) {
+          entry.value = value;
+
+          return this;
+        }
+      }
+    }
+
+    this.#add(hashValue, key, value, index);
+
+    return this;
+  }
+
+  /**
    * Returns `true` if an element in the hash map existed and has been removed,
    * or `false` if the element does not exist.
    *
@@ -285,7 +303,7 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
   delete(key: K): boolean {
     const table = this.#table;
     const hashValue = hash(key);
-    const index = (hashValue & 0x7fffffff) % table.length;
+    const index = (hashValue & 0x7fff_ffff) % table.length;
     const list = table[index];
 
     if (list !== undefined) {
@@ -327,7 +345,7 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
       this.#rehash();
 
       table = this.#table;
-      index = (hashValue & 0x7fffffff) % table.length;
+      index = (hashValue & 0x7fff_ffff) % table.length;
     }
 
     let list = table[index];
@@ -368,7 +386,7 @@ export class HashMap<K, V> implements Iterable<[K, V]> {
 
       if (oldList !== undefined) {
         for (const entry of oldList) {
-          const index = (hash(entry.key) & 0x7fffffff) % newCapacity;
+          const index = (hash(entry.key) & 0x7fff_ffff) % newCapacity;
           let list = newTable[index];
 
           if (list === undefined) {

@@ -1,16 +1,19 @@
-export { Equatable, equality, inequality } from "./equatable";
+export type { AbstractMap } from "./abstract-map";
+export type { AbstractSet } from "./abstract-set";
+export type { Equatable } from "./equatable";
+export { equality, inequality } from "./equatable";
+export type { Comparable } from "./comparable";
 export {
-  Comparable,
   lessThan,
   lessThanOrEqual,
   greaterThanOrEqual,
   greaterThan,
 } from "./comparable";
-export { Identifiable } from "./identifiable";
+export type { Identifiable } from "./identifiable";
 export { BinaryHeap } from "./binary-heap";
 export { RedBlackTree } from "./red-black-tree";
 export { HashMap } from "./hash-map";
 export { HashSet } from "./hash-set";
-export { Hashable } from "./hashable";
+export type { Hashable } from "./hashable";
 export { Hasher, hash } from "./hasher";
 export { LinkedList } from "./linked-list";
