@@ -36,9 +36,11 @@ export declare class LinkedList<T> implements Iterable<T>
 |  [back()](./calcium.linkedlist.back.md) |  | Provides a reference to the back element, or <code>undefined</code> if the list is empty. |
 |  [clear()](./calcium.linkedlist.clear.md) |  | Removes all elements from the linked list. |
 |  [delete(element)](./calcium.linkedlist.delete.md) |  | Removes a specified value from a linked list, if it is in the linked list. |
+|  [elements()](./calcium.linkedlist.elements.md) |  | An iterator over the elements of a linked list. |
+|  [forEach(callback, thisArg)](./calcium.linkedlist.foreach.md) |  | Calls <code>callback</code> once for each value present in the linked list. If a <code>thisArg</code> parameter is provided, it will be used as the <code>this</code> value for each invocation of <code>callback</code>. |
 |  [from(iterable)](./calcium.linkedlist.from.md) | <code>static</code> | Creates a new, shallow-copied linked list instance from an iterable object. |
 |  [front()](./calcium.linkedlist.front.md) |  | Provides a reference to the front element, or <code>undefined</code> if the list is empty. |
-|  [get(element)](./calcium.linkedlist.get.md) |  | Returns a specified element from a linked list. |
+|  [has(element)](./calcium.linkedlist.has.md) |  | Returns a boolean indicating whether an element with the specified value exists in a linked list or not. |
 |  [popBack()](./calcium.linkedlist.popback.md) |  | Removes the last element from a list and returns it, or <code>undefined</code> if it is empty. |
 |  [popFront()](./calcium.linkedlist.popfront.md) |  | Removes the first element and returns it, or <code>undefined</code> if the list is empty. |
 |  [pushBack(element)](./calcium.linkedlist.pushback.md) |  | Appends an element to the back of a list. |

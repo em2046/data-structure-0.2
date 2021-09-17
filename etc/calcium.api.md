@@ -37,6 +37,7 @@ export class BinaryHeap<T> implements Iterable<T> {
     constructor();
     constructor(iterable: Iterable<T>);
     clear(): void;
+    elements(): IterableIterator<T>;
     static from<T>(iterable?: Iterable<T>): BinaryHeap<T>;
     peek(): T | undefined;
     pop(): T | undefined;
@@ -133,9 +134,11 @@ export class LinkedList<T> implements Iterable<T> {
     back(): T | undefined;
     clear(): void;
     delete(element: T): boolean;
+    elements(): IterableIterator<T>;
+    forEach(callback: (element: T, set: LinkedList<T>) => void, thisArg?: any): void;
     static from<T>(iterable?: Iterable<T>): LinkedList<T>;
     front(): T | undefined;
-    get(element: T): T | undefined;
+    has(element: T): boolean;
     popBack(): T | undefined;
     popFront(): T | undefined;
     pushBack(element: T): LinkedList<T>;
