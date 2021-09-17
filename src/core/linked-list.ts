@@ -53,6 +53,13 @@ export class LinkedList<T> implements Iterable<T> {
    * An iterator over the elements of a linked list.
    */
   [Symbol.iterator](): IterableIterator<T> {
+    return this.elements();
+  }
+
+  /**
+   * An iterator over the elements of a linked list.
+   */
+  elements(): IterableIterator<T> {
     let node = this.#head;
 
     return {
@@ -77,6 +84,23 @@ export class LinkedList<T> implements Iterable<T> {
         };
       },
     };
+  }
+
+  /**
+   * Calls `callback` once for each value present in the linked list.
+   * If a `thisArg` parameter is provided, it will be used as the `this` value
+   * for each invocation of `callback`.
+   *
+   * @param callback - Function to execute for each element.
+   * @param thisArg - Value to use as `this` when executing `callback`.
+   */
+  forEach(
+    callback: (element: T, set: LinkedList<T>) => void,
+    thisArg?: any
+  ): void {
+    for (const element of this.elements()) {
+      callback.call(thisArg, element, this);
+    }
   }
 
   /**
