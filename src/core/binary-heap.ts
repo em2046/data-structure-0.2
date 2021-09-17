@@ -54,6 +54,15 @@ export class BinaryHeap<T> implements Iterable<T> {
    * This method does not change the existing binary heap.
    */
   [Symbol.iterator](): IterableIterator<T> {
+    return this.elements();
+  }
+
+  /**
+   * Returns an iterator which retrieves elements in heap order.
+   *
+   * This method does not change the existing binary heap.
+   */
+  elements(): IterableIterator<T> {
     const clone = BinaryHeap.from(this.#elements);
 
     return {
@@ -85,7 +94,7 @@ export class BinaryHeap<T> implements Iterable<T> {
    *
    * @param newElement - The element to push to the binary heap.
    */
-  push(newElement: T): BinaryHeap<T> {
+  push(newElement: T): this {
     const elements = this.#elements;
     const size = elements.length;
 

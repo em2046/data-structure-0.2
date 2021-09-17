@@ -53,6 +53,13 @@ export class LinkedList<T> implements Iterable<T> {
    * An iterator over the elements of a linked list.
    */
   [Symbol.iterator](): IterableIterator<T> {
+    return this.elements();
+  }
+
+  /**
+   * An iterator over the elements of a linked list.
+   */
+  elements(): IterableIterator<T> {
     let node = this.#head;
 
     return {
@@ -80,11 +87,28 @@ export class LinkedList<T> implements Iterable<T> {
   }
 
   /**
+   * Calls `callback` once for each value present in the linked list.
+   * If a `thisArg` parameter is provided, it will be used as the `this` value
+   * for each invocation of `callback`.
+   *
+   * @param callback - Function to execute for each element.
+   * @param thisArg - Value to use as `this` when executing `callback`.
+   */
+  forEach(
+    callback: (element: T, set: LinkedList<T>) => void,
+    thisArg?: any
+  ): void {
+    for (const element of this.elements()) {
+      callback.call(thisArg, element, this);
+    }
+  }
+
+  /**
    * Moves all elements from `other` to the end of the list.
    *
    * @param other - Other linked list to append.
    */
-  append(other: LinkedList<T>): LinkedList<T> {
+  append(other: LinkedList<T>): this {
     const otherHead = other.#head;
 
     if (otherHead === null) {
@@ -107,17 +131,6 @@ export class LinkedList<T> implements Iterable<T> {
     other.#size = 0;
 
     return this;
-  }
-
-  /**
-   * Removes all elements from the linked list.
-   */
-  clear(): void {
-    const size = this.#size;
-
-    for (let i = 0; i < size; i++) {
-      this.#popBack();
-    }
   }
 
   /**
@@ -153,7 +166,7 @@ export class LinkedList<T> implements Iterable<T> {
    *
    * @param element - The element to push to the linked list.
    */
-  pushFront(element: T): LinkedList<T> {
+  pushFront(element: T): this {
     this.#pushFront(new Node<T>(element));
 
     return this;
@@ -178,7 +191,7 @@ export class LinkedList<T> implements Iterable<T> {
    *
    * @param element - The element to push to the linked list.
    */
-  pushBack(element: T): LinkedList<T> {
+  pushBack(element: T): this {
     this.#pushBack(new Node<T>(element));
 
     return this;
@@ -199,23 +212,13 @@ export class LinkedList<T> implements Iterable<T> {
   }
 
   /**
-   * Returns a specified element from a linked list.
+   * Returns a boolean indicating whether an element with the specified value
+   * exists in a linked list or not.
    *
-   * @param element - The element to return from the linked list.
+   * @param element - The value to test for presence in the linked list.
    */
-  get(element: T): T | undefined {
-    let node = this.#head;
-    const size = this.#size;
-
-    for (let i = 0; i < size; i++) {
-      assert(node !== null);
-
-      if (equality(element, node.element)) {
-        return node.element;
-      }
-
-      node = node.next;
-    }
+  has(element: T): boolean {
+    return this.#get(element) !== null;
   }
 
   /**
@@ -223,7 +226,7 @@ export class LinkedList<T> implements Iterable<T> {
    *
    * @param element - The value of the element to add to the linked list.
    */
-  add(element: T): LinkedList<T> {
+  add(element: T): this {
     this.delete(element);
     this.pushBack(element);
 
@@ -258,6 +261,34 @@ export class LinkedList<T> implements Iterable<T> {
     }
 
     return false;
+  }
+
+  /**
+   * Removes all elements from the linked list.
+   */
+  clear(): void {
+    const size = this.#size;
+
+    for (let i = 0; i < size; i++) {
+      this.#popBack();
+    }
+  }
+
+  #get(element: T): Node<T> | null {
+    let node = this.#head;
+    const size = this.#size;
+
+    for (let i = 0; i < size; i++) {
+      assert(node !== null);
+
+      if (equality(element, node.element)) {
+        return node;
+      }
+
+      node = node.next;
+    }
+
+    return null;
   }
 
   #pushFront(node: Node<T>): void {

@@ -9,7 +9,7 @@ Appends a new element with a specified value to the end of a linked list.
 <b>Signature:</b>
 
 ```typescript
-add(element: T): LinkedList<T>;
+add(element: T): this;
 ```
 
 ## Parameters
@@ -20,5 +20,5 @@ add(element: T): LinkedList<T>;
 
 <b>Returns:</b>
 
-[LinkedList](./calcium.linkedlist.md)<!-- -->&lt;T&gt;
+this
 

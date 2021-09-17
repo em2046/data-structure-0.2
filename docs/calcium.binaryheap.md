@@ -34,6 +34,7 @@ export declare class BinaryHeap<T> implements Iterable<T>
 |  --- | --- | --- |
 |  [\[Symbol.iterator\]()](./calcium.binaryheap._symbol.iterator_.md) |  | Returns an iterator which retrieves elements in heap order.<!-- -->This method does not change the existing binary heap. |
 |  [clear()](./calcium.binaryheap.clear.md) |  | Removes all elements from a binary heap. |
+|  [elements()](./calcium.binaryheap.elements.md) |  | Returns an iterator which retrieves elements in heap order.<!-- -->This method does not change the existing binary heap. |
 |  [from(iterable)](./calcium.binaryheap.from.md) | <code>static</code> | Creates a new, shallow-copied binary heap instance from an iterable object. |
 |  [peek()](./calcium.binaryheap.peek.md) |  | Returns the smallest element in the binary heap, or <code>undefined</code> if it is empty. |
 |  [pop()](./calcium.binaryheap.pop.md) |  | Removes the smallest element from the binary heap and returns it, or <code>undefined</code> if it is empty. |
