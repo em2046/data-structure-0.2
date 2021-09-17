@@ -108,7 +108,7 @@ export class LinkedList<T> implements Iterable<T> {
    *
    * @param other - Other linked list to append.
    */
-  append(other: LinkedList<T>): LinkedList<T> {
+  append(other: LinkedList<T>): this {
     const otherHead = other.#head;
 
     if (otherHead === null) {
@@ -131,17 +131,6 @@ export class LinkedList<T> implements Iterable<T> {
     other.#size = 0;
 
     return this;
-  }
-
-  /**
-   * Removes all elements from the linked list.
-   */
-  clear(): void {
-    const size = this.#size;
-
-    for (let i = 0; i < size; i++) {
-      this.#popBack();
-    }
   }
 
   /**
@@ -177,7 +166,7 @@ export class LinkedList<T> implements Iterable<T> {
    *
    * @param element - The element to push to the linked list.
    */
-  pushFront(element: T): LinkedList<T> {
+  pushFront(element: T): this {
     this.#pushFront(new Node<T>(element));
 
     return this;
@@ -202,7 +191,7 @@ export class LinkedList<T> implements Iterable<T> {
    *
    * @param element - The element to push to the linked list.
    */
-  pushBack(element: T): LinkedList<T> {
+  pushBack(element: T): this {
     this.#pushBack(new Node<T>(element));
 
     return this;
@@ -237,7 +226,7 @@ export class LinkedList<T> implements Iterable<T> {
    *
    * @param element - The value of the element to add to the linked list.
    */
-  add(element: T): LinkedList<T> {
+  add(element: T): this {
     this.delete(element);
     this.pushBack(element);
 
@@ -272,6 +261,17 @@ export class LinkedList<T> implements Iterable<T> {
     }
 
     return false;
+  }
+
+  /**
+   * Removes all elements from the linked list.
+   */
+  clear(): void {
+    const size = this.#size;
+
+    for (let i = 0; i < size; i++) {
+      this.#popBack();
+    }
   }
 
   #get(element: T): Node<T> | null {

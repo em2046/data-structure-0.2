@@ -9,7 +9,7 @@ Appends an element to the back of a list.
 <b>Signature:</b>
 
 ```typescript
-pushBack(element: T): LinkedList<T>;
+pushBack(element: T): this;
 ```
 
 ## Parameters
@@ -20,5 +20,5 @@ pushBack(element: T): LinkedList<T>;
 
 <b>Returns:</b>
 
-[LinkedList](./calcium.linkedlist.md)<!-- -->&lt;T&gt;
+this
 

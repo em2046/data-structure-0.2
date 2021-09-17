@@ -9,7 +9,7 @@ Adds an element first in the list.
 <b>Signature:</b>
 
 ```typescript
-pushFront(element: T): LinkedList<T>;
+pushFront(element: T): this;
 ```
 
 ## Parameters
@@ -20,5 +20,5 @@ pushFront(element: T): LinkedList<T>;
 
 <b>Returns:</b>
 
-[LinkedList](./calcium.linkedlist.md)<!-- -->&lt;T&gt;
+this
 

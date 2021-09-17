@@ -9,7 +9,7 @@ Moves all elements from `other` to the end of the list.
 <b>Signature:</b>
 
 ```typescript
-append(other: LinkedList<T>): LinkedList<T>;
+append(other: LinkedList<T>): this;
 ```
 
 ## Parameters
@@ -20,5 +20,5 @@ append(other: LinkedList<T>): LinkedList<T>;
 
 <b>Returns:</b>
 
-[LinkedList](./calcium.linkedlist.md)<!-- -->&lt;T&gt;
+this
 

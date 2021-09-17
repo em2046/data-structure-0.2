@@ -94,7 +94,7 @@ export class BinaryHeap<T> implements Iterable<T> {
    *
    * @param newElement - The element to push to the binary heap.
    */
-  push(newElement: T): BinaryHeap<T> {
+  push(newElement: T): this {
     const elements = this.#elements;
     const size = elements.length;
 
