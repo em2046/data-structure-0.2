@@ -28,13 +28,11 @@ describe("entry", () => {
     expect(map.back()?.key).toBe(size - 1);
 
     for (let i = 0; i < size; i++) {
-      expect(map.get(new Entry(i, PRESENT))).toStrictEqual(
-        new Entry(i, i * 10)
-      );
+      expect(map.has(new Entry(i, PRESENT))).toBe(true);
     }
 
     for (let i = size; i < size * 2; i++) {
-      expect(map.get(new Entry(i, PRESENT))).toBe(undefined);
+      expect(map.has(new Entry(i, PRESENT))).toBe(false);
     }
 
     for (let i = 0; i < size; i++) {
@@ -43,9 +41,7 @@ describe("entry", () => {
     }
 
     for (let i = 0; i < size; i++) {
-      expect(map.get(new Entry(i, PRESENT))).toStrictEqual(
-        new Entry(i, i * 100)
-      );
+      expect(map.has(new Entry(i, PRESENT))).toBe(true);
     }
 
     for (let i = 0; i < size / 2; i++) {
@@ -54,10 +50,8 @@ describe("entry", () => {
     }
 
     for (let i = 0; i < size / 2; i++) {
-      expect(map.get(new Entry(2 * i, PRESENT))).toBe(undefined);
-      expect(map.get(new Entry(2 * i + 1, PRESENT))).toStrictEqual(
-        new Entry(2 * i + 1, i * 200 + 100)
-      );
+      expect(map.has(new Entry(2 * i, PRESENT))).toBe(false);
+      expect(map.has(new Entry(2 * i + 1, PRESENT))).toBe(true);
     }
 
     for (let i = 0; i < size / 2; i++) {
@@ -72,44 +66,44 @@ describe("entry", () => {
 
     expect(map.delete(new Entry(1, PRESENT))).toBe(false);
     expect(map.size).toBe(0);
-    expect(map.get(new Entry(1, PRESENT))).toBe(undefined);
+    expect(map.has(new Entry(1, PRESENT))).toBe(false);
     expect(map.front()).toBe(undefined);
     expect(map.back()).toBe(undefined);
 
     map.add(new Entry(1, 1));
 
     expect(map.size).toBe(1);
-    expect(map.get(new Entry(1, PRESENT))).toStrictEqual(new Entry(1, 1));
+    expect(map.has(new Entry(1, PRESENT))).toBe(true);
     expect(map.front()).toStrictEqual(new Entry(1, 1));
     expect(map.back()).toStrictEqual(new Entry(1, 1));
 
     map.add(new Entry(1, 2));
 
     expect(map.size).toBe(1);
-    expect(map.get(new Entry(1, PRESENT))).toStrictEqual(new Entry(1, 2));
+    expect(map.has(new Entry(1, PRESENT))).toBe(true);
     expect(map.front()).toStrictEqual(new Entry(1, 2));
     expect(map.back()).toStrictEqual(new Entry(1, 2));
 
     map.add(new Entry(2, 4));
 
     expect(map.size).toBe(2);
-    expect(map.get(new Entry(2, PRESENT))).toStrictEqual(new Entry(2, 4));
+    expect(map.has(new Entry(2, PRESENT))).toBe(true);
     expect(map.front()).toStrictEqual(new Entry(1, 2));
     expect(map.back()).toStrictEqual(new Entry(2, 4));
 
     expect(map.delete(new Entry(1, PRESENT))).toBe(true);
 
     expect(map.size).toBe(1);
-    expect(map.get(new Entry(1, PRESENT))).toBe(undefined);
-    expect(map.get(new Entry(2, PRESENT))).toStrictEqual(new Entry(2, 4));
+    expect(map.has(new Entry(1, PRESENT))).toBe(false);
+    expect(map.has(new Entry(2, PRESENT))).toBe(true);
     expect(map.front()).toStrictEqual(new Entry(2, 4));
     expect(map.back()).toStrictEqual(new Entry(2, 4));
 
     expect(map.delete(new Entry(2, PRESENT))).toBe(true);
 
     expect(map.size).toBe(0);
-    expect(map.get(new Entry(1, PRESENT))).toBe(undefined);
-    expect(map.get(new Entry(2, PRESENT))).toBe(undefined);
+    expect(map.has(new Entry(1, PRESENT))).toBe(false);
+    expect(map.has(new Entry(2, PRESENT))).toBe(false);
     expect(map.front()).toBe(undefined);
     expect(map.back()).toBe(undefined);
   });
@@ -141,7 +135,7 @@ describe("entry", () => {
       assert(back !== undefined);
       expect(map.delete(back)).toBe(true);
       expect(map.size).toBe(1);
-      expect(map.get(new Entry(1, PRESENT))).toStrictEqual(new Entry(1, 2));
+      expect(map.has(new Entry(1, PRESENT))).toBe(true);
     }
   });
 });

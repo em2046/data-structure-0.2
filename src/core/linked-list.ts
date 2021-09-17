@@ -199,23 +199,13 @@ export class LinkedList<T> implements Iterable<T> {
   }
 
   /**
-   * Returns a specified element from a linked list.
+   * Returns a boolean indicating whether an element with the specified value
+   * exists in a linked list or not.
    *
-   * @param element - The element to return from the linked list.
+   * @param element - The value to test for presence in the linked list.
    */
-  get(element: T): T | undefined {
-    let node = this.#head;
-    const size = this.#size;
-
-    for (let i = 0; i < size; i++) {
-      assert(node !== null);
-
-      if (equality(element, node.element)) {
-        return node.element;
-      }
-
-      node = node.next;
-    }
+  has(element: T): boolean {
+    return this.#get(element) !== null;
   }
 
   /**
@@ -258,6 +248,23 @@ export class LinkedList<T> implements Iterable<T> {
     }
 
     return false;
+  }
+
+  #get(element: T): Node<T> | null {
+    let node = this.#head;
+    const size = this.#size;
+
+    for (let i = 0; i < size; i++) {
+      assert(node !== null);
+
+      if (equality(element, node.element)) {
+        return node;
+      }
+
+      node = node.next;
+    }
+
+    return null;
   }
 
   #pushFront(node: Node<T>): void {
