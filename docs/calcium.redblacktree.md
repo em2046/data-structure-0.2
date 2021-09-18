@@ -13,13 +13,6 @@ export declare class RedBlackTree<K, V> implements AbstractMap<K, V>
 ```
 <b>Implements:</b> [AbstractMap](./calcium.abstractmap.md)<!-- -->&lt;K, V&gt;
 
-## Constructors
-
-|  Constructor | Modifiers | Description |
-|  --- | --- | --- |
-|  [(constructor)()](./calcium.redblacktree._constructor_.md) |  | Creates a new red black tree. |
-|  [(constructor)(iterable)](./calcium.redblacktree._constructor__1.md) |  | Creates a new, shallow-copied red black tree instance from an iterable object. |
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
@@ -37,6 +30,7 @@ export declare class RedBlackTree<K, V> implements AbstractMap<K, V>
 |  [deleteMin()](./calcium.redblacktree.deletemin.md) |  | Removes the smallest element from a red black tree. |
 |  [entries()](./calcium.redblacktree.entries.md) |  | Returns a new iterator object that contains an \*\*array of <code>[key, value]</code>\*\* for each element in the red black tree in in-order. |
 |  [forEach(callback, thisArg)](./calcium.redblacktree.foreach.md) |  | Calls <code>callback</code> once for each key-value pair present in the red black tree. If a <code>thisArg</code> parameter is provided to <code>forEach</code>, it will be used as the <code>this</code> value for each callback. |
+|  [from(iterable)](./calcium.redblacktree.from.md) | <code>static</code> | Creates a new, shallow-copied red black tree instance from an iterable object. |
 |  [get(key)](./calcium.redblacktree.get.md) |  | Returns a specified element from a red black tree. |
 |  [has(key)](./calcium.redblacktree.has.md) |  | Returns a boolean asserting whether a value has been associated to the key in the red black tree or not. |
 |  [keys()](./calcium.redblacktree.keys.md) |  | Returns a new iterator object that contains the \*\*keys\*\* for each element in the red black tree in in-order. |

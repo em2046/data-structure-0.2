@@ -13,13 +13,6 @@ export declare class LinkedList<T> implements Iterable<T>
 ```
 <b>Implements:</b> Iterable&lt;T&gt;
 
-## Constructors
-
-|  Constructor | Modifiers | Description |
-|  --- | --- | --- |
-|  [(constructor)()](./calcium.linkedlist._constructor_.md) |  | Creates a new linked list. |
-|  [(constructor)(iterable)](./calcium.linkedlist._constructor__1.md) |  | Creates a new, shallow-copied linked list instance from an iterable object. |
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |

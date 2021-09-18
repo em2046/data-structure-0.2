@@ -15,13 +15,6 @@ export declare class BinaryHeap<T> implements Iterable<T>
 ```
 <b>Implements:</b> Iterable&lt;T&gt;
 
-## Constructors
-
-|  Constructor | Modifiers | Description |
-|  --- | --- | --- |
-|  [(constructor)()](./calcium.binaryheap._constructor_.md) |  | Creates a new binary heap. |
-|  [(constructor)(iterable)](./calcium.binaryheap._constructor__1.md) |  | Creates a new, shallow-copied binary heap instance from an iterable object. |
-
 ## Properties
 
 |  Property | Modifiers | Type | Description |
