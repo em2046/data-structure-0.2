@@ -9,14 +9,14 @@ Pushes a new element onto the binary heap.
 <b>Signature:</b>
 
 ```typescript
-push(newElement: T): this;
+push(element: T): this;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  newElement | T | The element to push to the binary heap. |
+|  element | T | The element to push to the binary heap. |
 
 <b>Returns:</b>
 

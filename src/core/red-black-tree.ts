@@ -131,7 +131,7 @@ export class RedBlackTree<K, V> implements AbstractMap<K, V> {
    * `[[ 1, 'one' ],[ 2, 'two' ]]`.) Each key-value pair is added to the new
    * red black tree.
    */
-  static from<K, V>(iterable: Iterable<[K, V]> = []): RedBlackTree<K, V> {
+  static from<K, V>(iterable: Iterable<[K, V]>): RedBlackTree<K, V> {
     const map = new RedBlackTree<K, V>();
 
     for (const [key, value] of iterable) {

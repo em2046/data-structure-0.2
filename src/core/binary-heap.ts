@@ -27,7 +27,7 @@ export class BinaryHeap<T> implements Iterable<T> {
    *
    * @param iterable - An iterable object to convert to a binary heap.
    */
-  static from<T>(iterable: Iterable<T> = []): BinaryHeap<T> {
+  static from<T>(iterable: Iterable<T>): BinaryHeap<T> {
     const heap = new BinaryHeap<T>();
 
     heap.#elements = Array.from(iterable);
@@ -80,14 +80,14 @@ export class BinaryHeap<T> implements Iterable<T> {
   /**
    * Pushes a new element onto the binary heap.
    *
-   * @param newElement - The element to push to the binary heap.
+   * @param element - The element to push to the binary heap.
    */
-  push(newElement: T): this {
+  push(element: T): this {
     const elements = this.#elements;
     const size = elements.length;
 
-    elements.push(newElement);
-    this.#siftUp(newElement, size);
+    elements.push(element);
+    this.#siftUp(element, size);
 
     return this;
   }

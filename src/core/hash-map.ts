@@ -69,7 +69,7 @@ export class HashMap<K, V> implements AbstractMap<K, V> {
    * `[[ 1, 'one' ],[ 2, 'two' ]]`.) Each key-value pair is added to the new
    * hash map.
    */
-  static from<K, V>(iterable: Iterable<[K, V]> = []): HashMap<K, V> {
+  static from<K, V>(iterable: Iterable<[K, V]>): HashMap<K, V> {
     let size: number;
     const arrayLike = iterable as unknown as ArrayLike<[K, V]>;
 

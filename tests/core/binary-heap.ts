@@ -182,8 +182,6 @@ describe("binary heap", () => {
     for (const element of out) {
       expect(heap.pop()).toBe(element);
     }
-
-    BinaryHeap.from();
   });
 
   test("clear", () => {

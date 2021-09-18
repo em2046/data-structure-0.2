@@ -149,7 +149,5 @@ describe("linked list", () => {
     const iterator = heap[Symbol.iterator]();
 
     expect([...iterator]).toStrictEqual(out);
-
-    LinkedList.from();
   });
 });

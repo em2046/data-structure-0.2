@@ -40,7 +40,7 @@ export class HashSet<E> implements AbstractSet<E> {
    * If you don't specify this parameter, or its value is `null`, the hash set
    * is empty.
    */
-  static from<E>(iterable: Iterable<E> = []): HashSet<E> {
+  static from<E>(iterable: Iterable<E>): HashSet<E> {
     let size: number;
     const arrayLike = iterable as unknown as ArrayLike<E>;
 

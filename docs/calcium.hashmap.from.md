@@ -9,7 +9,7 @@ Creates a new, shallow-copied hash map instance from an iterable object.
 <b>Signature:</b>
 
 ```typescript
-static from<K, V>(iterable?: Iterable<[K, V]>): HashMap<K, V>;
+static from<K, V>(iterable: Iterable<[K, V]>): HashMap<K, V>;
 ```
 
 ## Parameters
