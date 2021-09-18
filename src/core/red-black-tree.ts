@@ -116,9 +116,11 @@ export class RedBlackTree<K, V> implements AbstractMap<K, V> {
   #size = 0;
 
   /**
-   * Creates a new red black tree.
+   * Returns the number of elements in a red black tree.
    */
-  constructor();
+  get size(): number {
+    return this.#size;
+  }
 
   /**
    * Creates a new, shallow-copied red black tree instance from an iterable
@@ -129,19 +131,14 @@ export class RedBlackTree<K, V> implements AbstractMap<K, V> {
    * `[[ 1, 'one' ],[ 2, 'two' ]]`.) Each key-value pair is added to the new
    * red black tree.
    */
-  constructor(iterable: Iterable<[K, V]>);
+  static from<K, V>(iterable: Iterable<[K, V]> = []): RedBlackTree<K, V> {
+    const map = new RedBlackTree<K, V>();
 
-  constructor(iterable: Iterable<[K, V]> = []) {
     for (const [key, value] of iterable) {
-      this.set(key, value);
+      map.set(key, value);
     }
-  }
 
-  /**
-   * Returns the number of elements in a red black tree.
-   */
-  get size(): number {
-    return this.#size;
+    return map;
   }
 
   /**

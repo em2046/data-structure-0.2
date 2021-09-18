@@ -16,24 +16,6 @@ export class LinkedList<T> implements Iterable<T> {
   #size = 0;
 
   /**
-   * Creates a new linked list.
-   */
-  constructor();
-
-  /**
-   * Creates a new, shallow-copied linked list instance from an iterable object.
-   *
-   * @param iterable - An iterable object to convert to a linked list.
-   */
-  constructor(iterable: Iterable<T>);
-
-  constructor(iterable: Iterable<T> = []) {
-    for (const element of iterable) {
-      this.pushBack(element);
-    }
-  }
-
-  /**
    * Returns the size of the linked list.
    */
   get size(): number {
@@ -46,7 +28,13 @@ export class LinkedList<T> implements Iterable<T> {
    * @param iterable - An iterable object to convert to a linked list.
    */
   static from<T>(iterable: Iterable<T> = []): LinkedList<T> {
-    return new LinkedList(iterable);
+    const list = new LinkedList<T>();
+
+    for (const element of iterable) {
+      list.pushBack(element);
+    }
+
+    return list;
   }
 
   /**

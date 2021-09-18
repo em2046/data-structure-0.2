@@ -16,23 +16,6 @@ export class BinaryHeap<T> implements Iterable<T> {
   #elements: T[] = [];
 
   /**
-   * Creates a new binary heap.
-   */
-  constructor();
-
-  /**
-   * Creates a new, shallow-copied binary heap instance from an iterable object.
-   *
-   * @param iterable - An iterable object to convert to a binary heap.
-   */
-  constructor(iterable: Iterable<T>);
-
-  constructor(iterable: Iterable<T> = []) {
-    this.#elements = Array.from(iterable);
-    this.#rebuild();
-  }
-
-  /**
    * Returns the number of elements in a binary heap.
    */
   get size(): number {
@@ -45,7 +28,12 @@ export class BinaryHeap<T> implements Iterable<T> {
    * @param iterable - An iterable object to convert to a binary heap.
    */
   static from<T>(iterable: Iterable<T> = []): BinaryHeap<T> {
-    return new BinaryHeap<T>(iterable);
+    const heap = new BinaryHeap<T>();
+
+    heap.#elements = Array.from(iterable);
+    heap.#rebuild();
+
+    return heap;
   }
 
   /**
