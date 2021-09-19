@@ -32,11 +32,11 @@ export class HashMap<K, V> implements AbstractMap<K, V> {
    */
   constructor(initialCapacity = 11, loadFactor = 0.75) {
     if (initialCapacity < 0) {
-      throw new Error(`Illegal Capacity: ${initialCapacity}`);
+      throw new RangeError(`Illegal capacity: ${initialCapacity}`);
     }
 
     if (loadFactor <= 0 || Number.isNaN(loadFactor)) {
-      throw new Error(`Illegal Load: ${loadFactor}`);
+      throw new RangeError(`Illegal load: ${loadFactor}`);
     }
 
     if (initialCapacity === 0) {
@@ -104,7 +104,7 @@ export class HashMap<K, V> implements AbstractMap<K, V> {
    */
   entries(): IterableIterator<[K, V]> {
     const table = this.#table;
-    let index = -1;
+    let index = 0;
     let listIterator: IterableIterator<Entry<K, unknown>> | undefined;
 
     return {
@@ -116,14 +116,12 @@ export class HashMap<K, V> implements AbstractMap<K, V> {
 
         while (index < table.length) {
           if (listIterator === undefined) {
-            index += 1;
-
             const list = table[index];
 
-            if (list === undefined) {
-              listIterator = undefined;
+            if (list === undefined || list.size === 0) {
+              index += 1;
             } else {
-              listIterator = list[Symbol.iterator]();
+              listIterator = list.elements();
             }
 
             continue;
@@ -133,6 +131,7 @@ export class HashMap<K, V> implements AbstractMap<K, V> {
 
           if (next.done) {
             listIterator = undefined;
+            index += 1;
           } else {
             const { key, value } = next.value;
 
