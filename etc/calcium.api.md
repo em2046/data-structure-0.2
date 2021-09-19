@@ -45,7 +45,7 @@ export class BinaryHeap<T> implements Iterable<T> {
 
 // @public
 export interface Comparable extends Equatable {
-    lessThan(rhs: Comparable): boolean;
+    lessThan(rhs: this): boolean;
 }
 
 // @public
@@ -53,7 +53,7 @@ export function equality<T>(lhs: T, rhs: T): boolean;
 
 // @public
 export interface Equatable {
-    equality(rhs: Equatable): boolean;
+    equality(rhs: this): boolean;
 }
 
 // @public
