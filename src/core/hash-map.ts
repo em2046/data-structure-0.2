@@ -327,12 +327,7 @@ export class HashMap<K, V> implements AbstractMap<K, V> {
     const size = table.length;
 
     for (let i = 0; i < size; i++) {
-      const list = table[i];
-
-      if (list !== undefined) {
-        list.clear();
-        table[i] = undefined;
-      }
+      table[i] = undefined;
     }
 
     this.#size = 0;

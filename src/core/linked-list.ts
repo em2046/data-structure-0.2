@@ -255,11 +255,9 @@ export class LinkedList<T> implements Iterable<T> {
    * Removes all elements from the linked list.
    */
   clear(): void {
-    const size = this.#size;
-
-    for (let i = 0; i < size; i++) {
-      this.#popBack();
-    }
+    this.#head = null;
+    this.#tail = null;
+    this.#size = 0;
   }
 
   #get(element: T): Node<T> | null {
