@@ -9,14 +9,14 @@ Returns a Boolean value indicating whether two values are equal.
 <b>Signature:</b>
 
 ```typescript
-equality(rhs: Equatable): boolean;
+equality(rhs: this): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  rhs | [Equatable](./calcium.equatable.md) | Another value to compare. |
+|  rhs | this | Another value to compare. |
 
 <b>Returns:</b>
 

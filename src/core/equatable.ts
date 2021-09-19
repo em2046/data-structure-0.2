@@ -12,7 +12,7 @@ export interface Equatable {
    *
    * @param rhs - Another value to compare.
    */
-  equality(rhs: Equatable): boolean;
+  equality(rhs: this): boolean;
 }
 
 /**

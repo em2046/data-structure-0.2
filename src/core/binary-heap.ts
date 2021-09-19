@@ -16,23 +16,6 @@ export class BinaryHeap<T> implements Iterable<T> {
   #elements: T[] = [];
 
   /**
-   * Creates a new binary heap.
-   */
-  constructor();
-
-  /**
-   * Creates a new, shallow-copied binary heap instance from an iterable object.
-   *
-   * @param iterable - An iterable object to convert to a binary heap.
-   */
-  constructor(iterable: Iterable<T>);
-
-  constructor(iterable: Iterable<T> = []) {
-    this.#elements = Array.from(iterable);
-    this.#rebuild();
-  }
-
-  /**
    * Returns the number of elements in a binary heap.
    */
   get size(): number {
@@ -44,8 +27,13 @@ export class BinaryHeap<T> implements Iterable<T> {
    *
    * @param iterable - An iterable object to convert to a binary heap.
    */
-  static from<T>(iterable: Iterable<T> = []): BinaryHeap<T> {
-    return new BinaryHeap<T>(iterable);
+  static from<T>(iterable: Iterable<T>): BinaryHeap<T> {
+    const heap = new BinaryHeap<T>();
+
+    heap.#elements = Array.from(iterable);
+    heap.#rebuild();
+
+    return heap;
   }
 
   /**
@@ -92,14 +80,14 @@ export class BinaryHeap<T> implements Iterable<T> {
   /**
    * Pushes a new element onto the binary heap.
    *
-   * @param newElement - The element to push to the binary heap.
+   * @param element - The element to push to the binary heap.
    */
-  push(newElement: T): this {
+  push(element: T): this {
     const elements = this.#elements;
     const size = elements.length;
 
-    elements.push(newElement);
-    this.#siftUp(newElement, size);
+    elements.push(element);
+    this.#siftUp(element, size);
 
     return this;
   }

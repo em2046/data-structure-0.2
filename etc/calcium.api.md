@@ -34,20 +34,18 @@ export interface AbstractSet<E> extends Iterable<E> {
 // @public
 export class BinaryHeap<T> implements Iterable<T> {
     [Symbol.iterator](): IterableIterator<T>;
-    constructor();
-    constructor(iterable: Iterable<T>);
     clear(): void;
     elements(): IterableIterator<T>;
-    static from<T>(iterable?: Iterable<T>): BinaryHeap<T>;
+    static from<T>(iterable: Iterable<T>): BinaryHeap<T>;
     peek(): T | undefined;
     pop(): T | undefined;
-    push(newElement: T): this;
+    push(element: T): this;
     get size(): number;
 }
 
 // @public
 export interface Comparable extends Equatable {
-    lessThan(rhs: Comparable): boolean;
+    lessThan(rhs: this): boolean;
 }
 
 // @public
@@ -55,7 +53,7 @@ export function equality<T>(lhs: T, rhs: T): boolean;
 
 // @public
 export interface Equatable {
-    equality(rhs: Equatable): boolean;
+    equality(rhs: this): boolean;
 }
 
 // @public
@@ -87,7 +85,7 @@ export class HashMap<K, V> implements AbstractMap<K, V> {
     delete(key: K): boolean;
     entries(): IterableIterator<[K, V]>;
     forEach(callback: (value: V, key: K, map: HashMap<K, V>) => void, thisArg?: any): void;
-    static from<K, V>(iterable?: Iterable<[K, V]>): HashMap<K, V>;
+    static from<K, V>(iterable: Iterable<[K, V]>): HashMap<K, V>;
     get(key: K): V | undefined;
     has(key: K): boolean;
     keys(): IterableIterator<K>;
@@ -105,7 +103,7 @@ export class HashSet<E> implements AbstractSet<E> {
     delete(element: E): boolean;
     elements(): IterableIterator<E>;
     forEach(callback: (element: E, set: HashSet<E>) => void, thisArg?: any): void;
-    static from<E>(iterable?: Iterable<E>): HashSet<E>;
+    static from<E>(iterable: Iterable<E>): HashSet<E>;
     has(element: E): boolean;
     get size(): number;
 }
@@ -127,8 +125,6 @@ export function lessThanOrEqual<T>(lhs: T, rhs: T): boolean;
 // @public
 export class LinkedList<T> implements Iterable<T> {
     [Symbol.iterator](): IterableIterator<T>;
-    constructor();
-    constructor(iterable: Iterable<T>);
     add(element: T): this;
     append(other: LinkedList<T>): this;
     back(): T | undefined;
@@ -136,7 +132,7 @@ export class LinkedList<T> implements Iterable<T> {
     delete(element: T): boolean;
     elements(): IterableIterator<T>;
     forEach(callback: (element: T, set: LinkedList<T>) => void, thisArg?: any): void;
-    static from<T>(iterable?: Iterable<T>): LinkedList<T>;
+    static from<T>(iterable: Iterable<T>): LinkedList<T>;
     front(): T | undefined;
     has(element: T): boolean;
     popBack(): T | undefined;
@@ -149,14 +145,13 @@ export class LinkedList<T> implements Iterable<T> {
 // @public
 export class RedBlackTree<K, V> implements AbstractMap<K, V> {
     [Symbol.iterator](): IterableIterator<[K, V]>;
-    constructor();
-    constructor(iterable: Iterable<[K, V]>);
     clear(): void;
     delete(key: K): boolean;
     deleteMax(): boolean;
     deleteMin(): boolean;
     entries(): IterableIterator<[K, V]>;
     forEach(callback: (value: V, key: K, map: RedBlackTree<K, V>) => void, thisArg?: any): void;
+    static from<K, V>(iterable: Iterable<[K, V]>): RedBlackTree<K, V>;
     get(key: K): V | undefined;
     has(key: K): boolean;
     keys(): IterableIterator<K>;

@@ -110,7 +110,7 @@ describe("hash map", () => {
       .fill(0)
       .map((_, i) => [i, i]);
     const map = HashMap.from(data);
-    const iterator = map[Symbol.iterator]();
+    const iterator = map.entries();
     const sorted = [...iterator].sort((a, b) => {
       return a[0] - b[0];
     });
@@ -129,7 +129,7 @@ describe("hash map", () => {
       .map((_, i) => [i, i]);
     const out = [...data].sort((a, b) => a[0] - b[0]);
     const map = HashMap.from<number, number>(data);
-    const iterator = map[Symbol.iterator]();
+    const iterator = map.entries();
     const sorted = [...iterator].sort((a, b) => {
       return a[0] - b[0];
     });
@@ -216,6 +216,6 @@ describe("hash map", () => {
       .fill(0)
       .map((_, i) => [i, i]);
 
-    HashMap.from(data[Symbol.iterator]());
+    HashMap.from(data.entries());
   });
 });

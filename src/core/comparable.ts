@@ -1,4 +1,4 @@
-import { equality, Equatable } from "./equatable";
+import { Equatable } from "./equatable";
 
 // Copied from
 // https://github.com/apple/swift/blob/7123d2614b5f222d03b3762cb110d27a9dd98e24/stdlib/public/core/Comparable.swift
@@ -16,7 +16,7 @@ export interface Comparable extends Equatable {
    *
    * @param rhs - Another value to compare.
    */
-  lessThan(rhs: Comparable): boolean;
+  lessThan(rhs: this): boolean;
 }
 
 /**
@@ -52,7 +52,7 @@ export function lessThan<T>(lhs: T, rhs: T): boolean {
  * @param rhs - Another value to compare.
  */
 export function lessThanOrEqual<T>(lhs: T, rhs: T): boolean {
-  return lessThan(lhs, rhs) || equality(lhs, rhs);
+  return !lessThan(rhs, lhs);
 }
 
 /**
@@ -78,5 +78,5 @@ export function greaterThanOrEqual<T>(lhs: T, rhs: T): boolean {
  * @param rhs - Another value to compare.
  */
 export function greaterThan<T>(lhs: T, rhs: T): boolean {
-  return !lessThanOrEqual(lhs, rhs);
+  return lessThan(rhs, lhs);
 }

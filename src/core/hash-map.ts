@@ -32,11 +32,11 @@ export class HashMap<K, V> implements AbstractMap<K, V> {
    */
   constructor(initialCapacity = 11, loadFactor = 0.75) {
     if (initialCapacity < 0) {
-      throw new Error(`Illegal Capacity: ${initialCapacity}`);
+      throw new RangeError(`Illegal capacity: ${initialCapacity}`);
     }
 
     if (loadFactor <= 0 || Number.isNaN(loadFactor)) {
-      throw new Error(`Illegal Load: ${loadFactor}`);
+      throw new RangeError(`Illegal load: ${loadFactor}`);
     }
 
     if (initialCapacity === 0) {
@@ -69,7 +69,7 @@ export class HashMap<K, V> implements AbstractMap<K, V> {
    * `[[ 1, 'one' ],[ 2, 'two' ]]`.) Each key-value pair is added to the new
    * hash map.
    */
-  static from<K, V>(iterable: Iterable<[K, V]> = []): HashMap<K, V> {
+  static from<K, V>(iterable: Iterable<[K, V]>): HashMap<K, V> {
     let size: number;
     const arrayLike = iterable as unknown as ArrayLike<[K, V]>;
 
@@ -104,7 +104,7 @@ export class HashMap<K, V> implements AbstractMap<K, V> {
    */
   entries(): IterableIterator<[K, V]> {
     const table = this.#table;
-    let index = -1;
+    let index = 0;
     let listIterator: IterableIterator<Entry<K, unknown>> | undefined;
 
     return {
@@ -116,14 +116,12 @@ export class HashMap<K, V> implements AbstractMap<K, V> {
 
         while (index < table.length) {
           if (listIterator === undefined) {
-            index += 1;
-
             const list = table[index];
 
-            if (list === undefined) {
-              listIterator = undefined;
+            if (list === undefined || list.size === 0) {
+              index += 1;
             } else {
-              listIterator = list[Symbol.iterator]();
+              listIterator = list.elements();
             }
 
             continue;
@@ -133,6 +131,7 @@ export class HashMap<K, V> implements AbstractMap<K, V> {
 
           if (next.done) {
             listIterator = undefined;
+            index += 1;
           } else {
             const { key, value } = next.value;
 
@@ -275,6 +274,12 @@ export class HashMap<K, V> implements AbstractMap<K, V> {
    * @param value - The value of the element to add to the hash map.
    */
   set(key: K, value: V): this {
+    // Make sure the value is not undefined.
+    if (value === undefined) {
+      throw new TypeError(`Illegal value: undefined`);
+    }
+
+    // Makes sure the key is not already in the hash map.
     const table = this.#table;
     const hashValue = hash(key);
     const index = (hashValue & 0x7fff_ffff) % table.length;
@@ -328,12 +333,7 @@ export class HashMap<K, V> implements AbstractMap<K, V> {
     const size = table.length;
 
     for (let i = 0; i < size; i++) {
-      const list = table[i];
-
-      if (list !== undefined) {
-        list.clear();
-        table[i] = undefined;
-      }
+      table[i] = undefined;
     }
 
     this.#size = 0;
@@ -343,12 +343,15 @@ export class HashMap<K, V> implements AbstractMap<K, V> {
     let table = this.#table;
 
     if (this.#size >= this.#threshold) {
+      // Rehash the table if the threshold is exceeded.
       this.#rehash();
 
       table = this.#table;
       index = (hashValue & 0x7fff_ffff) % table.length;
     }
 
+    // Creates the new entry.
+    const entry = new Entry(key, value);
     let list = table[index];
 
     if (list === undefined) {
@@ -356,7 +359,7 @@ export class HashMap<K, V> implements AbstractMap<K, V> {
       table[index] = list;
     }
 
-    list.pushBack(new Entry(key, value));
+    list.pushBack(entry);
     this.#size += 1;
   }
 
@@ -367,6 +370,7 @@ export class HashMap<K, V> implements AbstractMap<K, V> {
 
     if (newCapacity - MAX_ARRAY_SIZE > 0) {
       if (oldCapacity === MAX_ARRAY_SIZE) {
+        // Keep running with MAX_ARRAY_SIZE buckets.
         return;
       }
 
@@ -387,7 +391,8 @@ export class HashMap<K, V> implements AbstractMap<K, V> {
 
       if (oldList !== undefined) {
         for (const entry of oldList) {
-          const index = (hash(entry.key) & 0x7fff_ffff) % newCapacity;
+          const hashValue = hash(entry.key);
+          const index = (hashValue & 0x7fff_ffff) % newCapacity;
           let list = newTable[index];
 
           if (list === undefined) {

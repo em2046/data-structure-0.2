@@ -9,7 +9,7 @@ Creates a new, shallow-copied hash set instance from an iterable object.
 <b>Signature:</b>
 
 ```typescript
-static from<E>(iterable?: Iterable<E>): HashSet<E>;
+static from<E>(iterable: Iterable<E>): HashSet<E>;
 ```
 
 ## Parameters

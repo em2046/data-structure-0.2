@@ -116,9 +116,11 @@ export class RedBlackTree<K, V> implements AbstractMap<K, V> {
   #size = 0;
 
   /**
-   * Creates a new red black tree.
+   * Returns the number of elements in a red black tree.
    */
-  constructor();
+  get size(): number {
+    return this.#size;
+  }
 
   /**
    * Creates a new, shallow-copied red black tree instance from an iterable
@@ -129,19 +131,14 @@ export class RedBlackTree<K, V> implements AbstractMap<K, V> {
    * `[[ 1, 'one' ],[ 2, 'two' ]]`.) Each key-value pair is added to the new
    * red black tree.
    */
-  constructor(iterable: Iterable<[K, V]>);
+  static from<K, V>(iterable: Iterable<[K, V]>): RedBlackTree<K, V> {
+    const map = new RedBlackTree<K, V>();
 
-  constructor(iterable: Iterable<[K, V]> = []) {
     for (const [key, value] of iterable) {
-      this.set(key, value);
+      map.set(key, value);
     }
-  }
 
-  /**
-   * Returns the number of elements in a red black tree.
-   */
-  get size(): number {
-    return this.#size;
+    return map;
   }
 
   /**
@@ -307,6 +304,11 @@ export class RedBlackTree<K, V> implements AbstractMap<K, V> {
    * @param value - The value of the element to add to the red black tree.
    */
   set(key: K, value: V): this {
+    // Make sure the value is not undefined.
+    if (value === undefined) {
+      throw new TypeError(`Illegal value: undefined`);
+    }
+
     this.#root = this.#set(this.#root, key, value);
     this.#root.color = Color.Black;
 
@@ -323,6 +325,7 @@ export class RedBlackTree<K, V> implements AbstractMap<K, V> {
 
     const size = this.#size;
 
+    // If both children of root are black, set root to red.
     if (!isRed(this.#root.left) && !isRed(this.#root.right)) {
       this.#root.color = Color.Red;
     }
@@ -346,6 +349,7 @@ export class RedBlackTree<K, V> implements AbstractMap<K, V> {
 
     const size = this.#size;
 
+    // If both children of root are black, set root to red.
     if (!isRed(this.#root.left) && !isRed(this.#root.right)) {
       this.#root.color = Color.Red;
     }
@@ -371,6 +375,7 @@ export class RedBlackTree<K, V> implements AbstractMap<K, V> {
 
     const size = this.#size;
 
+    // If both children of root are black, set root to red.
     if (!isRed(this.#root.left) && !isRed(this.#root.right)) {
       this.#root.color = Color.Red;
     }
@@ -479,6 +484,7 @@ export class RedBlackTree<K, V> implements AbstractMap<K, V> {
       node.right = this.#set(node.right, key, value);
     }
 
+    // Fix-up any right-leaning links.
     return balance(node);
   }
 

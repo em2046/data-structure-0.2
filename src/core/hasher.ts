@@ -12,6 +12,8 @@ function hashPrimitive(value: unknown): number {
       return hashBigInt(value);
     case "number":
       return hashNumber(value);
+    case "symbol":
+      return hashString(String(value.description));
     default:
       return hashString(String(value));
   }

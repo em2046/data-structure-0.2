@@ -9,14 +9,14 @@ Returns a Boolean value indicating whether the value of `this` is less than that
 <b>Signature:</b>
 
 ```typescript
-lessThan(rhs: Comparable): boolean;
+lessThan(rhs: this): boolean;
 ```
 
 ## Parameters
 
 |  Parameter | Type | Description |
 |  --- | --- | --- |
-|  rhs | [Comparable](./calcium.comparable.md) | Another value to compare. |
+|  rhs | this | Another value to compare. |
 
 <b>Returns:</b>
 
