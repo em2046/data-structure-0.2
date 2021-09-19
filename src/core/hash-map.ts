@@ -274,6 +274,12 @@ export class HashMap<K, V> implements AbstractMap<K, V> {
    * @param value - The value of the element to add to the hash map.
    */
   set(key: K, value: V): this {
+    // Make sure the value is not undefined.
+    if (value === undefined) {
+      throw new TypeError(`Illegal value: undefined`);
+    }
+
+    // Makes sure the key is not already in the hash map.
     const table = this.#table;
     const hashValue = hash(key);
     const index = (hashValue & 0x7fff_ffff) % table.length;
@@ -337,12 +343,15 @@ export class HashMap<K, V> implements AbstractMap<K, V> {
     let table = this.#table;
 
     if (this.#size >= this.#threshold) {
+      // Rehash the table if the threshold is exceeded.
       this.#rehash();
 
       table = this.#table;
       index = (hashValue & 0x7fff_ffff) % table.length;
     }
 
+    // Creates the new entry.
+    const entry = new Entry(key, value);
     let list = table[index];
 
     if (list === undefined) {
@@ -350,7 +359,7 @@ export class HashMap<K, V> implements AbstractMap<K, V> {
       table[index] = list;
     }
 
-    list.pushBack(new Entry(key, value));
+    list.pushBack(entry);
     this.#size += 1;
   }
 
@@ -361,6 +370,7 @@ export class HashMap<K, V> implements AbstractMap<K, V> {
 
     if (newCapacity - MAX_ARRAY_SIZE > 0) {
       if (oldCapacity === MAX_ARRAY_SIZE) {
+        // Keep running with MAX_ARRAY_SIZE buckets.
         return;
       }
 
@@ -381,7 +391,8 @@ export class HashMap<K, V> implements AbstractMap<K, V> {
 
       if (oldList !== undefined) {
         for (const entry of oldList) {
-          const index = (hash(entry.key) & 0x7fff_ffff) % newCapacity;
+          const hashValue = hash(entry.key);
+          const index = (hashValue & 0x7fff_ffff) % newCapacity;
           let list = newTable[index];
 
           if (list === undefined) {
