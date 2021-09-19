@@ -127,7 +127,7 @@ describe("red black tree", () => {
       .fill(0)
       .map((_, i) => [i, i]);
     const map = RedBlackTree.from<number, number>(data);
-    const iterator = map[Symbol.iterator]();
+    const iterator = map.entries();
 
     for (let i = 0; i < size; i++) {
       expect(iterator.next().value).toStrictEqual([i, i]);
@@ -143,7 +143,7 @@ describe("red black tree", () => {
       .map((_, i) => [i, i]);
     const out = [...data].sort((a, b) => a[0] - b[0]);
     const map = RedBlackTree.from<number, number>(data);
-    const iterator = map[Symbol.iterator]();
+    const iterator = map.entries();
 
     expect([...iterator]).toStrictEqual(out);
   });
