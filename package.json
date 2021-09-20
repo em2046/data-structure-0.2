@@ -1,8 +1,13 @@
 {
-  "name": "calcium",
+  "name": "@jiangshengdev/calcium",
   "version": "1.0.0",
-  "main": "./lib/index.js",
-  "typings": "./lib/index.d.ts",
+  "description": "Data Structures in TypeScript.",
+  "main": "dist/calcium.cjs.js",
+  "module": "dist/calcium.esm.js",
+  "types": "dist/calcium.d.ts",
+  "files": [
+    "dist"
+  ],
   "repository": "https://github.com/jiangshengdev/calcium.git",
   "author": "Jiang Sheng <jiangshengdev@outlook.com>",
   "license": "MIT",
