@@ -29,6 +29,7 @@ describe("comparable", () => {
   });
 
   test("user defined equality", () => {
+    // Our type.
     class SketchyNum implements Equatable {
       num: number;
 
@@ -36,11 +37,13 @@ describe("comparable", () => {
         this.num = num;
       }
 
+      // Our custom eq allows numbers which are near each other to be equal! :D
       equality(rhs: SketchyNum): boolean {
         return Math.abs(this.num - rhs.num) < 5;
       }
     }
 
+    // Now these binary operators will work when applied!
     expect(equality(new SketchyNum(37), new SketchyNum(34))).toBe(true);
     expect(inequality(new SketchyNum(25), new SketchyNum(57))).toBe(true);
   });
