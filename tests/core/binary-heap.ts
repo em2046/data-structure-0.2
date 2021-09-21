@@ -34,7 +34,7 @@ describe("binary heap", () => {
     expect(sorted).toStrictEqual(out);
   });
 
-  test("symbol iterator next", () => {
+  test("elements iterator next", () => {
     const data = [2, 4, 6, 2, 1, 8, 10, 3, 5, 7, 0, 9, 1];
     const out = [0, 1, 1, 2, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     const heap = BinaryHeap.from(data);
@@ -47,7 +47,7 @@ describe("binary heap", () => {
     expect(iterator.next().done).toBe(true);
   });
 
-  test("symbol iterator collect", () => {
+  test("elements iterator collect", () => {
     const data = [2, 4, 6, 2, 1, 8, 10, 3, 5, 7, 0, 9, 1];
     const out = [0, 1, 1, 2, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     const heap = BinaryHeap.from(data);
@@ -95,44 +95,48 @@ describe("binary heap", () => {
   });
 
   test("push unique", () => {
-    class Box<T> implements Comparable {
+    class ReverseBox<T> implements Comparable {
       value: T;
 
       constructor(value: T) {
         this.value = value;
       }
 
-      equality(rhs: Box<T>): boolean {
+      equality(rhs: ReverseBox<T>): boolean {
         return rhs.value === this.value;
       }
 
-      lessThan(rhs: Box<T>): boolean {
+      lessThan(rhs: ReverseBox<T>): boolean {
         return rhs.value < this.value;
       }
     }
 
-    const heap = BinaryHeap.from([new Box(2), new Box(4), new Box(9)]);
+    const heap = BinaryHeap.from([
+      new ReverseBox(2),
+      new ReverseBox(4),
+      new ReverseBox(9),
+    ]);
 
     expect(heap.size).toBe(3);
     expect(heap.peek()?.value).toBe(9);
 
-    heap.push(new Box(11));
+    heap.push(new ReverseBox(11));
     expect(heap.size).toBe(4);
     expect(heap.peek()?.value).toBe(11);
 
-    heap.push(new Box(5));
+    heap.push(new ReverseBox(5));
     expect(heap.size).toBe(5);
     expect(heap.peek()?.value).toBe(11);
 
-    heap.push(new Box(27));
+    heap.push(new ReverseBox(27));
     expect(heap.size).toBe(6);
     expect(heap.peek()?.value).toBe(27);
 
-    heap.push(new Box(3));
+    heap.push(new ReverseBox(3));
     expect(heap.size).toBe(7);
     expect(heap.peek()?.value).toBe(27);
 
-    heap.push(new Box(103));
+    heap.push(new ReverseBox(103));
     expect(heap.size).toBe(8);
     expect(heap.peek()?.value).toBe(103);
   });
@@ -191,5 +195,7 @@ describe("binary heap", () => {
     heap.clear();
 
     expect(heap.size).toBe(0);
+    expect(heap.peek()).toBe(undefined);
+    expect(heap.pop()).toBe(undefined);
   });
 });
