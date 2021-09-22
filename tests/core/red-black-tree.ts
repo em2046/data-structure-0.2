@@ -121,7 +121,7 @@ describe("red black tree", () => {
     expect([...map.values()].length).toBe(0);
   });
 
-  test("symbol iterator next", () => {
+  test("entries iterator next", () => {
     const size = VITE ? 200 : 10_000;
     const data: [number, number][] = new Array(size)
       .fill(0)
@@ -136,7 +136,7 @@ describe("red black tree", () => {
     expect(iterator.next().done).toBe(true);
   });
 
-  test("symbol iterator collect", () => {
+  test("entries iterator collect", () => {
     const size = VITE ? 200 : 10_000;
     const data: [number, number][] = new Array(size)
       .fill(0)
