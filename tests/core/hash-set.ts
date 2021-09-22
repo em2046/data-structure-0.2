@@ -38,4 +38,24 @@ describe("hash set", () => {
       set.has(x);
     }
   });
+
+  test("for each", () => {
+    const data = [2, 4, 6, 2, 1, 8, 10, 3, 5, 7, 0, 9, 1];
+    const set = HashSet.from(data);
+
+    set.forEach((element) => {
+      expect(data.includes(element)).toBe(true);
+    });
+  });
+
+  test("delete", () => {
+    const set = new HashSet<number>();
+
+    expect(set.delete(1)).toBe(false);
+
+    set.add(1);
+
+    expect(set.delete(1)).toBe(true);
+    expect(set.delete(1)).toBe(false);
+  });
 });
