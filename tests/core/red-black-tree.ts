@@ -232,10 +232,10 @@ describe("red black tree", () => {
       [2, "b"],
       [3, "c"],
     ];
-    const set = RedBlackTree.from(xs);
+    const map = RedBlackTree.from(xs);
 
     for (const x of xs) {
-      expect(set.has(x[0])).toBe(true);
+      expect(map.has(x[0])).toBe(true);
     }
   });
 

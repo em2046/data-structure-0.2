@@ -1,5 +1,6 @@
 import { LinkedList } from "../../src";
 import { Entry } from "../../src/core/entry";
+import { assert } from "../../src/shared";
 import { MIN_INSERTS_HEIGHT_2, VITE } from "../config";
 
 // Copied from
@@ -118,5 +119,36 @@ describe("entry", () => {
     expect([...map.elements()].length).toBe(0);
 
     expect(map.delete(new Entry(1, PRESENT))).toBe(false);
+  });
+
+  test("delete back small", () => {
+    const map = new LinkedList<Entry<number, unknown>>();
+
+    expect(map.delete(new Entry(1, PRESENT))).toBe(false);
+
+    expect(map.size).toBe(0);
+
+    map.add(new Entry(1, 1));
+
+    {
+      const back = map.back();
+
+      assert(back !== undefined);
+      expect(map.delete(back)).toBe(true);
+
+      expect(map.size).toBe(0);
+    }
+
+    map.add(new Entry(1, 2));
+    map.add(new Entry(2, 4));
+
+    {
+      const back = map.back();
+
+      assert(back !== undefined);
+      expect(map.delete(back)).toBe(true);
+      expect(map.size).toBe(1);
+      expect(map.has(new Entry(1, PRESENT))).toBe(true);
+    }
   });
 });
