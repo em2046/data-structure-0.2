@@ -1,7 +1,7 @@
 import { LinkedList } from "../../src";
 import { Entry } from "../../src/core/entry";
-import { MIN_INSERTS_HEIGHT_2, VITE } from "../config";
 import { assert } from "../../src/shared";
+import { MIN_INSERTS_HEIGHT_2, VITE } from "../config";
 
 // Copied from
 // https://github.com/rust-lang/rust/blob/fa2692990c05652c7823c8d2afae501a00a69050/library/alloc/src/collections/btree/map/tests.rs
@@ -13,6 +13,7 @@ describe("entry", () => {
     const map = new LinkedList<Entry<number, unknown>>();
     let size = VITE ? MIN_INSERTS_HEIGHT_2 : 10_000;
 
+    // Round up to even number.
     size = size + (size % 2);
 
     expect(map.size).toBe(0);
@@ -65,10 +66,12 @@ describe("entry", () => {
     const map = new LinkedList<Entry<number, unknown>>();
 
     expect(map.delete(new Entry(1, PRESENT))).toBe(false);
+
     expect(map.size).toBe(0);
     expect(map.has(new Entry(1, PRESENT))).toBe(false);
     expect(map.front()).toBe(undefined);
     expect(map.back()).toBe(undefined);
+    expect([...map.elements()].length).toBe(0);
 
     map.add(new Entry(1, 1));
 
@@ -76,6 +79,7 @@ describe("entry", () => {
     expect(map.has(new Entry(1, PRESENT))).toBe(true);
     expect(map.front()).toStrictEqual(new Entry(1, 1));
     expect(map.back()).toStrictEqual(new Entry(1, 1));
+    expect([...map.elements()]).toStrictEqual([new Entry(1, 1)]);
 
     map.add(new Entry(1, 2));
 
@@ -83,6 +87,7 @@ describe("entry", () => {
     expect(map.has(new Entry(1, PRESENT))).toBe(true);
     expect(map.front()).toStrictEqual(new Entry(1, 2));
     expect(map.back()).toStrictEqual(new Entry(1, 2));
+    expect([...map.elements()]).toStrictEqual([new Entry(1, 2)]);
 
     map.add(new Entry(2, 4));
 
@@ -90,6 +95,10 @@ describe("entry", () => {
     expect(map.has(new Entry(2, PRESENT))).toBe(true);
     expect(map.front()).toStrictEqual(new Entry(1, 2));
     expect(map.back()).toStrictEqual(new Entry(2, 4));
+    expect([...map.elements()]).toStrictEqual([
+      new Entry(1, 2),
+      new Entry(2, 4),
+    ]);
 
     expect(map.delete(new Entry(1, PRESENT))).toBe(true);
 
@@ -98,6 +107,7 @@ describe("entry", () => {
     expect(map.has(new Entry(2, PRESENT))).toBe(true);
     expect(map.front()).toStrictEqual(new Entry(2, 4));
     expect(map.back()).toStrictEqual(new Entry(2, 4));
+    expect([...map.elements()]).toStrictEqual([new Entry(2, 4)]);
 
     expect(map.delete(new Entry(2, PRESENT))).toBe(true);
 
@@ -106,6 +116,9 @@ describe("entry", () => {
     expect(map.has(new Entry(2, PRESENT))).toBe(false);
     expect(map.front()).toBe(undefined);
     expect(map.back()).toBe(undefined);
+    expect([...map.elements()].length).toBe(0);
+
+    expect(map.delete(new Entry(1, PRESENT))).toBe(false);
   });
 
   test("delete back small", () => {

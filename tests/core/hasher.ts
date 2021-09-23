@@ -13,6 +13,11 @@ describe("hasher", () => {
     }
   });
 
+  test("symbol", () => {
+    testInt32(hash(Symbol()));
+    testInt32(hash(Symbol("foo")));
+  });
+
   test("const", () => {
     testInt32(hash(Number.EPSILON));
     testInt32(hash(Number.MAX_SAFE_INTEGER));
@@ -47,10 +52,10 @@ describe("hasher", () => {
       testInt32(hash(char));
     }
 
-    const emoji = ["😃", "🧘🏻‍♂️", "🌍", "🍞", "🚗", "📞", "🎉", "❤️", "🍆", "🏁"];
+    const emojis = ["😃", "🧘🏻‍♂️", "🌍", "🍞", "🚗", "📞", "🎉", "❤️", "🍆", "🏁"];
 
-    for (const char of emoji) {
-      testInt32(hash(char));
+    for (const emoji of emojis) {
+      testInt32(hash(emoji));
     }
   });
 });

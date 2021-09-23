@@ -14,6 +14,7 @@ describe("hash map", () => {
     const map = new HashMap<number, number>();
     let size = VITE ? MIN_INSERTS_HEIGHT_2 : 10_000;
 
+    // Round up to even number.
     size = size + (size % 2);
 
     expect(map.size).toBe(0);
@@ -61,6 +62,7 @@ describe("hash map", () => {
     const map = new HashMap<number, number>();
 
     expect(map.delete(1)).toBe(false);
+
     expect(map.size).toBe(0);
     expect(map.get(1)).toBe(undefined);
     expect([...map.keys()].length).toBe(0);
@@ -102,39 +104,42 @@ describe("hash map", () => {
     expect(map.get(2)).toBe(undefined);
     expect([...map.keys()].length).toBe(0);
     expect([...map.values()].length).toBe(0);
+
+    expect(map.delete(1)).toBe(false);
   });
 
-  test("symbol iterator next", () => {
+  test("entries iterator next", () => {
     const size = VITE ? 200 : 10_000;
     const data: [number, number][] = new Array(size)
       .fill(0)
       .map((_, i) => [i, i]);
     const map = HashMap.from(data);
-    const iterator = map.entries();
-    const sorted = [...iterator].sort((a, b) => {
+    const entries = map.entries();
+    const sorted = [...entries].sort((a, b) => {
       return a[0] - b[0];
     });
+    const iterator = sorted.values();
 
     for (let i = 0; i < sorted.length; i++) {
-      const element = sorted[i];
+      const value = iterator.next().value;
 
-      expect(element).toStrictEqual([i, i]);
+      expect(value).toStrictEqual([i, i]);
     }
+
+    expect(iterator.next().done).toBe(true);
   });
 
-  test("symbol iterator collect", () => {
+  test("entries iterator collect", () => {
     const size = VITE ? 200 : 10_000;
     const data: [number, number][] = new Array(size)
       .fill(0)
       .map((_, i) => [i, i]);
-    const out = [...data].sort((a, b) => a[0] - b[0]);
-    const map = HashMap.from<number, number>(data);
-    const iterator = map.entries();
-    const sorted = [...iterator].sort((a, b) => {
+    const map = HashMap.from(data);
+    const sorted = [...map].sort((a, b) => {
       return a[0] - b[0];
     });
 
-    expect(sorted).toStrictEqual(out);
+    expect(sorted).toStrictEqual(data);
   });
 
   test("clear", () => {
@@ -209,6 +214,12 @@ describe("hash map", () => {
       new HashMap(undefined, 0);
     }).toThrowError();
 
+    expect(() => {
+      const map = new HashMap();
+
+      map.set(0, undefined);
+    }).toThrowError();
+
     new HashMap(0);
 
     const size = VITE ? 200 : 10_000;
@@ -216,6 +227,23 @@ describe("hash map", () => {
       .fill(0)
       .map((_, i) => [i, i]);
 
-    HashMap.from(data.entries());
+    HashMap.from(data.values());
+  });
+
+  test("for each", () => {
+    const data: [number, string][] = [
+      [1, "a"],
+      [2, "b"],
+      [3, "c"],
+    ];
+    const map = HashMap.from(data);
+
+    map.forEach((value, key) => {
+      const find = data.find((item) => {
+        return item[0] === key && item[1] === value;
+      });
+
+      expect(find).not.toBe(undefined);
+    });
   });
 });

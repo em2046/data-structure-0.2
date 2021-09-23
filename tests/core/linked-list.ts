@@ -5,6 +5,10 @@ import { VITE } from "../config";
 // https://github.com/rust-lang/rust/blob/2b4196e97736ffe75433235bf586989cdb4221c4/library/alloc/src/collections/linked_list/tests.rs
 
 describe("linked list", () => {
+  function generateTest() {
+    return LinkedList.from([0, 1, 2, 3, 4, 5, 6]);
+  }
+
   test("append empty to empty", () => {
     const m = new LinkedList<number>();
     const n = new LinkedList<number>();
@@ -142,12 +146,86 @@ describe("linked list", () => {
     expect(list.size).toBe(0);
   });
 
-  test("symbol iterator collect", () => {
+  test("elements iterator collect", () => {
     const data = [2, 4, 6, 2, 1, 8, 10, 3, 5, 7, 0, 9, 1];
     const out = [...data];
     const heap = LinkedList.from(data);
     const iterator = heap.elements();
 
     expect([...iterator]).toStrictEqual(out);
+  });
+
+  test("basic", () => {
+    class Box<T> {
+      value: T;
+
+      constructor(value: T) {
+        this.value = value;
+      }
+    }
+
+    const m = new LinkedList<Box<number>>();
+
+    expect(m.popFront()).toBe(undefined);
+    expect(m.popBack()).toBe(undefined);
+    expect(m.popFront()).toBe(undefined);
+
+    m.pushFront(new Box(1));
+
+    expect(m.popFront()).toStrictEqual(new Box(1));
+
+    m.pushBack(new Box(2));
+    m.pushBack(new Box(3));
+
+    expect(m.size).toBe(2);
+    expect(m.popFront()).toStrictEqual(new Box(2));
+    expect(m.popFront()).toStrictEqual(new Box(3));
+    expect(m.size).toBe(0);
+    expect(m.popFront()).toBe(undefined);
+
+    m.pushBack(new Box(1));
+    m.pushBack(new Box(3));
+    m.pushBack(new Box(5));
+    m.pushBack(new Box(7));
+
+    expect(m.popFront()).toStrictEqual(new Box(1));
+  });
+
+  test("iterator", () => {
+    const m = generateTest();
+
+    [...m].forEach((value, index) => {
+      expect(index).toBe(value);
+    });
+
+    const n = new LinkedList();
+
+    expect(n.elements().next().done).toBe(true);
+    n.pushFront(4);
+
+    const iterator = n.elements();
+
+    expect(iterator.next().value).toBe(4);
+    expect(iterator.next().done).toBe(true);
+  });
+
+  test("contains", () => {
+    const list = LinkedList.from([2, 3, 4]);
+
+    expect(list.has(3)).toBe(true);
+    expect(list.has(1)).toBe(false);
+
+    list.clear();
+
+    expect(list.has(3)).toBe(false);
+  });
+
+  test("for each", () => {
+    const data = [2, 4, 6, 2, 1, 8, 10, 3, 5, 7, 0, 9, 1];
+    const list = LinkedList.from(data);
+
+    list.forEach((element) => {
+      expect(data.includes(element)).toBe(true);
+    });
   });
 });
