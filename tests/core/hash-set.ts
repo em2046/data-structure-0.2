@@ -35,7 +35,7 @@ describe("hash set", () => {
     const set = HashSet.from(xs);
 
     for (const x of xs) {
-      set.has(x);
+      expect(set.has(x)).toBe(true);
     }
   });
 

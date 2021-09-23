@@ -14,6 +14,7 @@ describe("hash map", () => {
     const map = new HashMap<number, number>();
     let size = VITE ? MIN_INSERTS_HEIGHT_2 : 10_000;
 
+    // Round up to even number.
     size = size + (size % 2);
 
     expect(map.size).toBe(0);
@@ -61,6 +62,7 @@ describe("hash map", () => {
     const map = new HashMap<number, number>();
 
     expect(map.delete(1)).toBe(false);
+
     expect(map.size).toBe(0);
     expect(map.get(1)).toBe(undefined);
     expect([...map.keys()].length).toBe(0);
@@ -102,6 +104,8 @@ describe("hash map", () => {
     expect(map.get(2)).toBe(undefined);
     expect([...map.keys()].length).toBe(0);
     expect([...map.values()].length).toBe(0);
+
+    expect(map.delete(1)).toBe(false);
   });
 
   test("entries iterator next", () => {

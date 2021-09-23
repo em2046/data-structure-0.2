@@ -142,7 +142,7 @@ describe("linked list", () => {
     expect(list.size).toBe(0);
   });
 
-  test("symbol iterator collect", () => {
+  test("elements iterator collect", () => {
     const data = [2, 4, 6, 2, 1, 8, 10, 3, 5, 7, 0, 9, 1];
     const out = [...data];
     const heap = LinkedList.from(data);

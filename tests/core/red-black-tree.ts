@@ -14,6 +14,7 @@ describe("red black tree", () => {
     const map = new RedBlackTree<number, number>();
     let size = VITE ? MIN_INSERTS_HEIGHT_2 : 10_000;
 
+    // Round up to even number.
     size = size + (size % 2);
 
     expect(map.size).toBe(0);
@@ -66,6 +67,7 @@ describe("red black tree", () => {
     const map = new RedBlackTree<number, number>();
 
     expect(map.delete(1)).toBe(false);
+
     expect(map.size).toBe(0);
     expect(map.get(1)).toBe(undefined);
     expect(map.min()).toBe(null);
@@ -119,6 +121,8 @@ describe("red black tree", () => {
     expect(map.max()).toBe(null);
     expect([...map.keys()].length).toBe(0);
     expect([...map.values()].length).toBe(0);
+
+    expect(map.delete(1)).toBe(false);
   });
 
   test("entries iterator next", () => {
@@ -137,6 +141,17 @@ describe("red black tree", () => {
   });
 
   test("entries iterator collect", () => {
+    const size = VITE ? 200 : 10_000;
+    const data: [number, number][] = new Array(size)
+      .fill(0)
+      .map((_, i) => [i, i]);
+    const out = [...data].sort((a, b) => a[0] - b[0]);
+    const map = RedBlackTree.from<number, number>(data);
+
+    expect([...map]).toStrictEqual(out);
+  });
+
+  test("iterable iterator", () => {
     const size = VITE ? 200 : 10_000;
     const data: [number, number][] = new Array(size)
       .fill(0)
@@ -208,6 +223,19 @@ describe("red black tree", () => {
       i = (i + offset) & 0xff;
       map.set(i, i);
       map.delete(0xff - i);
+    }
+  });
+
+  test("from iterator", () => {
+    const xs: [number, string][] = [
+      [1, "a"],
+      [2, "b"],
+      [3, "c"],
+    ];
+    const set = RedBlackTree.from(xs);
+
+    for (const x of xs) {
+      expect(set.has(x[0])).toBe(true);
     }
   });
 
@@ -319,5 +347,30 @@ describe("red black tree", () => {
     for (let i = 0; i < size - 1; i++) {
       expect(map.next(i)).toStrictEqual([i + 1, (i + 1) * 10]);
     }
+  });
+
+  test("init", () => {
+    expect(() => {
+      const map = new RedBlackTree();
+
+      map.set(0, undefined);
+    }).toThrowError();
+  });
+
+  test("for each", () => {
+    const data: [number, string][] = [
+      [1, "a"],
+      [2, "b"],
+      [3, "c"],
+    ];
+    const map = RedBlackTree.from(data);
+
+    map.forEach((value, key) => {
+      const find = data.find((item) => {
+        return item[0] === key && item[1] === value;
+      });
+
+      expect(find).not.toBe(undefined);
+    });
   });
 });

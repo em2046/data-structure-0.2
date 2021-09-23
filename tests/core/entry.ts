@@ -65,6 +65,7 @@ describe("entry", () => {
     const map = new LinkedList<Entry<number, unknown>>();
 
     expect(map.delete(new Entry(1, PRESENT))).toBe(false);
+
     expect(map.size).toBe(0);
     expect(map.has(new Entry(1, PRESENT))).toBe(false);
     expect(map.front()).toBe(undefined);
@@ -115,6 +116,7 @@ describe("entry", () => {
     expect(map.front()).toBe(undefined);
     expect(map.back()).toBe(undefined);
     expect([...map.elements()].length).toBe(0);
+
     expect(map.delete(new Entry(1, PRESENT))).toBe(false);
   });
 });
