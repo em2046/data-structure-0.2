@@ -3,8 +3,21 @@ import { Equatable } from "../core";
 // Copied from
 // https://github.com/apple/swift/blob/7123d2614b5f222d03b3762cb110d27a9dd98e24/stdlib/public/Darwin/CoreGraphics/CoreGraphics.swift
 
+/**
+ * @public
+ *
+ * In classical Euclidean geometry, a point is a primitive notion that models
+ * an exact location in the space, and has no length, width, or thickness.
+ */
 export class Point implements Equatable {
+  /**
+   * Represents the horizontal.
+   */
   readonly x: number;
+
+  /**
+   * Represents the vertical.
+   */
   readonly y: number;
 
   constructor();
@@ -16,6 +29,11 @@ export class Point implements Equatable {
     this.y = y;
   }
 
+  /**
+   * Returns a Boolean value indicating whether two point are equal.
+   *
+   * @param rhs - Another point to compare.
+   */
   equality(rhs: Point): boolean {
     return this.x === rhs.x && this.y === rhs.y;
   }
