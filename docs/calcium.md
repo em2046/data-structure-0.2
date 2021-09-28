@@ -14,7 +14,9 @@ Data Structures in TypeScript.
 |  [Hasher](./calcium.hasher.md) | The universal hash function used by <code>Set</code> and <code>Map</code>. |
 |  [HashMap](./calcium.hashmap.md) | The hash map holds key-value pairs. Any value (both objects and primitive values) may be used as either a key or a value. |
 |  [HashSet](./calcium.hashset.md) | The hash set lets you store unique values of any type, whether primitive values or object references. |
+|  [LineSegment](./calcium.linesegment.md) | In geometry, a line segment is a part of a line that is bounded by two distinct end points, and contains every point on the line that is between its endpoints. |
 |  [LinkedList](./calcium.linkedlist.md) | A doubly-linked list with owned nodes. |
+|  [Point](./calcium.point.md) | In classical Euclidean geometry, a point is a primitive notion that models an exact location in the space, and has no length, width, or thickness. |
 |  [RedBlackTree](./calcium.redblacktree.md) | The red black tree holds key-value pairs. |
 
 ## Functions
@@ -28,6 +30,7 @@ Data Structures in TypeScript.
 |  [inequality(lhs, rhs)](./calcium.inequality.md) | Returns a Boolean value indicating whether two values are not equal. |
 |  [lessThan(lhs, rhs)](./calcium.lessthan.md) | Returns a Boolean value indicating whether the value of the first argument is less than that of the second argument. |
 |  [lessThanOrEqual(lhs, rhs)](./calcium.lessthanorequal.md) | Returns a Boolean value indicating whether the value of the first argument is less than or equal to that of the second argument. |
+|  [lineLineIntersection(lhs, rhs)](./calcium.linelineintersection.md) | In Euclidean geometry, the intersection of a line and a line can be the empty set, a point, or a line. |
 
 ## Interfaces
 

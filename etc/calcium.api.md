@@ -123,6 +123,16 @@ export function lessThan<T>(lhs: T, rhs: T): boolean;
 export function lessThanOrEqual<T>(lhs: T, rhs: T): boolean;
 
 // @public
+export function lineLineIntersection(lhs: LineSegment, rhs: LineSegment): Point;
+
+// @public
+export class LineSegment {
+    constructor(start: Point, end: Point);
+    readonly end: Point;
+    readonly start: Point;
+}
+
+// @public
 export class LinkedList<T> implements Iterable<T> {
     [Symbol.iterator](): IterableIterator<T>;
     add(element: T): this;
@@ -140,6 +150,15 @@ export class LinkedList<T> implements Iterable<T> {
     pushBack(element: T): this;
     pushFront(element: T): this;
     get size(): number;
+}
+
+// @public
+export class Point implements Equatable {
+    constructor();
+    constructor(x: number, y: number);
+    equality(rhs: Point): boolean;
+    readonly x: number;
+    readonly y: number;
 }
 
 // @public
