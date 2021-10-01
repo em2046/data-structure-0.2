@@ -1,7 +1,7 @@
-import { Triangle } from "./triangle";
-import { Point } from "./point";
 import { parallelogramArea } from "./area";
 import { LineSegment } from "./line-segment";
+import { Point } from "./point";
+import { Triangle } from "./triangle";
 
 export function pointInTriangle(triangle: Triangle, point: Point): boolean {
   const { a, b, c } = triangle;

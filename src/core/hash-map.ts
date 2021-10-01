@@ -1,8 +1,8 @@
-import { LinkedList } from "./linked-list";
-import { Entry } from "./entry";
-import { hash } from "./hasher";
-import { equality } from "./equatable";
 import { AbstractMap } from "./abstract-map";
+import { Entry } from "./entry";
+import { equality } from "./equatable";
+import { hash } from "./hasher";
+import { LinkedList } from "./linked-list";
 
 // Copied from
 // https://github.com/openjdk/jdk/blob/1fb798d320c708dfcbc0bb157511a2937fafb9e6/src/java.base/share/classes/java/util/Hashtable.java

@@ -1,8 +1,8 @@
-import { Color, Node } from "./red-black-node";
-import { greaterThanOrEqual, lessThan, lessThanOrEqual } from "./comparable";
-import { equality } from "./equatable";
 import { assert } from "../shared";
 import { AbstractMap } from "./abstract-map";
+import { greaterThanOrEqual, lessThan, lessThanOrEqual } from "./comparable";
+import { equality } from "./equatable";
+import { Color, Node } from "./red-black-node";
 
 // Copied from
 // https://www.cs.princeton.edu/~rs/talks/LLRB/LLRB.pdf

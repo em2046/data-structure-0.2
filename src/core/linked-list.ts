@@ -1,6 +1,6 @@
-import { Node } from "./linked-node";
-import { equality } from "./equatable";
 import { assert } from "../shared";
+import { equality } from "./equatable";
+import { Node } from "./linked-node";
 
 // Copied from
 // https://github.com/rust-lang/rust/blob/2b4196e97736ffe75433235bf586989cdb4221c4/library/alloc/src/collections/linked_list.rs
