@@ -2,7 +2,10 @@ import { determinant } from "./determinant";
 import { LineSegment } from "./line-segment";
 import { Point } from "./point";
 
-export function parallelogramArea(line: LineSegment, point: Point): number {
+export function parallelogramSignedArea(
+  line: LineSegment,
+  point: Point
+): number {
   const a = line.start;
   const b = line.end;
   const c = point;
