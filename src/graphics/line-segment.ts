@@ -1,3 +1,4 @@
+import { Equatable, Identifiable } from "../core";
 import { Point } from "./point";
 
 /**
@@ -7,7 +8,7 @@ import { Point } from "./point";
  * distinct end points, and contains every point on the line that is between
  * its endpoints.
  */
-export class LineSegment {
+export class LineSegment implements Equatable {
   /**
    * An end point.
    */
@@ -21,5 +22,25 @@ export class LineSegment {
   constructor(start: Point, end: Point) {
     this.start = start;
     this.end = end;
+  }
+
+  equality(rhs: LineSegment): boolean {
+    return this.start === rhs.start && this.end === rhs.end;
+  }
+}
+
+export class IdentifiableLineSegment
+  extends LineSegment
+  implements Identifiable
+{
+  readonly id: string;
+
+  constructor(id: string, start: Point, end: Point) {
+    super(start, end);
+    this.id = id;
+  }
+
+  equality(rhs: IdentifiableLineSegment): boolean {
+    return this.id === rhs.id;
   }
 }

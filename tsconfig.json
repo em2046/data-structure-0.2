@@ -8,7 +8,7 @@
     "sourceMap": true,
     "declarationMap": true,
     "types": ["jest"],
-    "lib": ["ESNext"],
+    "lib": ["ESNext", "DOM"],
     "outDir": "lib"
   },
   "include": ["src/**/*.ts"]
