@@ -1,4 +1,4 @@
-import { Equatable, Identifiable } from "../core";
+import { Equatable, Hashable, Hasher, Identifiable } from "../core";
 
 // Copied from
 // https://github.com/apple/swift/blob/7123d2614b5f222d03b3762cb110d27a9dd98e24/stdlib/public/Darwin/CoreGraphics/CoreGraphics.swift
@@ -39,7 +39,7 @@ export class Point implements Equatable {
   }
 }
 
-export class IdentifiablePoint extends Point implements Identifiable {
+export class IdentifiablePoint extends Point implements Identifiable, Hashable {
   readonly id: string;
 
   constructor(id: string, x: number, y: number) {
@@ -49,5 +49,9 @@ export class IdentifiablePoint extends Point implements Identifiable {
 
   equality(rhs: IdentifiablePoint): boolean {
     return this.id === rhs.id;
+  }
+
+  hash(hasher: Hasher): void {
+    hasher.combine(this.id);
   }
 }

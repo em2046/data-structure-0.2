@@ -1,4 +1,4 @@
-import { Equatable, Identifiable } from "../core";
+import { Equatable, Hashable, Hasher, Identifiable } from "../core";
 import { Point } from "./point";
 
 /**
@@ -31,7 +31,7 @@ export class LineSegment implements Equatable {
 
 export class IdentifiableLineSegment
   extends LineSegment
-  implements Identifiable
+  implements Identifiable, Hashable
 {
   readonly id: string;
 
@@ -42,5 +42,9 @@ export class IdentifiableLineSegment
 
   equality(rhs: IdentifiableLineSegment): boolean {
     return this.id === rhs.id;
+  }
+
+  hash(hasher: Hasher): void {
+    hasher.combine(this.id);
   }
 }
