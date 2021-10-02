@@ -9,7 +9,7 @@ import { Equatable, Hashable, Hasher, Identifiable } from "../core";
  * In classical Euclidean geometry, a point is a primitive notion that models
  * an exact location in the space, and has no length, width, or thickness.
  */
-export class Point implements Equatable {
+export class Point implements Equatable, Hashable {
   /**
    * Represents the horizontal.
    */
@@ -37,21 +37,18 @@ export class Point implements Equatable {
   equality(rhs: Point): boolean {
     return this.x === rhs.x && this.y === rhs.y;
   }
+
+  hash(hasher: Hasher): void {
+    hasher.combine(this.x);
+    hasher.combine(this.y);
+  }
 }
 
-export class IdentifiablePoint extends Point implements Identifiable, Hashable {
+export class IdentifiablePoint extends Point implements Identifiable {
   readonly id: string;
 
   constructor(id: string, x: number, y: number) {
     super(x, y);
     this.id = id;
-  }
-
-  equality(rhs: IdentifiablePoint): boolean {
-    return this.id === rhs.id;
-  }
-
-  hash(hasher: Hasher): void {
-    hasher.combine(this.id);
   }
 }

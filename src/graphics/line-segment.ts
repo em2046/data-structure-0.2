@@ -1,5 +1,5 @@
 import { Equatable, Hashable, Hasher, Identifiable } from "../core";
-import { Point } from "./point";
+import { IdentifiablePoint, Point } from "./point";
 
 /**
  * @public
@@ -8,43 +8,42 @@ import { Point } from "./point";
  * distinct end points, and contains every point on the line that is between
  * its endpoints.
  */
-export class LineSegment implements Equatable {
+export class LineSegment<T extends Point = Point>
+  implements Equatable, Hashable
+{
   /**
    * An end point.
    */
-  readonly start: Point;
+  readonly start: T;
 
   /**
    * Another end point.
    */
-  readonly end: Point;
+  readonly end: T;
 
-  constructor(start: Point, end: Point) {
+  constructor(start: T, end: T) {
     this.start = start;
     this.end = end;
   }
 
-  equality(rhs: LineSegment): boolean {
+  equality(rhs: LineSegment<T>): boolean {
     return this.start === rhs.start && this.end === rhs.end;
+  }
+
+  hash(hasher: Hasher): void {
+    hasher.combine(this.start);
+    hasher.combine(this.end);
   }
 }
 
 export class IdentifiableLineSegment
-  extends LineSegment
-  implements Identifiable, Hashable
+  extends LineSegment<IdentifiablePoint>
+  implements Identifiable
 {
   readonly id: string;
 
-  constructor(id: string, start: Point, end: Point) {
+  constructor(id: string, start: IdentifiablePoint, end: IdentifiablePoint) {
     super(start, end);
     this.id = id;
-  }
-
-  equality(rhs: IdentifiableLineSegment): boolean {
-    return this.id === rhs.id;
-  }
-
-  hash(hasher: Hasher): void {
-    hasher.combine(this.id);
   }
 }

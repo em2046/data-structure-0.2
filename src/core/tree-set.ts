@@ -87,6 +87,46 @@ export class TreeSet<E> implements AbstractSet<E> {
     return this.#map.has(element);
   }
 
+  min(): E | undefined {
+    const min = this.#map.min();
+
+    if (min === null) {
+      return undefined;
+    }
+
+    return min[0];
+  }
+
+  max(): E | undefined {
+    const min = this.#map.max();
+
+    if (min === null) {
+      return undefined;
+    }
+
+    return min[0];
+  }
+
+  previous(key: E): E | undefined {
+    const previous = this.#map.previous(key);
+
+    if (previous === null) {
+      return undefined;
+    }
+
+    return previous[0];
+  }
+
+  next(key: E): E | undefined {
+    const next = this.#map.next(key);
+
+    if (next === null) {
+      return undefined;
+    }
+
+    return next[0];
+  }
+
   /**
    * Appends `value` to the tree set. Returns the tree set with added value.
    *
@@ -106,6 +146,14 @@ export class TreeSet<E> implements AbstractSet<E> {
    */
   delete(element: E): boolean {
     return this.#map.delete(element);
+  }
+
+  deleteMin(): boolean {
+    return this.#map.deleteMin();
+  }
+
+  deleteMax(): boolean {
+    return this.#map.deleteMax();
   }
 
   /**
