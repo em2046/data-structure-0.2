@@ -164,7 +164,7 @@ export function findIntersections(
         const rhsSlope = slope(rhsSegment);
         const visited = visitedRecord.has(lhsIntersect);
 
-        if (visited === undefined) {
+        if (visited === false) {
           return lhsSlope > rhsSlope;
         } else {
           return lhsSlope < rhsSlope;
