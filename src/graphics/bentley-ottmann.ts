@@ -11,6 +11,9 @@ import { parallelogramSignedArea } from "./area";
 import { lineLineIntersection } from "./intersection";
 import { LineSegment } from "./line-segment";
 import { Point } from "./point";
+import { RedBlackTree } from "./red-black-tree";
+
+const EPSILON = 1e-15;
 
 enum EventType {
   Top = "TOP",
@@ -33,15 +36,24 @@ class EventPoint implements Comparable {
   }
 
   equality(rhs: EventPoint): boolean {
-    return this.point.x === rhs.point.x && this.point.y === rhs.point.y;
+    const lhsPoint = this.point;
+    const rhsPoint = rhs.point;
+
+    return (
+      Math.abs(lhsPoint.x - rhsPoint.x) < EPSILON &&
+      Math.abs(lhsPoint.y - rhsPoint.y) < EPSILON
+    );
   }
 
   lessThan(rhs: EventPoint): boolean {
-    if (this.point.y === rhs.point.y) {
-      return this.point.x < rhs.point.x;
+    const lhsPoint = this.point;
+    const rhsPoint = rhs.point;
+
+    if (Math.abs(lhsPoint.y - rhsPoint.y) < EPSILON) {
+      return rhsPoint.x - lhsPoint.x > EPSILON;
     }
 
-    return this.point.y < rhs.point.y;
+    return rhsPoint.y - lhsPoint.y > EPSILON;
   }
 }
 
@@ -116,11 +128,10 @@ export function findIntersections(
   const topPointRecord = new HashMap<Point, StateSegment[]>();
   const bottomPointRecord = new HashMap<Point, StateSegment[]>();
   const intersectionRecord = new HashMap<Point, StateSegment[][]>();
-  const status = new TreeSet<StateSegment>();
+  const status = new RedBlackTree<StateSegment>();
   const topList: Point[] = [];
   const bottomList: Point[] = [];
   const sweepLine = new SweepLine();
-  const prevOrderMap = new HashMap<StateSegment, number>();
   const visitedRecord = new HashSet<Point>();
 
   class StateSegment implements Comparable, Hashable {
@@ -131,7 +142,24 @@ export function findIntersections(
     }
 
     equality(rhs: StateSegment): boolean {
-      return equality(this.segment, rhs.segment);
+      const lhsSegment = this.segment;
+      const rhsSegment = rhs.segment;
+
+      if (equality(lhsSegment, rhsSegment)) {
+        return true;
+      }
+
+      const lhsIntersect = sweepLine.intersect(lhsSegment);
+      const rhsIntersect = sweepLine.intersect(rhsSegment);
+
+      if (Math.abs(lhsIntersect.x - rhsIntersect.x) < EPSILON) {
+        const lhsSlope = slope(lhsSegment);
+        const rhsSlope = slope(rhsSegment);
+
+        return lhsSlope === rhsSlope;
+      }
+
+      return false;
     }
 
     lessThan(rhs: StateSegment): boolean {
@@ -142,29 +170,17 @@ export function findIntersections(
         return false;
       }
 
-      // If (prevOrderMap.size) {
-      //   const lhsPrevIndex = prevOrderMap.get(this);
-      //   const rhsPrevIndex = prevOrderMap.get(rhs);
-      //
-      //   console.log("prevOrderMap", prevOrderMap, lhsPrevIndex, rhsPrevIndex);
-      //
-      //   if (
-      //     typeof lhsPrevIndex === "number" &&
-      //     typeof rhsPrevIndex === "number"
-      //   ) {
-      //     return lhsPrevIndex > rhsPrevIndex;
-      //   }
-      // }
-
       const lhsIntersect = sweepLine.intersect(lhsSegment);
       const rhsIntersect = sweepLine.intersect(rhsSegment);
 
-      if (lhsIntersect.x === rhsIntersect.x) {
+      if (Math.abs(lhsIntersect.x - rhsIntersect.x) < EPSILON) {
         const lhsSlope = slope(lhsSegment);
         const rhsSlope = slope(rhsSegment);
-        const visited = visitedRecord.has(lhsIntersect);
 
-        if (visited === false) {
+        if (
+          sweepLine.point.x - lhsIntersect.x > EPSILON &&
+          sweepLine.point.y - lhsIntersect.y > EPSILON
+        ) {
           return lhsSlope > rhsSlope;
         } else {
           return lhsSlope < rhsSlope;
@@ -227,52 +243,10 @@ export function findIntersections(
     }
   }
 
-  console.log(events);
-  console.log(topPointRecord);
-  console.log(bottomPointRecord);
-  console.log(status);
-
-  function findSegment(point: Point): StateSegment | undefined {
-    const topSegments = topPointRecord.get(point);
-
-    if (topSegments !== undefined) {
-      for (let i = 0; i < topSegments.length; i++) {
-        const topSegment = topSegments[i];
-
-        if (status.has(topSegment)) {
-          return topSegment;
-        }
-      }
-    }
-
-    const bottomSegments = bottomPointRecord.get(point);
-
-    if (bottomSegments !== undefined) {
-      for (let i = 0; i < bottomSegments.length; i++) {
-        const bottomSegment = bottomSegments[i];
-
-        if (status.has(bottomSegment)) {
-          return bottomSegment;
-        }
-      }
-    }
-
-    const intersectionSegments = intersectionRecord.get(point);
-
-    if (intersectionSegments !== undefined) {
-      for (let i = 0; i < intersectionSegments.length; i++) {
-        const intersectionSegment = intersectionSegments[i];
-
-        if (status.has(intersectionSegment[0])) {
-          return intersectionSegment[0];
-        }
-
-        if (status.has(intersectionSegment[1])) {
-          return intersectionSegment[1];
-        }
-      }
-    }
-  }
+  console.log("events", events);
+  console.log("topPointRecord", topPointRecord);
+  console.log("bottomPointRecord", bottomPointRecord);
+  console.log("status", status);
 
   function handleEventPoint(event: EventPoint) {
     const point = event.point;
@@ -280,70 +254,38 @@ export function findIntersections(
     const bottomSegments = bottomPointRecord.get(point);
     const intersectionSegments = intersectionRecord.get(point);
     const topSet = HashSet.from<StateSegment>(topSegments ?? []);
-    const preBottomSet = new HashSet<StateSegment>();
     const bottomSet = new HashSet<StateSegment>();
-    const preIntersectionSet = new HashSet<StateSegment>();
     const intersectionSet = new HashSet<StateSegment>();
-    const includes: StateSegment[] = [];
+    let siblings: [StateSegment, StateSegment] | undefined;
 
-    console.log([...status].map((s) => s.segment.id));
-
-    prevOrderMap.clear();
+    console.log("POINT", point);
+    console.log(
+      "status",
+      [...status].map((s) => s.segment.id)
+    );
+    console.log(
+      "events",
+      [...events].map((e) => e.point)
+    );
 
     sweepLine.state = SweepLineState.In;
-    sweepLine.setPosition(point);
-
-    const include = findSegment(point);
 
     if (bottomSegments) {
       bottomSegments.forEach((state) => {
-        preBottomSet.add(state);
+        bottomSet.add(state);
       });
     }
 
     if (intersectionSegments) {
       intersectionSegments.forEach((list) => {
         list.forEach((state) => {
-          preIntersectionSet.add(state);
+          intersectionSet.add(state);
         });
       });
     }
 
-    console.log(preBottomSet);
-    console.log(preIntersectionSet);
-
-    if (include) {
-      includes.push(include);
-
-      let previous = status.previous(include);
-      let next = status.next(include);
-
-      while (previous !== undefined) {
-        includes.unshift(previous);
-        previous = status.previous(previous);
-      }
-
-      while (next !== undefined) {
-        includes.push(next);
-        next = status.previous(next);
-      }
-
-      includes.forEach((state) => {
-        const segment = state.segment;
-
-        if (equality(segment.start, point)) {
-          // Do nothing.
-        } else if (equality(segment.end, point)) {
-          if (preBottomSet.has(state)) {
-            bottomSet.add(state);
-          }
-        } else {
-          if (preIntersectionSet.has(state)) {
-            intersectionSet.add(state);
-          }
-        }
-      });
-    }
+    console.log("intersectionSegments", intersectionSegments);
+    console.log("intersectionSet", intersectionSet);
 
     const overAllState = [...topSet, ...bottomSet, ...intersectionSet];
     const overAllSet: HashSet<StateSegment> =
@@ -351,11 +293,14 @@ export function findIntersections(
 
     if (overAllSet.size > 1) {
       const oldPoint = intersectionRecord.get(point);
+      const uniqueOverAllStates = [...overAllSet];
+
+      console.log("overAllSet", overAllSet, uniqueOverAllStates);
 
       if (oldPoint) {
-        oldPoint.push([...overAllSet]);
+        oldPoint.push(uniqueOverAllStates);
       } else {
-        intersectionRecord.set(point, [[...overAllSet]]);
+        intersectionRecord.set(point, [uniqueOverAllStates]);
       }
     }
 
@@ -368,21 +313,82 @@ export function findIntersections(
       ...intersectionSet,
     ]);
 
+    if (topAndIntersectionSet.size === 0) {
+      const bottomList = [...bottomSet];
+
+      console.log(bottomList);
+
+      let left;
+      let right;
+
+      for (let i = 0; i < bottomList.length; i++) {
+        const state = bottomList[i];
+
+        if (status.has(state)) {
+          console.log("STATE", state);
+
+          let prev = status.previous(state);
+
+          left = prev;
+
+          console.log("PREV", prev);
+
+          while (prev) {
+            if (bottomSet.has(prev)) {
+              left = prev;
+              prev = status.previous(prev);
+            } else {
+              break;
+            }
+          }
+
+          break;
+        }
+      }
+
+      for (let i = 0; i < bottomList.length; i++) {
+        const state = bottomList[i];
+
+        if (status.has(state)) {
+          let next = status.next(state);
+
+          right = next;
+
+          while (next) {
+            if (bottomSet.has(next)) {
+              right = next;
+              next = status.next(next);
+            } else {
+              break;
+            }
+          }
+
+          break;
+        }
+      }
+
+      if (left && right) {
+        siblings = [left, right];
+      }
+    }
+
     console.log("DELETE");
+
     bottomAndIntersection.forEach((state) => {
+      console.log("delete", state);
       status.delete(state);
     });
 
-    includes.forEach((state, index) => {
-      prevOrderMap.set(state, index);
-    });
-
+    sweepLine.setPosition(point);
     console.log("ADD");
     sweepLine.state = SweepLineState.Out;
     visitedRecord.add(point);
 
     topAndIntersectionSet.forEach((state) => {
-      status.add(state);
+      if (!bottomSet.has(state)) {
+        console.log("add", state);
+        status.add(state);
+      }
     });
 
     const topAndIntersection = [...topAndIntersectionSet];
@@ -390,19 +396,31 @@ export function findIntersections(
     if (topAndIntersectionSet.size === 0) {
       console.log("EMPTY");
       console.log(point);
-      console.log(bottomSet);
+
+      if (siblings !== undefined) {
+        const [left, right] = siblings;
+
+        console.log("SIBLINGS", left, right);
+
+        findNewEvent(left, right);
+      }
     } else {
       let left;
       let right;
 
       console.log("NOT EMPTY");
+      console.log(
+        "status",
+        [...status].map((s) => s.segment.id)
+      );
+      console.log("topAndIntersection", topAndIntersection);
 
       for (let i = 0; i < topAndIntersection.length; i++) {
         const state = topAndIntersection[i];
 
-        left = state;
-
         if (status.has(state)) {
+          left = state;
+
           let prev = status.previous(state);
 
           while (prev) {
@@ -424,7 +442,7 @@ export function findIntersections(
         leftLeft = status.previous(left);
       }
 
-      console.log("LEFT", left, leftLeft);
+      console.log("LEFT", leftLeft, left);
 
       if (left && leftLeft) {
         findNewEvent(leftLeft, left);
@@ -433,9 +451,9 @@ export function findIntersections(
       for (let i = 0; i < topAndIntersection.length; i++) {
         const state = topAndIntersection[i];
 
-        right = state;
-
         if (status.has(state)) {
+          right = state;
+
           let next = status.next(state);
 
           while (next) {
@@ -463,18 +481,6 @@ export function findIntersections(
         findNewEvent(right, rightRight);
       }
     }
-
-    //
-    // if (topSegments !== undefined) {
-    //   topSegments.forEach((topSegment) => {
-    //     // Console.log(topSegment);
-    //
-    //     status.add(topSegment);
-    //   });
-    // }
-
-    // Console.log(point);
-    // console.log(topSegments);
   }
 
   function findNewEvent(lhs: StateSegment, rhs: StateSegment) {
@@ -487,19 +493,17 @@ export function findIntersections(
     if (inner) {
       const intersection = lineLineIntersection(lhsSegment, rhsSegment);
 
-      console.log("intersection", intersection);
+      console.log("INTERSECTION", intersection);
 
       const currentPoint = sweepLine.point;
 
-      if (currentPoint.y === intersection.y) {
-        if (currentPoint.x >= intersection.x) {
+      if (Math.abs(currentPoint.y - intersection.y) < EPSILON) {
+        if (currentPoint.x - intersection.x > EPSILON) {
           return;
         }
-      } else if (currentPoint.y >= intersection.y) {
+      } else if (currentPoint.y - intersection.y > EPSILON) {
         return;
       }
-
-      events.add(new EventPoint(intersection, EventType.Intersection));
 
       const value: [StateSegment, StateSegment] = [lhs, rhs];
       const oldValues = intersectionRecord.get(intersection);
@@ -507,6 +511,7 @@ export function findIntersections(
       if (oldValues) {
         oldValues.push(value);
       } else {
+        events.add(new EventPoint(intersection, EventType.Intersection));
         intersectionRecord.set(intersection, [value]);
       }
     }

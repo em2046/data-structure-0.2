@@ -1,4 +1,4 @@
-import { BinaryHeap, Comparable } from "../../src";
+import { BinaryHeap, Comparable, equality, lessThan } from "../../src";
 
 // Copied from
 // https://github.com/rust-lang/rust/blob/d488de82f30fd1dcb0220d57498638596622394e/library/alloc/tests/binary_heap.rs
@@ -103,11 +103,11 @@ describe("binary heap", () => {
       }
 
       equality(rhs: ReverseBox<T>): boolean {
-        return rhs.value === this.value;
+        return equality(rhs.value, this.value);
       }
 
       lessThan(rhs: ReverseBox<T>): boolean {
-        return rhs.value < this.value;
+        return lessThan(rhs.value, this.value);
       }
     }
 

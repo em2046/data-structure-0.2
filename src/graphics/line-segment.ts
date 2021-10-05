@@ -1,4 +1,4 @@
-import { Equatable, Hashable, Hasher, Identifiable } from "../core";
+import { equality, Equatable, Hashable, Hasher, Identifiable } from "../core";
 import { IdentifiablePoint, Point } from "./point";
 
 /**
@@ -27,7 +27,7 @@ export class LineSegment<T extends Point = Point>
   }
 
   equality(rhs: LineSegment<T>): boolean {
-    return this.start === rhs.start && this.end === rhs.end;
+    return equality(this.start, rhs.start) && equality(this.end, rhs.end);
   }
 
   hash(hasher: Hasher): void {
